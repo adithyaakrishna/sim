@@ -118,17 +118,18 @@ const STYLES = {
     default: {
       active: 'bg-[var(--border-1)] text-[var(--text-primary)] [&_svg]:text-[var(--text-primary)]',
       hover:
-        'hover:bg-[var(--border-1)] hover:text-[var(--text-primary)] hover:[&_svg]:text-[var(--text-primary)]',
+        'hover-hover:bg-[var(--border-1)] hover-hover:text-[var(--text-primary)] hover-hover:[&_svg]:text-[var(--text-primary)]',
     },
     secondary: {
       active: 'bg-[var(--brand-secondary)] text-white [&_svg]:text-white',
-      hover: 'hover:bg-[var(--brand-secondary)] hover:text-white hover:[&_svg]:text-white',
+      hover:
+        'hover-hover:bg-[var(--brand-secondary)] hover-hover:text-white hover-hover:[&_svg]:text-white',
     },
     inverted: {
       active:
         'bg-[#363636] text-white [&_svg]:text-white dark:bg-[var(--surface-5)] dark:text-[var(--text-primary)] dark:[&_svg]:text-[var(--text-primary)]',
       hover:
-        'hover:bg-[#363636] hover:text-white hover:[&_svg]:text-white dark:hover:bg-[var(--surface-5)] dark:hover:text-[var(--text-primary)] dark:hover:[&_svg]:text-[var(--text-primary)]',
+        'hover-hover:bg-[#363636] hover-hover:text-white hover-hover:[&_svg]:text-white dark:hover-hover:bg-[var(--surface-5)] dark:hover-hover:text-[var(--text-primary)] dark:hover-hover:[&_svg]:text-[var(--text-primary)]',
     },
   },
 } as const
@@ -401,6 +402,18 @@ export interface PopoverContentProps
    * @default true
    */
   avoidCollisions?: boolean
+  /**
+   * Show an arrow pointing toward the anchor element.
+   * The arrow color matches the popover background based on the current color scheme.
+   * @default false
+   */
+  showArrow?: boolean
+  /**
+   * Custom className for the arrow element.
+   * Overrides the default color-scheme-based fill when provided.
+   * Useful when the popover background is overridden via className.
+   */
+  arrowClassName?: string
 }
 
 /**
@@ -425,6 +438,8 @@ const PopoverContent = React.forwardRef<
       collisionPadding = 8,
       border = false,
       avoidCollisions = true,
+      showArrow = false,
+      arrowClassName,
       onOpenAutoFocus,
       onCloseAutoFocus,
       ...restProps
@@ -579,7 +594,8 @@ const PopoverContent = React.forwardRef<
         onCloseAutoFocus={handleCloseAutoFocus}
         {...restProps}
         className={cn(
-          'z-[10000200] flex flex-col overflow-auto outline-none will-change-transform',
+          'z-[var(--z-popover)] flex flex-col outline-none will-change-transform',
+          showArrow ? 'overflow-visible' : 'overflow-auto',
           STYLES.colorScheme[colorScheme].content,
           STYLES.content,
           hasUserWidthConstraint && '[&_.flex-1]:truncate [&_[data-popover-section]]:truncate',
@@ -601,6 +617,27 @@ const PopoverContent = React.forwardRef<
         }}
       >
         {children}
+        {showArrow && (
+          <PopoverPrimitive.Arrow width={14} height={7} asChild>
+            <svg
+              width={14}
+              height={7}
+              viewBox='0 0 14 7'
+              preserveAspectRatio='none'
+              className={
+                arrowClassName ??
+                cn(
+                  colorScheme === 'inverted'
+                    ? 'fill-[#242424] stroke-[#363636] dark:fill-[var(--surface-3)] dark:stroke-[var(--border-1)]'
+                    : 'fill-[var(--surface-3)] stroke-[var(--border-1)] dark:fill-[var(--surface-3)]'
+                )
+              }
+            >
+              <polygon points='0,0 14,0 7,7' className='stroke-none' />
+              <polyline points='0,0 7,7 14,0' fill='none' strokeWidth={1} />
+            </svg>
+          </PopoverPrimitive.Arrow>
+        )}
       </PopoverPrimitive.Content>
     )
 
@@ -735,7 +772,7 @@ const PopoverItem = React.forwardRef<HTMLDivElement, PopoverItemProps>(
           STYLES.colorScheme[colorScheme].text,
           STYLES.size[size].item,
           getItemStateClasses(variant, colorScheme, !!isActive),
-          suppressHover && 'hover:!bg-transparent',
+          suppressHover && 'hover-hover:!bg-transparent',
           disabled && 'pointer-events-none cursor-not-allowed opacity-50',
           className
         )}
@@ -929,7 +966,7 @@ const PopoverFolder = React.forwardRef<HTMLDivElement, PopoverFolderProps>(
             STYLES.colorScheme[colorScheme].text,
             STYLES.size[size].item,
             getItemStateClasses(variant, colorScheme, isActive || isHoverOpen),
-            suppressHover && 'hover:!bg-transparent',
+            suppressHover && 'hover-hover:!bg-transparent',
             className
           )}
           role='menuitem'
@@ -951,7 +988,7 @@ const PopoverFolder = React.forwardRef<HTMLDivElement, PopoverFolderProps>(
           createPortal(
             <DismissableLayerBranch
               className={cn(
-                'fixed z-[10000201] min-w-[120px]',
+                'fixed z-[calc(var(--z-popover)+1)] min-w-[120px]',
                 STYLES.content,
                 STYLES.colorScheme[colorScheme].content,
                 'shadow-lg'
