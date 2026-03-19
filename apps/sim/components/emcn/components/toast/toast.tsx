@@ -14,7 +14,7 @@ import { X } from 'lucide-react'
 import { createPortal } from 'react-dom'
 import { cn } from '@/lib/core/utils/cn'
 
-const AUTO_DISMISS_MS = 0
+const AUTO_DISMISS_MS = 5000
 const EXIT_ANIMATION_MS = 200
 const MAX_VISIBLE = 20
 
@@ -117,11 +117,11 @@ function ToastItem({ toast: t, onDismiss }: { toast: ToastData; onDismiss: (id: 
   return (
     <div
       className={cn(
-        'pointer-events-auto flex w-[320px] items-start gap-[8px] rounded-[8px] border px-[12px] py-[10px] shadow-md transition-all',
+        'pointer-events-auto flex w-[320px] items-start gap-[8px] rounded-[8px] border px-[12px] py-[10px] shadow-md transition-[transform,opacity]',
         VARIANT_STYLES[t.variant],
         exiting
-          ? 'animate-[toast-exit_200ms_ease-in_forwards]'
-          : 'animate-[toast-enter_200ms_ease-out_forwards]'
+          ? 'animate-[toast-exit_200ms_ease-in_forwards] motion-reduce:animate-none'
+          : 'animate-[toast-enter_200ms_ease-out_forwards] motion-reduce:animate-none'
       )}
     >
       <div className='min-w-0 flex-1'>
@@ -137,7 +137,7 @@ function ToastItem({ toast: t, onDismiss }: { toast: ToastData; onDismiss: (id: 
             t.action!.onClick()
             dismiss()
           }}
-          className='shrink-0 font-medium text-[13px] underline underline-offset-2 opacity-90 hover:opacity-100'
+          className='shrink-0 font-medium text-[13px] underline underline-offset-2 opacity-90 hover-hover:opacity-100'
         >
           {t.action.label}
         </button>
@@ -145,7 +145,7 @@ function ToastItem({ toast: t, onDismiss }: { toast: ToastData; onDismiss: (id: 
       <button
         type='button'
         onClick={dismiss}
-        className='shrink-0 rounded-[4px] p-[2px] opacity-60 hover:opacity-100'
+        className='relative shrink-0 rounded-[4px] p-[2px] opacity-60 before:absolute before:inset-[-11px] before:content-[""] hover-hover:opacity-100'
       >
         <X className='h-[14px] w-[14px]' />
       </button>
@@ -211,7 +211,7 @@ export function ToastProvider({ children }: { children?: ReactNode }) {
           <div
             aria-live='polite'
             aria-label='Notifications'
-            className='pointer-events-none fixed right-[16px] bottom-[16px] z-[10000400] flex flex-col-reverse items-end gap-[8px]'
+            className='pointer-events-none fixed right-[16px] bottom-[16px] z-[var(--z-toast)] flex flex-col-reverse items-end gap-[8px]'
           >
             {toasts.map((t) => (
               <ToastItem key={t.id} toast={t} onDismiss={dismissToast} />
