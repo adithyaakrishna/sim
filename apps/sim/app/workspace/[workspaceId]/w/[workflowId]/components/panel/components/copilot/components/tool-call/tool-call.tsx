@@ -424,7 +424,7 @@ export function OptionsSelector({
             }}
             className={clsx(
               'group flex cursor-pointer items-start gap-2 rounded-[6px] p-1',
-              'hover:bg-[var(--surface-4)]',
+              'hover-hover:bg-[var(--surface-4)]',
               disabled && !isChosen && 'cursor-not-allowed opacity-50',
               streaming && 'pointer-events-none',
               isLocked && 'cursor-default',
@@ -915,7 +915,7 @@ const SubagentContentRenderer = memo(function SubagentContentRenderer({
     <div className='w-full'>
       <button
         onClick={() => setIsExpanded((v) => !v)}
-        className='group inline-flex items-center gap-1 text-left font-[470] font-season text-[var(--text-secondary)] text-sm transition-colors hover:text-[var(--text-primary)]'
+        className='group inline-flex items-center gap-1 text-left font-[470] font-season text-[var(--text-secondary)] text-sm transition-colors hover-hover:text-[var(--text-primary)]'
         type='button'
       >
         <span className='text-[var(--text-tertiary)]'>{durationText}</span>

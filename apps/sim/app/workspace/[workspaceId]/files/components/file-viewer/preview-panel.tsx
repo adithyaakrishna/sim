@@ -120,7 +120,7 @@ const MarkdownPreview = memo(function MarkdownPreview({ content }: { content: st
               href={href}
               target='_blank'
               rel='noopener noreferrer'
-              className='break-all text-[var(--brand-secondary)] underline-offset-2 hover:underline'
+              className='break-all text-[var(--brand-secondary)] underline-offset-2 hover-hover:underline'
             >
               {children}
             </a>

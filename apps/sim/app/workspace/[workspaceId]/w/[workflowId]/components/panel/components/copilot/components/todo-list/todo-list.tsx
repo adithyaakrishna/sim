@@ -117,7 +117,7 @@ export const TodoList = memo(function TodoList({
             <div
               key={todo.id}
               className={cn(
-                'flex items-start gap-2 px-3 py-1.5 transition-colors hover:bg-[var(--surface-5)]/50 dark:hover:bg-[var(--border-1)]/50',
+                'flex items-start gap-2 px-3 py-1.5 transition-colors hover-hover:bg-[var(--surface-5)]/50 dark:hover-hover:bg-[var(--border-1)]/50',
                 index !== todos.length - 1 && 'border-[var(--border-1)] border-b'
               )}
             >

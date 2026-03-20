@@ -83,7 +83,7 @@ export function BottomControls({
             className={cn(
               'h-[20px] w-[20px] rounded-full border-0 p-0 transition-colors',
               !isAborting
-                ? 'bg-[var(--c-383838)] hover:bg-[var(--c-575757)] dark:bg-[var(--c-E0E0E0)] dark:hover:bg-[var(--c-CFCFCF)]'
+                ? 'bg-[var(--c-383838)] hover-hover:bg-[var(--c-575757)] dark:bg-[var(--c-E0E0E0)] dark:hover-hover:bg-[var(--c-CFCFCF)]'
                 : 'bg-[var(--c-383838)] dark:bg-[var(--c-E0E0E0)]'
             )}
             title='Stop generation'
@@ -107,7 +107,7 @@ export function BottomControls({
             className={cn(
               'h-[22px] w-[22px] rounded-full border-0 p-0 transition-colors',
               canSubmit
-                ? 'bg-[var(--c-383838)] hover:bg-[var(--c-575757)] dark:bg-[var(--c-E0E0E0)] dark:hover:bg-[var(--c-CFCFCF)]'
+                ? 'bg-[var(--c-383838)] hover-hover:bg-[var(--c-575757)] dark:bg-[var(--c-E0E0E0)] dark:hover-hover:bg-[var(--c-CFCFCF)]'
                 : 'bg-[var(--c-808080)] dark:bg-[var(--c-808080)]'
             )}
           >

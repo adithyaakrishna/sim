@@ -330,7 +330,7 @@ const CopilotMessage: FC<CopilotMessageProps> = memo(
                 onClick={handleMessageClick}
                 onMouseEnter={() => setIsHoveringMessage(true)}
                 onMouseLeave={() => setIsHoveringMessage(false)}
-                className='group relative w-full cursor-pointer rounded-[4px] border border-[var(--border-1)] bg-[var(--surface-4)] px-[6px] py-[6px] transition-all duration-200 hover:border-[var(--surface-7)] hover:bg-[var(--surface-4)] dark:bg-[var(--surface-4)] dark:hover:border-[var(--surface-7)] dark:hover:bg-[var(--border-1)]'
+                className='group relative w-full cursor-pointer rounded-[4px] border border-[var(--border-1)] bg-[var(--surface-4)] px-[6px] py-[6px] transition-all duration-200 hover-hover:border-[var(--surface-7)] hover-hover:bg-[var(--surface-4)] dark:bg-[var(--surface-4)] dark:hover-hover:border-[var(--surface-7)] dark:hover-hover:bg-[var(--border-1)]'
               >
                 <div
                   ref={messageContentRef}
@@ -360,7 +360,7 @@ const CopilotMessage: FC<CopilotMessageProps> = memo(
                         e.stopPropagation()
                         abortMessage()
                       }}
-                      className='h-[20px] w-[20px] rounded-full border-0 bg-[var(--c-383838)] p-0 transition-colors hover:bg-[var(--c-575757)] dark:bg-[var(--c-E0E0E0)] dark:hover:bg-[var(--c-CFCFCF)]'
+                      className='h-[20px] w-[20px] rounded-full border-0 bg-[var(--c-383838)] p-0 transition-colors hover-hover:bg-[var(--c-575757)] dark:bg-[var(--c-E0E0E0)] dark:hover-hover:bg-[var(--c-CFCFCF)]'
                       title='Stop generation'
                     >
                       <svg
@@ -441,7 +441,7 @@ const CopilotMessage: FC<CopilotMessageProps> = memo(
                       href={citation.url}
                       target='_blank'
                       rel='noopener noreferrer'
-                      className='inline-flex max-w-full items-center rounded-md border bg-muted/50 px-2 py-1 text-muted-foreground text-xs transition-colors hover:bg-muted hover:text-foreground'
+                      className='inline-flex max-w-full items-center rounded-md border bg-muted/50 px-2 py-1 text-muted-foreground text-xs transition-colors hover-hover:bg-muted hover-hover:text-foreground'
                     >
                       <span className='truncate'>{citation.title}</span>
                     </a>

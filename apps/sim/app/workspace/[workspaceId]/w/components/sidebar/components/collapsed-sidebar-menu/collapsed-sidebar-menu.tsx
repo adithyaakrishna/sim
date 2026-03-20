@@ -46,7 +46,7 @@ export function CollapsedSidebarMenu({
             <button
               type='button'
               aria-label={ariaLabel}
-              className='mx-[2px] flex h-[30px] items-center rounded-[8px] px-[8px] hover:bg-[var(--surface-active)]'
+              className='mx-[2px] flex h-[30px] items-center rounded-[8px] px-[8px] hover-hover:bg-[var(--surface-active)]'
               onClick={onClick}
             >
               {icon}

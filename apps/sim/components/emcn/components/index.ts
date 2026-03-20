@@ -55,6 +55,7 @@ export {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from './dropdown-menu/dropdown-menu'
+export { Expandable, ExpandableContent } from './expandable/expandable'
 export { Input, type InputProps, inputVariants } from './input/input'
 export { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from './input-otp/input-otp'
 export { Label } from './label/label'

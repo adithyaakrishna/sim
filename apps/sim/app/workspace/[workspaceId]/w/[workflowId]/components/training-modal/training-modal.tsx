@@ -512,7 +512,7 @@ export function TrainingModal() {
                       {datasets.map((dataset, index) => (
                         <div
                           key={dataset.id}
-                          className='rounded-[8px] border bg-[var(--surface-3)] transition-colors hover:bg-[var(--surface-4)]'
+                          className='rounded-[8px] border bg-[var(--surface-3)] transition-colors hover-hover:bg-[var(--surface-4)]'
                         >
                           <div className='flex items-start p-[12px]'>
                             <Checkbox
@@ -758,8 +758,8 @@ export function TrainingModal() {
                 variant='primary'
                 className={cn(
                   'w-full',
-                  liveWorkflowSent && '!bg-green-600 !text-white hover:!bg-green-700',
-                  liveWorkflowFailed && '!bg-red-600 !text-white hover:!bg-red-700'
+                  liveWorkflowSent && '!bg-green-600 !text-white hover-hover:!bg-green-700',
+                  liveWorkflowFailed && '!bg-red-600 !text-white hover-hover:!bg-red-700'
                 )}
               >
                 {sendingLiveWorkflow ? (

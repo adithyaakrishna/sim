@@ -38,7 +38,7 @@ export function ContextPills({ contexts, onRemoveContext }: ContextPillsProps) {
           <button
             type='button'
             onClick={() => onRemoveContext(ctx)}
-            className='text-muted-foreground transition-colors hover:text-foreground'
+            className='text-muted-foreground transition-colors hover-hover:text-foreground'
             title='Remove context'
             aria-label='Remove context'
           >

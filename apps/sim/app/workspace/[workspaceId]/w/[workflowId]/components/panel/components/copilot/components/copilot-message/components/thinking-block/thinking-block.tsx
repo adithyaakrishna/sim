@@ -273,7 +273,7 @@ export function ThinkingBlock({
               return next
             })
           }}
-          className='group inline-flex items-center gap-1 text-left font-[470] font-season text-[var(--text-secondary)] text-sm transition-colors hover:text-[var(--text-primary)]'
+          className='group inline-flex items-center gap-1 text-left font-[470] font-season text-[var(--text-secondary)] text-sm transition-colors hover-hover:text-[var(--text-primary)]'
           type='button'
         >
           <span className='relative inline-block'>
@@ -332,7 +332,7 @@ export function ThinkingBlock({
         onClick={() => {
           setIsExpanded((v) => !v)
         }}
-        className='group inline-flex items-center gap-1 text-left font-[470] font-season text-[var(--text-secondary)] text-sm transition-colors hover:text-[var(--text-primary)]'
+        className='group inline-flex items-center gap-1 text-left font-[470] font-season text-[var(--text-secondary)] text-sm transition-colors hover-hover:text-[var(--text-primary)]'
         type='button'
         disabled={!hasContent}
       >

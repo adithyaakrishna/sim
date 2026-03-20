@@ -49,9 +49,13 @@ function ColorGrid({
   const [focusedIndex, setFocusedIndex] = useState(-1)
   const gridRef = useRef<HTMLDivElement>(null)
   const buttonRefs = useRef<(HTMLButtonElement | null)[]>([])
+  const prevIsOpenRef = useRef(false)
 
   useEffect(() => {
-    if (isOpen && gridRef.current) {
+    const justOpened = isOpen && !prevIsOpenRef.current
+    prevIsOpenRef.current = isOpen
+
+    if (justOpened && gridRef.current) {
       const selectedIndex = WORKFLOW_COLORS.findIndex(
         ({ color }) => color.toLowerCase() === hexInput.toLowerCase()
       )
@@ -326,6 +330,7 @@ export function ContextMenu({
 
   const handleHexKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
+      e.stopPropagation()
       if (e.key === 'Enter') {
         e.preventDefault()
         handleHexSubmit()

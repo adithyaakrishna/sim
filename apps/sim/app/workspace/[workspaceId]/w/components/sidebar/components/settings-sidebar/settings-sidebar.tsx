@@ -186,7 +186,7 @@ export function SettingsSidebar({
             <button
               type='button'
               onClick={handleBack}
-              className='group mx-[2px] flex h-[30px] items-center gap-[8px] rounded-[8px] px-[8px] text-[14px] hover:bg-[var(--surface-active)]'
+              className='group mx-[2px] flex h-[30px] items-center gap-[8px] rounded-[8px] px-[8px] text-[14px] hover-hover:bg-[var(--surface-active)]'
             >
               <div className='flex h-[16px] w-[16px] flex-shrink-0 items-center justify-center text-[var(--text-icon)]'>
                 <ChevronDown className='h-[10px] w-[10px] rotate-90' />
@@ -253,7 +253,7 @@ export function SettingsSidebar({
                     const Icon = item.icon
                     const active = activeSection === item.id
                     const itemClassName = cn(
-                      'group mx-[2px] flex h-[30px] items-center gap-[8px] rounded-[8px] px-[8px] text-[14px] hover:bg-[var(--surface-active)]',
+                      'group mx-[2px] flex h-[30px] items-center gap-[8px] rounded-[8px] px-[8px] text-[14px] hover-hover:bg-[var(--surface-active)]',
                       active && 'bg-[var(--surface-active)]'
                     )
                     const content = (

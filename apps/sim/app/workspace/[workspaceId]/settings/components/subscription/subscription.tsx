@@ -654,7 +654,7 @@ export function Subscription() {
                   'rounded-[4px] px-[10px] py-[4px] font-medium text-[12px] transition-colors',
                   !isAnnual
                     ? 'bg-[var(--surface-3)] text-[var(--text-primary)]'
-                    : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+                    : 'text-[var(--text-muted)] hover-hover:text-[var(--text-primary)]'
                 )}
                 onClick={() => setIsAnnual(false)}
               >
@@ -666,7 +666,7 @@ export function Subscription() {
                   'flex items-center gap-[4px] rounded-[4px] px-[10px] py-[4px] font-medium text-[12px] transition-colors',
                   isAnnual
                     ? 'bg-[var(--surface-3)] text-[var(--text-primary)]'
-                    : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+                    : 'text-[var(--text-muted)] hover-hover:text-[var(--text-primary)]'
                 )}
                 onClick={() => setIsAnnual(true)}
               >
@@ -1051,7 +1051,7 @@ function TeamPlanModal({ open, onOpenChange, isAnnual, onConfirm }: TeamPlanModa
                   'flex-1 rounded-[6px] border px-[12px] py-[10px] text-left transition-colors',
                   selectedTier === PRO_TIER.credits
                     ? 'border-[var(--accent)] bg-[var(--accent)]/5'
-                    : 'border-[var(--border-1)] hover:border-[var(--border-2)]'
+                    : 'border-[var(--border-1)] hover-hover:border-[var(--border-2)]'
                 )}
                 onClick={() => setSelectedTier(PRO_TIER.credits)}
               >
@@ -1069,7 +1069,7 @@ function TeamPlanModal({ open, onOpenChange, isAnnual, onConfirm }: TeamPlanModa
                   'flex-1 rounded-[6px] border px-[12px] py-[10px] text-left transition-colors',
                   selectedTier === MAX_TIER.credits
                     ? 'border-[var(--accent)] bg-[var(--accent)]/5'
-                    : 'border-[var(--border-1)] hover:border-[var(--border-2)]'
+                    : 'border-[var(--border-1)] hover-hover:border-[var(--border-2)]'
                 )}
                 onClick={() => setSelectedTier(MAX_TIER.credits)}
               >

@@ -88,7 +88,7 @@ const CodeBlock = memo(function CodeBlock({ code, language }: CodeBlockProps) {
         <span className='font-season text-[var(--text-muted)] text-xs'>{displayLanguage}</span>
         <button
           onClick={handleCopy}
-          className='text-[var(--text-muted)] transition-colors hover:text-[var(--text-tertiary)]'
+          className='text-[var(--text-muted)] transition-colors hover-hover:text-[var(--text-tertiary)]'
           title='Copy'
           type='button'
         >
@@ -124,7 +124,7 @@ const LinkWithPreview = memo(function LinkWithPreview({
       <Tooltip.Trigger asChild>
         <a
           href={href}
-          className='inline break-all text-blue-600 hover:underline dark:text-blue-400'
+          className='inline break-all text-blue-600 hover-hover:underline dark:text-blue-400'
           target='_blank'
           rel='noopener noreferrer'
         >

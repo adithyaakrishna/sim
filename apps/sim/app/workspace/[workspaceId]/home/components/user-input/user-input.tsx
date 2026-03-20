@@ -102,7 +102,7 @@ const OVERLAY_CLASSES = cn(
 
 const SEND_BUTTON_BASE = 'h-[28px] w-[28px] rounded-full border-0 p-0 transition-colors'
 const SEND_BUTTON_ACTIVE =
-  'bg-[var(--c-383838)] hover:bg-[var(--c-575757)] dark:bg-[var(--c-E0E0E0)] dark:hover:bg-[var(--c-CFCFCF)]'
+  'bg-[var(--c-383838)] hover-hover:bg-[var(--c-575757)] dark:bg-[var(--c-E0E0E0)] dark:hover-hover:bg-[var(--c-CFCFCF)]'
 const SEND_BUTTON_DISABLED = 'bg-[var(--c-808080)] dark:bg-[var(--c-808080)]'
 
 const MAX_CHAT_TEXTAREA_HEIGHT = 200
@@ -705,7 +705,7 @@ export function UserInput({
               <Tooltip.Root key={file.id}>
                 <Tooltip.Trigger asChild>
                   <div
-                    className='group relative h-[56px] w-[56px] flex-shrink-0 cursor-pointer overflow-hidden rounded-[8px] border border-[var(--border-1)] bg-[var(--surface-5)] hover:bg-[var(--surface-4)]'
+                    className='group relative h-[56px] w-[56px] flex-shrink-0 cursor-pointer overflow-hidden rounded-[8px] border border-[var(--border-1)] bg-[var(--surface-5)] hover-hover:bg-[var(--surface-4)]'
                     onClick={() => files.handleFileClick(file)}
                   >
                     {isImage && file.previewUrl ? (
@@ -800,7 +800,7 @@ export function UserInput({
             <DropdownMenuTrigger asChild>
               <button
                 type='button'
-                className='flex h-[28px] w-[28px] cursor-pointer items-center justify-center rounded-full border border-[#F0F0F0] transition-colors hover:bg-[#F7F7F7] dark:border-[#3d3d3d] dark:hover:bg-[#303030]'
+                className='flex h-[28px] w-[28px] cursor-pointer items-center justify-center rounded-full border border-[#F0F0F0] transition-colors hover-hover:bg-[#F7F7F7] dark:border-[#3d3d3d] dark:hover-hover:bg-[#303030]'
                 title='Add attachments or resources'
               >
                 <Plus className='h-[16px] w-[16px] text-[var(--text-icon)]' />
@@ -939,8 +939,8 @@ export function UserInput({
             className={cn(
               'flex h-[28px] w-[28px] items-center justify-center rounded-full transition-colors',
               isListening
-                ? 'bg-red-500 text-white hover:bg-red-600'
-                : 'text-[var(--text-icon)] hover:bg-[#F7F7F7] dark:hover:bg-[#303030]'
+                ? 'bg-red-500 text-white hover-hover:bg-red-600'
+                : 'text-[var(--text-icon)] hover-hover:bg-[#F7F7F7] dark:hover-hover:bg-[#303030]'
             )}
             title={isListening ? 'Stop listening' : 'Voice input'}
           >

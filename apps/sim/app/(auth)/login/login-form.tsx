@@ -417,29 +417,41 @@ export default function LoginPage({
               <div className='flex items-center justify-between'>
                 <Label htmlFor='email'>Email</Label>
               </div>
-              <Input
-                id='email'
-                name='email'
-                placeholder='Enter your email'
-                required
-                autoCapitalize='none'
-                autoComplete='email'
-                autoCorrect='off'
-                value={email}
-                onChange={handleEmailChange}
-                className={cn(
-                  showEmailValidationError &&
-                    emailErrors.length > 0 &&
-                    'border-red-500 focus:border-red-500'
-                )}
-              />
-              {showEmailValidationError && emailErrors.length > 0 && (
-                <div className='mt-1 space-y-1 text-red-400 text-xs'>
-                  {emailErrors.map((error, index) => (
-                    <p key={index}>{error}</p>
-                  ))}
+              <div className='relative'>
+                <Input
+                  id='email'
+                  name='email'
+                  placeholder='Enter your email'
+                  required
+                  autoCapitalize='none'
+                  autoComplete='email'
+                  autoCorrect='off'
+                  value={email}
+                  onChange={handleEmailChange}
+                  className={cn(
+                    showEmailValidationError &&
+                      emailErrors.length > 0 &&
+                      'border-red-500 focus:border-red-500'
+                  )}
+                />
+                <div
+                  className={cn(
+                    'absolute right-0 left-0 z-10 grid transition-[grid-template-rows] duration-200 ease-out',
+                    showEmailValidationError && emailErrors.length > 0
+                      ? 'grid-rows-[1fr]'
+                      : 'grid-rows-[0fr]'
+                  )}
+                  aria-live='polite'
+                >
+                  <div className='overflow-hidden'>
+                    <div className='mt-1 space-y-1 text-red-400 text-xs'>
+                      {emailErrors.map((error, index) => (
+                        <p key={index}>{error}</p>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-              )}
+              </div>
             </div>
             <div className='space-y-2'>
               <div className='flex items-center justify-between'>
@@ -453,40 +465,52 @@ export default function LoginPage({
                 </button>
               </div>
               <div className='relative'>
-                <Input
-                  id='password'
-                  name='password'
-                  required
-                  type={showPassword ? 'text' : 'password'}
-                  autoCapitalize='none'
-                  autoComplete='current-password'
-                  autoCorrect='off'
-                  placeholder='Enter your password'
-                  value={password}
-                  onChange={handlePasswordChange}
-                  className={cn(
-                    'pr-10',
-                    showValidationError &&
-                      passwordErrors.length > 0 &&
-                      'border-red-500 focus:border-red-500'
-                  )}
-                />
-                <button
-                  type='button'
-                  onClick={() => setShowPassword(!showPassword)}
-                  className='-translate-y-1/2 absolute top-1/2 right-3 text-[#999] transition hover:text-[#ECECEC]'
-                  aria-label={showPassword ? 'Hide password' : 'Show password'}
-                >
-                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                </button>
-              </div>
-              {showValidationError && passwordErrors.length > 0 && (
-                <div className='mt-1 space-y-1 text-red-400 text-xs'>
-                  {passwordErrors.map((error, index) => (
-                    <p key={index}>{error}</p>
-                  ))}
+                <div className='relative'>
+                  <Input
+                    id='password'
+                    name='password'
+                    required
+                    type={showPassword ? 'text' : 'password'}
+                    autoCapitalize='none'
+                    autoComplete='current-password'
+                    autoCorrect='off'
+                    placeholder='Enter your password'
+                    value={password}
+                    onChange={handlePasswordChange}
+                    className={cn(
+                      'pr-10',
+                      showValidationError &&
+                        passwordErrors.length > 0 &&
+                        'border-red-500 focus:border-red-500'
+                    )}
+                  />
+                  <button
+                    type='button'
+                    onClick={() => setShowPassword(!showPassword)}
+                    className='-translate-y-1/2 absolute top-1/2 right-3 text-[#999] transition hover:text-[#ECECEC]'
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
                 </div>
-              )}
+                <div
+                  className={cn(
+                    'absolute right-0 left-0 z-10 grid transition-[grid-template-rows] duration-200 ease-out',
+                    showValidationError && passwordErrors.length > 0
+                      ? 'grid-rows-[1fr]'
+                      : 'grid-rows-[0fr]'
+                  )}
+                  aria-live='polite'
+                >
+                  <div className='overflow-hidden'>
+                    <div className='mt-1 space-y-1 text-red-400 text-xs'>
+                      {passwordErrors.map((error, index) => (
+                        <p key={index}>{error}</p>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -495,6 +519,7 @@ export default function LoginPage({
             disabled={isLoading}
             loading={isLoading}
             loadingText='Signing in'
+            className='!mt-6'
           >
             Sign in
           </BrandedButton>
@@ -588,17 +613,33 @@ export default function LoginPage({
                     resetStatus.type === 'error' && 'border-red-500 focus:border-red-500'
                   )}
                 />
-                {resetStatus.type === 'error' && (
-                  <div className='mt-1 text-red-400 text-xs'>
+                <div
+                  className={cn(
+                    'grid transition-[grid-template-rows] duration-200 ease-out',
+                    resetStatus.type === 'error' ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+                  )}
+                  aria-live='polite'
+                >
+                  <div className='overflow-hidden'>
+                    <div className='mt-1 text-red-400 text-xs'>
+                      <p>{resetStatus.message}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                className={cn(
+                  'grid transition-[grid-template-rows] duration-200 ease-out',
+                  resetStatus.type === 'success' ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+                )}
+                aria-live='polite'
+              >
+                <div className='overflow-hidden'>
+                  <div className='mt-1 text-[#4CAF50] text-xs'>
                     <p>{resetStatus.message}</p>
                   </div>
-                )}
-              </div>
-              {resetStatus.type === 'success' && (
-                <div className='mt-1 text-[#4CAF50] text-xs'>
-                  <p>{resetStatus.message}</p>
                 </div>
-              )}
+              </div>
               <BrandedButton
                 type='button'
                 onClick={handleForgotPassword}

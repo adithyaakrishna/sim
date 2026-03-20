@@ -190,7 +190,7 @@ const PlanModeSection: React.FC<PlanModeSectionProps> = ({
             <>
               <Button
                 variant='ghost'
-                className='h-[18px] w-[18px] p-0 hover:text-[var(--text-primary)]'
+                className='h-[18px] w-[18px] p-0 hover-hover:text-[var(--text-primary)]'
                 onClick={handleCancel}
                 aria-label='Cancel editing'
               >
@@ -198,7 +198,7 @@ const PlanModeSection: React.FC<PlanModeSectionProps> = ({
               </Button>
               <Button
                 variant='ghost'
-                className='h-[18px] w-[18px] p-0 hover:text-[var(--text-primary)]'
+                className='h-[18px] w-[18px] p-0 hover-hover:text-[var(--text-primary)]'
                 onClick={handleSave}
                 aria-label='Save changes'
               >
@@ -220,7 +220,7 @@ const PlanModeSection: React.FC<PlanModeSectionProps> = ({
               {onSave && (
                 <Button
                   variant='ghost'
-                  className='h-[18px] w-[18px] p-0 hover:text-[var(--text-primary)]'
+                  className='h-[18px] w-[18px] p-0 hover-hover:text-[var(--text-primary)]'
                   onClick={handleEdit}
                   aria-label='Edit workflow plan'
                 >
@@ -230,7 +230,7 @@ const PlanModeSection: React.FC<PlanModeSectionProps> = ({
               {onClear && (
                 <Button
                   variant='ghost'
-                  className='h-[18px] w-[18px] p-0 hover:text-[var(--text-primary)]'
+                  className='h-[18px] w-[18px] p-0 hover-hover:text-[var(--text-primary)]'
                   onClick={onClear}
                   aria-label='Clear workflow plan'
                 >
@@ -262,7 +262,7 @@ const PlanModeSection: React.FC<PlanModeSectionProps> = ({
         className={cn(
           'group flex h-[20px] w-full cursor-ns-resize items-center justify-center border-t',
           BORDER_STRONG,
-          'transition-colors hover:bg-[var(--surface-5)]',
+          'transition-colors hover-hover:bg-[var(--surface-5)]',
           isResizing && SURFACE_9
         )}
         onMouseDown={handleResizeStart}

@@ -36,7 +36,7 @@ export function QueuedMessages() {
       <button
         type='button'
         onClick={() => setIsExpanded(!isExpanded)}
-        className='flex w-full items-center justify-between px-[10px] py-[6px] transition-colors hover:bg-[var(--surface-3)]'
+        className='flex w-full items-center justify-between px-[10px] py-[6px] transition-colors hover-hover:bg-[var(--surface-3)]'
       >
         <div className='flex items-center gap-[6px]'>
           {isExpanded ? (
@@ -57,7 +57,7 @@ export function QueuedMessages() {
           {messageQueue.map((msg) => (
             <div
               key={msg.id}
-              className='group flex items-center gap-[8px] border-[var(--border)] border-t px-[10px] py-[6px] hover:bg-[var(--surface-3)]'
+              className='group flex items-center gap-[8px] border-[var(--border)] border-t px-[10px] py-[6px] hover-hover:bg-[var(--surface-3)]'
             >
               {/* Radio indicator */}
               <div className='flex h-[14px] w-[14px] shrink-0 items-center justify-center'>
@@ -77,7 +77,7 @@ export function QueuedMessages() {
                     e.stopPropagation()
                     handleSendNow(msg.id)
                   }}
-                  className='rounded p-[3px] text-[var(--text-tertiary)] transition-colors hover:bg-[var(--bg-quaternary)] hover:text-[var(--text-primary)]'
+                  className='rounded p-[3px] text-[var(--text-tertiary)] transition-colors hover-hover:bg-[var(--bg-quaternary)] hover-hover:text-[var(--text-primary)]'
                   title='Send now (aborts current stream)'
                 >
                   <ArrowUp className='h-[14px] w-[14px]' />
@@ -88,7 +88,7 @@ export function QueuedMessages() {
                     e.stopPropagation()
                     handleRemove(msg.id)
                   }}
-                  className='rounded p-[3px] text-[var(--text-tertiary)] transition-colors hover:bg-red-500/10 hover:text-red-400'
+                  className='rounded p-[3px] text-[var(--text-tertiary)] transition-colors hover-hover:bg-red-500/10 hover-hover:text-red-400'
                   title='Remove from queue'
                 >
                   <Trash2 className='h-[14px] w-[14px]' />
