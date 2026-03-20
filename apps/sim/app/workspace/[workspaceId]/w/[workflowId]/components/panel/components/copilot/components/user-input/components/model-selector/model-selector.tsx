@@ -145,7 +145,7 @@ export function ModelSelector({ selectedModel, isNearTop, onModelSelect }: Model
         <div ref={triggerRef} className='min-w-0 max-w-full'>
           <Badge
             variant='outline'
-            className='min-w-0 max-w-full cursor-pointer rounded-[6px]'
+            className='min-w-0 max-w-full cursor-pointer rounded-md'
             title='Choose model'
             aria-expanded={open}
             onMouseDown={(e) => {
@@ -167,7 +167,7 @@ export function ModelSelector({ selectedModel, isNearTop, onModelSelect }: Model
         onOpenAutoFocus={(e) => e.preventDefault()}
         onCloseAutoFocus={(e) => e.preventDefault()}
       >
-        <PopoverScrollArea className='space-y-[2px]'>
+        <PopoverScrollArea className='space-y-0.5'>
           {modelOptions.length > 0 ? (
             modelOptions.map((option) => (
               <PopoverItem

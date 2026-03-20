@@ -32,7 +32,7 @@ export function CollapsedSidebarMenu({
   className,
 }: CollapsedSidebarMenuProps) {
   return (
-    <div className={cn('flex flex-col px-[8px]', className)}>
+    <div className={cn('flex flex-col px-2', className)}>
       <DropdownMenu
         open={hover.isOpen}
         onOpenChange={(open) => {
@@ -46,7 +46,7 @@ export function CollapsedSidebarMenu({
             <button
               type='button'
               aria-label={ariaLabel}
-              className='mx-[2px] flex h-[30px] items-center rounded-[8px] px-[8px] hover-hover:bg-[var(--surface-active)]'
+              className='mx-0.5 flex h-[30px] items-center rounded-lg px-2 hover-hover:bg-[var(--surface-active)]'
               onClick={onClick}
             >
               {icon}

@@ -39,9 +39,9 @@ interface FileAttachmentPillProps {
 function FileAttachmentPill({ mediaType, filename }: FileAttachmentPillProps) {
   const Icon = getDocumentIcon(mediaType, filename)
   return (
-    <div className='flex max-w-[140px] items-center gap-[5px] rounded-[10px] bg-[var(--surface-5)] px-[6px] py-[3px]'>
+    <div className='flex max-w-[140px] items-center gap-[5px] rounded-[10px] bg-[var(--surface-5)] px-1.5 py-[3px]'>
       <Icon className='h-[14px] w-[14px] flex-shrink-0 text-[var(--text-icon)]' />
-      <span className='truncate text-[11px] text-[var(--text-body)]'>{filename}</span>
+      <span className='truncate text-xs text-[var(--text-body)]'>{filename}</span>
     </div>
   )
 }
@@ -338,8 +338,8 @@ export function Home({ chatId }: HomeProps = {}) {
   if (!hasMessages && !chatId) {
     return (
       <div className='h-full overflow-y-auto bg-[var(--bg)] [scrollbar-gutter:stable]'>
-        <div className='flex min-h-full flex-col items-center justify-center px-[24px] pb-[2vh]'>
-          <h1 className='mb-[24px] max-w-[42rem] font-[430] font-season text-[32px] text-[var(--text-primary)] tracking-[-0.02em]'>
+        <div className='flex min-h-full flex-col items-center justify-center px-6 pb-[2vh]'>
+          <h1 className='mb-6 max-w-[42rem] font-[430] font-season text-[32px] text-[var(--text-primary)] tracking-[-0.02em]'>
             What should we get done
             {session?.user?.name ? `, ${session.user.name.split(' ')[0]}` : ''}?
           </h1>
@@ -356,7 +356,7 @@ export function Home({ chatId }: HomeProps = {}) {
         </div>
         <div
           ref={templateRef}
-          className='-mt-[30vh] mx-auto w-full max-w-[68rem] px-[16px] pb-[32px] sm:px-[24px] lg:px-[40px]'
+          className='-mt-[30vh] mx-auto w-full max-w-[68rem] px-4 pb-8 sm:px-6 lg:px-10'
         >
           <TemplatePrompts onSelect={handleSubmit} />
         </div>
@@ -376,15 +376,15 @@ export function Home({ chatId }: HomeProps = {}) {
               if (msg.role === 'user') {
                 const hasAttachments = msg.attachments && msg.attachments.length > 0
                 return (
-                  <div key={msg.id} className='flex flex-col items-end gap-[6px] pt-3'>
+                  <div key={msg.id} className='flex flex-col items-end gap-1.5 pt-3'>
                     {hasAttachments && (
-                      <div className='flex max-w-[70%] flex-wrap justify-end gap-[6px]'>
+                      <div className='flex max-w-[70%] flex-wrap justify-end gap-1.5'>
                         {msg.attachments!.map((att) => {
                           const isImage = att.media_type.startsWith('image/')
                           return isImage && att.previewUrl ? (
                             <div
                               key={att.id}
-                              className='h-[56px] w-[56px] overflow-hidden rounded-[8px]'
+                              className='h-[56px] w-[56px] overflow-hidden rounded-lg'
                             >
                               <img
                                 src={att.previewUrl}
@@ -441,7 +441,7 @@ export function Home({ chatId }: HomeProps = {}) {
         </div>
 
         <div
-          className={`flex-shrink-0 px-[24px] pb-[16px]${isInputEntering ? ' animate-slide-in-bottom' : ''}`}
+          className={`flex-shrink-0 px-6 pb-4${isInputEntering ? ' animate-slide-in-bottom' : ''}`}
           onAnimationEnd={isInputEntering ? () => setIsInputEntering(false) : undefined}
         >
           <div className='mx-auto max-w-[42rem]'>
@@ -504,7 +504,7 @@ export function Home({ chatId }: HomeProps = {}) {
           <button
             type='button'
             onClick={expandResource}
-            className='flex h-[30px] w-[30px] items-center justify-center rounded-[8px] hover-hover:bg-[var(--surface-active)]'
+            className='flex h-[30px] w-[30px] items-center justify-center rounded-lg hover-hover:bg-[var(--surface-active)]'
             aria-label='Expand resource view'
           >
             <PanelLeft className='h-[16px] w-[16px] text-[var(--text-icon)]' />

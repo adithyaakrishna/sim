@@ -177,15 +177,15 @@ const PlanModeSection: React.FC<PlanModeSectionProps> = ({
 
   return (
     <div
-      className={cn('relative flex flex-col rounded-[4px]', SURFACE_5, className)}
+      className={cn('relative flex flex-col rounded-sm', SURFACE_5, className)}
       style={{ height: `${height}px` }}
     >
       {/* Header with build/edit/save/clear buttons */}
-      <div className='flex flex-shrink-0 items-center justify-between border-[var(--border-1)] border-b py-[6px] pr-[2px] pl-[12px]'>
-        <span className='font-[500] text-[11px] text-[var(--text-secondary)] uppercase tracking-wide'>
+      <div className='flex flex-shrink-0 items-center justify-between border-[var(--border-1)] border-b py-1.5 pr-0.5 pl-3'>
+        <span className='font-[500] text-xs text-[var(--text-secondary)] uppercase tracking-wide'>
           Workflow Plan
         </span>
-        <div className='ml-auto flex items-center gap-[4px]'>
+        <div className='ml-auto flex items-center gap-1'>
           {isEditing ? (
             <>
               <Button
@@ -211,7 +211,7 @@ const PlanModeSection: React.FC<PlanModeSectionProps> = ({
                 <Button
                   variant='default'
                   onClick={onBuildPlan}
-                  className='h-[22px] px-[10px] text-[11px]'
+                  className='h-[22px] px-2.5 text-xs'
                   title='Build workflow from plan'
                 >
                   Build Plan
@@ -243,13 +243,13 @@ const PlanModeSection: React.FC<PlanModeSectionProps> = ({
       </div>
 
       {/* Scrollable content area */}
-      <div className='flex-1 overflow-y-auto overflow-x-hidden px-[12px] py-[10px]'>
+      <div className='flex-1 overflow-y-auto overflow-x-hidden px-3 py-2.5'>
         {isEditing ? (
           <Textarea
             ref={textareaRef}
             value={editedContent}
             onChange={(e) => setEditedContent(e.target.value)}
-            className='h-full min-h-full w-full resize-none border-0 bg-transparent p-0 font-[470] font-season text-[13px] text-[var(--text-primary)] leading-[1.4rem] outline-none ring-0 focus-visible:ring-0 focus-visible:ring-offset-0'
+            className='h-full min-h-full w-full resize-none border-0 bg-transparent p-0 font-[470] font-season text-small text-[var(--text-primary)] leading-[1.4rem] outline-none ring-0 focus-visible:ring-0 focus-visible:ring-offset-0'
             placeholder='Enter your workflow plan...'
           />
         ) : (

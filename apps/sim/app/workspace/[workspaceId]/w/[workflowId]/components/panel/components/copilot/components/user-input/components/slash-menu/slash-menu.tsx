@@ -87,7 +87,7 @@ function SlashMenuContent({
   }, [onFolderNavChange, isInFolder, openFolder, closeFolder, setSubmenuActiveIndex])
 
   return (
-    <PopoverScrollArea ref={menuListRef} className='space-y-[2px]'>
+    <PopoverScrollArea ref={menuListRef} className='space-y-0.5'>
       {isInFolder ? (
         <>
           {WEB_COMMANDS.map((cmd, index) => (

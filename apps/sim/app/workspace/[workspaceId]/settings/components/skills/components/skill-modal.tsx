@@ -129,9 +129,9 @@ export function SkillModal({
       <ModalContent size='lg'>
         <ModalHeader>{initialValues ? 'Edit Skill' : 'Create Skill'}</ModalHeader>
         <ModalBody>
-          <div className='flex flex-col gap-[18px]'>
-            <div className='flex flex-col gap-[4px]'>
-              <Label htmlFor='skill-name' className='font-medium text-[14px]'>
+          <div className='flex flex-col gap-4.5'>
+            <div className='flex flex-col gap-1'>
+              <Label htmlFor='skill-name' className='font-medium text-sm'>
                 Name
               </Label>
               <Input
@@ -145,16 +145,16 @@ export function SkillModal({
                 }}
               />
               {errors.name ? (
-                <p className='text-[13px] text-[var(--text-error)]'>{errors.name}</p>
+                <p className='text-small text-[var(--text-error)]'>{errors.name}</p>
               ) : (
-                <span className='text-[11px] text-[var(--text-muted)]'>
+                <span className='text-xs text-[var(--text-muted)]'>
                   Lowercase letters, numbers, and hyphens (e.g. my-skill)
                 </span>
               )}
             </div>
 
-            <div className='flex flex-col gap-[4px]'>
-              <Label htmlFor='skill-description' className='font-medium text-[14px]'>
+            <div className='flex flex-col gap-1'>
+              <Label htmlFor='skill-description' className='font-medium text-sm'>
                 Description
               </Label>
               <Input
@@ -169,12 +169,12 @@ export function SkillModal({
                 maxLength={1024}
               />
               {errors.description && (
-                <p className='text-[13px] text-[var(--text-error)]'>{errors.description}</p>
+                <p className='text-small text-[var(--text-error)]'>{errors.description}</p>
               )}
             </div>
 
-            <div className='flex flex-col gap-[4px]'>
-              <Label htmlFor='skill-content' className='font-medium text-[14px]'>
+            <div className='flex flex-col gap-1'>
+              <Label htmlFor='skill-content' className='font-medium text-sm'>
                 Content
               </Label>
               <Textarea
@@ -186,15 +186,15 @@ export function SkillModal({
                   if (errors.content || errors.general)
                     setErrors((prev) => ({ ...prev, content: undefined, general: undefined }))
                 }}
-                className='min-h-[200px] resize-y font-mono text-[14px]'
+                className='min-h-[200px] resize-y font-mono text-sm'
               />
               {errors.content && (
-                <p className='text-[13px] text-[var(--text-error)]'>{errors.content}</p>
+                <p className='text-small text-[var(--text-error)]'>{errors.content}</p>
               )}
             </div>
 
             {errors.general && (
-              <p className='text-[13px] text-[var(--text-error)]'>{errors.general}</p>
+              <p className='text-small text-[var(--text-error)]'>{errors.general}</p>
             )}
           </div>
         </ModalBody>

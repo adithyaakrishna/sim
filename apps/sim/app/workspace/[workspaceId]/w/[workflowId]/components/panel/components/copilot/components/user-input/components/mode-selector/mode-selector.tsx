@@ -96,7 +96,7 @@ export function ModeSelector({ mode, onModeChange, isNearTop, disabled }: ModeSe
           <Badge
             variant='outline'
             className={cn(
-              'cursor-pointer rounded-[6px]',
+              'cursor-pointer rounded-md',
               (disabled || !onModeChange) && 'cursor-not-allowed opacity-50'
             )}
             aria-expanded={open}
@@ -123,7 +123,7 @@ export function ModeSelector({ mode, onModeChange, isNearTop, disabled }: ModeSe
         onOpenAutoFocus={(e) => e.preventDefault()}
         onCloseAutoFocus={(e) => e.preventDefault()}
       >
-        <PopoverScrollArea className='space-y-[2px]'>
+        <PopoverScrollArea className='space-y-0.5'>
           <PopoverItem active={mode === 'ask'} onClick={() => handleSelect('ask')}>
             <MessageSquare className='h-3.5 w-3.5' />
             <span>Ask</span>

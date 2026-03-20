@@ -46,7 +46,7 @@ export function BottomControls({
   return (
     <div className='flex items-center justify-between gap-2'>
       {/* Left side: Mode Selector + Model Selector */}
-      <div className='flex min-w-0 flex-1 items-center gap-[8px]'>
+      <div className='flex min-w-0 flex-1 items-center gap-2'>
         {!hideModeSelector && (
           <ModeSelector
             mode={mode}
@@ -64,12 +64,12 @@ export function BottomControls({
       </div>
 
       {/* Right side: Attach Button + Send Button */}
-      <div className='flex flex-shrink-0 items-center gap-[10px]'>
+      <div className='flex flex-shrink-0 items-center gap-2.5'>
         <Badge
           onClick={onFileSelect}
           title='Attach file'
           className={cn(
-            'cursor-pointer rounded-[6px] border-0 bg-transparent p-[0px] dark:bg-transparent',
+            'cursor-pointer rounded-md border-0 bg-transparent p-[0px] dark:bg-transparent',
             disabled && 'cursor-not-allowed opacity-50'
           )}
         >
@@ -83,8 +83,8 @@ export function BottomControls({
             className={cn(
               'h-[20px] w-[20px] rounded-full border-0 p-0 transition-colors',
               !isAborting
-                ? 'bg-[var(--c-383838)] hover-hover:bg-[var(--c-575757)] dark:bg-[var(--c-E0E0E0)] dark:hover-hover:bg-[var(--c-CFCFCF)]'
-                : 'bg-[var(--c-383838)] dark:bg-[var(--c-E0E0E0)]'
+                ? 'bg-[var(--divider)] hover-hover:bg-[var(--text-secondary)] dark:bg-[var(--border-1)] dark:hover-hover:bg-[var(--text-body)]'
+                : 'bg-[var(--divider)] dark:bg-[var(--border-1)]'
             )}
             title='Stop generation'
           >
@@ -107,8 +107,8 @@ export function BottomControls({
             className={cn(
               'h-[22px] w-[22px] rounded-full border-0 p-0 transition-colors',
               canSubmit
-                ? 'bg-[var(--c-383838)] hover-hover:bg-[var(--c-575757)] dark:bg-[var(--c-E0E0E0)] dark:hover-hover:bg-[var(--c-CFCFCF)]'
-                : 'bg-[var(--c-808080)] dark:bg-[var(--c-808080)]'
+                ? 'bg-[var(--divider)] hover-hover:bg-[var(--text-secondary)] dark:bg-[var(--border-1)] dark:hover-hover:bg-[var(--text-body)]'
+                : 'bg-[var(--text-subtle)] dark:bg-[var(--text-subtle)]'
             )}
           >
             {isLoading ? (

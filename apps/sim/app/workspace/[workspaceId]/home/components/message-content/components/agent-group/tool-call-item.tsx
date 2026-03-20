@@ -86,11 +86,11 @@ function FlatToolLine({
   status: ToolCallStatus
 }) {
   return (
-    <div className='flex items-center gap-[8px] pl-[24px]'>
+    <div className='flex items-center gap-2 pl-6'>
       <div className='flex h-[16px] w-[16px] flex-shrink-0 items-center justify-center'>
         <StatusIcon status={status} toolName={toolName} />
       </div>
-      <span className='font-base text-[13px] text-[var(--text-secondary)]'>{displayTitle}</span>
+      <span className='font-base text-small text-[var(--text-secondary)]'>{displayTitle}</span>
     </div>
   )
 }
@@ -140,17 +140,17 @@ function ToolCallCard({
   const ResolvedIcon = Icon ?? CircleCheck
 
   return (
-    <div className='animate-stream-fade-in pl-[24px]'>
-      <div className='overflow-hidden rounded-[8px] border border-[var(--border)] bg-[var(--surface-3)]'>
-        <div className='flex items-center gap-[8px] px-[10px] py-[6px]'>
+    <div className='animate-stream-fade-in pl-6'>
+      <div className='overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface-3)]'>
+        <div className='flex items-center gap-2 px-2.5 py-1.5'>
           <div className='flex h-[16px] w-[16px] flex-shrink-0 items-center justify-center'>
             <ResolvedIcon className='h-[15px] w-[15px] text-[var(--text-tertiary)]' />
           </div>
-          <span className='font-base text-[13px] text-[var(--text-secondary)]'>{displayTitle}</span>
+          <span className='font-base text-small text-[var(--text-secondary)]'>{displayTitle}</span>
         </div>
         {body && (
-          <div className='border-[var(--border)] border-t px-[10px] py-[6px]'>
-            <pre className='max-h-[200px] overflow-y-auto whitespace-pre-wrap break-all font-mono text-[12px] text-[var(--text-body)] leading-[1.5]'>
+          <div className='border-[var(--border)] border-t px-2.5 py-1.5'>
+            <pre className='max-h-[200px] overflow-y-auto whitespace-pre-wrap break-all font-mono text-caption text-[var(--text-body)] leading-[1.5]'>
               {body}
             </pre>
           </div>

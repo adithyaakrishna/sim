@@ -97,7 +97,7 @@ export const MothershipView = memo(
                 previewMode={isActivePreviewable ? previewMode : undefined}
               />
             ) : (
-              <div className='flex h-full items-center justify-center text-[14px] text-[var(--text-muted)]'>
+              <div className='flex h-full items-center justify-center text-sm text-[var(--text-muted)]'>
                 Click "+" above to add a resource
               </div>
             )}

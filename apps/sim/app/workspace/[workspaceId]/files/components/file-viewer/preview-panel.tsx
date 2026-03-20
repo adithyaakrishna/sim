@@ -51,12 +51,12 @@ export function PreviewPanel({ content, mimeType, filename }: PreviewPanelProps)
 
 const MarkdownPreview = memo(function MarkdownPreview({ content }: { content: string }) {
   return (
-    <div className='h-full overflow-auto p-[24px]'>
+    <div className='h-full overflow-auto p-6'>
       <ReactMarkdown
         remarkPlugins={[remarkGfm, remarkBreaks]}
         components={{
           p: ({ children }: any) => (
-            <p className='mb-3 break-words text-[14px] text-[var(--text-primary)] leading-[1.6] last:mb-0'>
+            <p className='mb-3 break-words text-sm text-[var(--text-primary)] leading-[1.6] last:mb-0'>
               {children}
             </p>
           ),
@@ -71,22 +71,22 @@ const MarkdownPreview = memo(function MarkdownPreview({ content }: { content: st
             </h2>
           ),
           h3: ({ children }: any) => (
-            <h3 className='mt-4 mb-2 break-words font-semibold text-[16px] text-[var(--text-primary)] first:mt-0'>
+            <h3 className='mt-4 mb-2 break-words font-semibold text-md text-[var(--text-primary)] first:mt-0'>
               {children}
             </h3>
           ),
           h4: ({ children }: any) => (
-            <h4 className='mt-3 mb-2 break-words font-semibold text-[14px] text-[var(--text-primary)] first:mt-0'>
+            <h4 className='mt-3 mb-2 break-words font-semibold text-sm text-[var(--text-primary)] first:mt-0'>
               {children}
             </h4>
           ),
           ul: ({ children }: any) => (
-            <ul className='mt-1 mb-3 list-disc space-y-1 break-words pl-6 text-[14px] text-[var(--text-primary)]'>
+            <ul className='mt-1 mb-3 list-disc space-y-1 break-words pl-6 text-sm text-[var(--text-primary)]'>
               {children}
             </ul>
           ),
           ol: ({ children }: any) => (
-            <ol className='mt-1 mb-3 list-decimal space-y-1 break-words pl-6 text-[14px] text-[var(--text-primary)]'>
+            <ol className='mt-1 mb-3 list-decimal space-y-1 break-words pl-6 text-sm text-[var(--text-primary)]'>
               {children}
             </ol>
           ),
@@ -98,7 +98,7 @@ const MarkdownPreview = memo(function MarkdownPreview({ content }: { content: st
               return (
                 <code
                   {...props}
-                  className='whitespace-normal rounded bg-[var(--surface-5)] px-1.5 py-0.5 font-mono text-[#F59E0B] text-[13px]'
+                  className='whitespace-normal rounded bg-[var(--surface-5)] px-1.5 py-0.5 font-mono text-[var(--amber)] text-small'
                 >
                   {children}
                 </code>
@@ -108,7 +108,7 @@ const MarkdownPreview = memo(function MarkdownPreview({ content }: { content: st
             return (
               <code
                 {...props}
-                className='my-3 block whitespace-pre-wrap break-words rounded-md bg-[var(--surface-5)] p-4 font-mono text-[13px] text-[var(--text-primary)]'
+                className='my-3 block whitespace-pre-wrap break-words rounded-md bg-[var(--surface-5)] p-4 font-mono text-small text-[var(--text-primary)]'
               >
                 {children}
               </code>
@@ -144,7 +144,7 @@ const MarkdownPreview = memo(function MarkdownPreview({ content }: { content: st
           ),
           table: ({ children }: any) => (
             <div className='my-4 max-w-full overflow-x-auto rounded-md border border-[var(--border)]'>
-              <table className='w-full border-collapse text-[13px]'>{children}</table>
+              <table className='w-full border-collapse text-small'>{children}</table>
             </div>
           ),
           thead: ({ children }: any) => <thead className='bg-[var(--surface-2)]'>{children}</thead>,
@@ -153,7 +153,7 @@ const MarkdownPreview = memo(function MarkdownPreview({ content }: { content: st
             <tr className='border-[var(--border)] border-b last:border-b-0'>{children}</tr>
           ),
           th: ({ children }: any) => (
-            <th className='px-3 py-2 text-left font-semibold text-[12px] text-[var(--text-primary)]'>
+            <th className='px-3 py-2 text-left font-semibold text-caption text-[var(--text-primary)]'>
               {children}
             </th>
           ),
@@ -205,22 +205,22 @@ function CsvPreview({ content }: { content: string }) {
 
   if (headers.length === 0) {
     return (
-      <div className='flex h-full items-center justify-center p-[24px]'>
-        <p className='text-[13px] text-[var(--text-muted)]'>No data to display</p>
+      <div className='flex h-full items-center justify-center p-6'>
+        <p className='text-small text-[var(--text-muted)]'>No data to display</p>
       </div>
     )
   }
 
   return (
-    <div className='h-full overflow-auto p-[24px]'>
+    <div className='h-full overflow-auto p-6'>
       <div className='overflow-x-auto rounded-md border border-[var(--border)]'>
-        <table className='w-full border-collapse text-[13px]'>
+        <table className='w-full border-collapse text-small'>
           <thead className='bg-[var(--surface-2)]'>
             <tr>
               {headers.map((header, i) => (
                 <th
                   key={i}
-                  className='whitespace-nowrap px-3 py-2 text-left font-semibold text-[12px] text-[var(--text-primary)]'
+                  className='whitespace-nowrap px-3 py-2 text-left font-semibold text-caption text-[var(--text-primary)]'
                 >
                   {header}
                 </th>

@@ -5,7 +5,7 @@ import Navbar from '@/app/(home)/components/navbar/navbar'
 export default function ChangelogLayout({ children }: { children: React.ReactNode }) {
   return (
     <div
-      className={`${martianMono.variable} relative min-h-screen bg-[#1C1C1C] font-[430] font-season text-[#ECECEC]`}
+      className={`${martianMono.variable} relative min-h-screen bg-[var(--text-primary)] font-[430] font-season text-[var(--landing-text)]`}
     >
       <header>
         <Navbar />

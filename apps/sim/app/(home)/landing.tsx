@@ -33,7 +33,7 @@ import {
  */
 export default async function Landing() {
   return (
-    <div className={`${season.variable} ${martianMono.variable} min-h-screen bg-[#1C1C1C]`}>
+    <div className={`${season.variable} ${martianMono.variable} min-h-screen bg-[var(--text-primary)]`}>
       <StructuredData />
       <header>
         <Navbar />

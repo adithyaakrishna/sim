@@ -31,21 +31,21 @@ export function QueuedMessages() {
   if (messageQueue.length === 0) return null
 
   return (
-    <div className='mx-[14px] overflow-hidden rounded-t-[4px] border border-[var(--border)] border-b-0 bg-[var(--bg-secondary)]'>
+    <div className='mx-3.5 overflow-hidden rounded-t-[4px] border border-[var(--border)] border-b-0 bg-[var(--bg-secondary)]'>
       {/* Header */}
       <button
         type='button'
         onClick={() => setIsExpanded(!isExpanded)}
-        className='flex w-full items-center justify-between px-[10px] py-[6px] transition-colors hover-hover:bg-[var(--surface-3)]'
+        className='flex w-full items-center justify-between px-2.5 py-1.5 transition-colors hover-hover:bg-[var(--surface-3)]'
       >
-        <div className='flex items-center gap-[6px]'>
+        <div className='flex items-center gap-1.5'>
           {isExpanded ? (
             <ChevronDown className='h-[14px] w-[14px] text-[var(--text-tertiary)]' />
           ) : (
             <ChevronRight className='h-[14px] w-[14px] text-[var(--text-tertiary)]' />
           )}
-          <span className='font-medium text-[12px] text-[var(--text-primary)]'>Queued</span>
-          <span className='flex-shrink-0 font-medium text-[12px] text-[var(--text-tertiary)]'>
+          <span className='font-medium text-caption text-[var(--text-primary)]'>Queued</span>
+          <span className='flex-shrink-0 font-medium text-caption text-[var(--text-tertiary)]'>
             {messageQueue.length}
           </span>
         </div>
@@ -57,7 +57,7 @@ export function QueuedMessages() {
           {messageQueue.map((msg) => (
             <div
               key={msg.id}
-              className='group flex items-center gap-[8px] border-[var(--border)] border-t px-[10px] py-[6px] hover-hover:bg-[var(--surface-3)]'
+              className='group flex items-center gap-2 border-[var(--border)] border-t px-2.5 py-1.5 hover-hover:bg-[var(--surface-3)]'
             >
               {/* Radio indicator */}
               <div className='flex h-[14px] w-[14px] shrink-0 items-center justify-center'>
@@ -66,11 +66,11 @@ export function QueuedMessages() {
 
               {/* Message content */}
               <div className='min-w-0 flex-1'>
-                <p className='truncate text-[13px] text-[var(--text-primary)]'>{msg.content}</p>
+                <p className='truncate text-small text-[var(--text-primary)]'>{msg.content}</p>
               </div>
 
               {/* Actions - always visible */}
-              <div className='flex shrink-0 items-center gap-[4px]'>
+              <div className='flex shrink-0 items-center gap-1'>
                 <button
                   type='button'
                   onClick={(e) => {

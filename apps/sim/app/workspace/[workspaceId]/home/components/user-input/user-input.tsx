@@ -85,7 +85,7 @@ import { useAnimatedPlaceholder } from '../../hooks'
 const TEXTAREA_BASE_CLASSES = cn(
   'm-0 box-border h-auto min-h-[24px] w-full resize-none',
   'overflow-y-auto overflow-x-hidden break-all border-0 bg-transparent',
-  'px-[4px] py-[4px] font-body text-[15px] leading-[24px] tracking-[-0.015em]',
+  'px-1 py-1 font-body text-base leading-[24px] tracking-[-0.015em]',
   'text-transparent caret-[var(--text-primary)] outline-none',
   'placeholder:font-[380] placeholder:text-[var(--text-subtle)]',
   'focus-visible:ring-0 focus-visible:ring-offset-0',
@@ -95,15 +95,15 @@ const TEXTAREA_BASE_CLASSES = cn(
 const OVERLAY_CLASSES = cn(
   'pointer-events-none absolute top-0 left-0 m-0 box-border h-auto w-full resize-none',
   'overflow-y-auto overflow-x-hidden whitespace-pre-wrap break-all border-0 bg-transparent',
-  'px-[4px] py-[4px] font-body text-[15px] leading-[24px] tracking-[-0.015em]',
+  'px-1 py-1 font-body text-base leading-[24px] tracking-[-0.015em]',
   'text-[var(--text-primary)] outline-none',
   '[-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden'
 )
 
 const SEND_BUTTON_BASE = 'h-[28px] w-[28px] rounded-full border-0 p-0 transition-colors'
 const SEND_BUTTON_ACTIVE =
-  'bg-[var(--c-383838)] hover-hover:bg-[var(--c-575757)] dark:bg-[var(--c-E0E0E0)] dark:hover-hover:bg-[var(--c-CFCFCF)]'
-const SEND_BUTTON_DISABLED = 'bg-[var(--c-808080)] dark:bg-[var(--c-808080)]'
+  'bg-[var(--divider)] hover-hover:bg-[var(--text-secondary)] dark:bg-[var(--border-1)] dark:hover-hover:bg-[var(--text-body)]'
+const SEND_BUTTON_DISABLED = 'bg-[var(--text-subtle)] dark:bg-[var(--text-subtle)]'
 
 const MAX_CHAT_TEXTAREA_HEIGHT = 200
 
@@ -660,7 +660,7 @@ export function UserInput({
       elements.push(
         <span
           key={`mention-${i}-${range.start}-${range.end}`}
-          className='rounded-[5px] bg-[var(--surface-5)] py-[2px]'
+          className='rounded-[5px] bg-[var(--surface-5)] py-0.5'
           style={{
             boxShadow: '-2px 0 0 var(--surface-5), 2px 0 0 var(--surface-5)',
           }}
@@ -688,7 +688,7 @@ export function UserInput({
     <div
       onClick={handleContainerClick}
       className={cn(
-        'relative z-10 mx-auto w-full max-w-[42rem] cursor-text rounded-[20px] border border-[var(--border-1)] bg-[var(--white)] px-[10px] py-[8px] dark:bg-[var(--surface-4)]',
+        'relative z-10 mx-auto w-full max-w-[42rem] cursor-text rounded-[20px] border border-[var(--border-1)] bg-[var(--white)] px-2.5 py-2 dark:bg-[var(--surface-4)]',
         isInitialView && 'shadow-sm'
       )}
       onDragEnter={files.handleDragEnter}
@@ -698,14 +698,14 @@ export function UserInput({
     >
       {/* Attached files */}
       {files.attachedFiles.length > 0 && (
-        <div className='mb-[6px] flex flex-wrap gap-[6px]'>
+        <div className='mb-1.5 flex flex-wrap gap-1.5'>
           {files.attachedFiles.map((file) => {
             const isImage = file.type.startsWith('image/')
             return (
               <Tooltip.Root key={file.id}>
                 <Tooltip.Trigger asChild>
                   <div
-                    className='group relative h-[56px] w-[56px] flex-shrink-0 cursor-pointer overflow-hidden rounded-[8px] border border-[var(--border-1)] bg-[var(--surface-5)] hover-hover:bg-[var(--surface-4)]'
+                    className='group relative h-[56px] w-[56px] flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border border-[var(--border-1)] bg-[var(--surface-5)] hover-hover:bg-[var(--surface-4)]'
                     onClick={() => files.handleFileClick(file)}
                   >
                     {isImage && file.previewUrl ? (
@@ -715,12 +715,12 @@ export function UserInput({
                         className='h-full w-full object-cover'
                       />
                     ) : (
-                      <div className='flex h-full w-full flex-col items-center justify-center gap-[2px] text-[var(--text-icon)]'>
+                      <div className='flex h-full w-full flex-col items-center justify-center gap-0.5 text-[var(--text-icon)]'>
                         {(() => {
                           const Icon = getDocumentIcon(file.type, file.name)
                           return <Icon className='h-[18px] w-[18px]' />
                         })()}
-                        <span className='max-w-[48px] truncate px-[2px] text-[9px] text-[var(--text-muted)]'>
+                        <span className='max-w-[48px] truncate px-0.5 text-[9px] text-[var(--text-muted)]'>
                           {file.name.split('.').pop()}
                         </span>
                       </div>
@@ -737,7 +737,7 @@ export function UserInput({
                           e.stopPropagation()
                           files.removeFile(file.id)
                         }}
-                        className='absolute top-[2px] right-[2px] flex h-[16px] w-[16px] items-center justify-center rounded-full bg-black/60 opacity-0 group-hover:opacity-100'
+                        className='absolute top-0.5 right-[2px] flex h-[16px] w-[16px] items-center justify-center rounded-full bg-black/60 opacity-0 group-hover:opacity-100'
                       >
                         <X className='h-[10px] w-[10px] text-white' />
                       </button>
@@ -785,7 +785,7 @@ export function UserInput({
       </div>
 
       <div className='flex items-center justify-between'>
-        <div className='flex items-center gap-[6px]'>
+        <div className='flex items-center gap-1.5'>
           <DropdownMenu
             open={plusMenuOpen}
             onOpenChange={(open) => {
@@ -800,7 +800,7 @@ export function UserInput({
             <DropdownMenuTrigger asChild>
               <button
                 type='button'
-                className='flex h-[28px] w-[28px] cursor-pointer items-center justify-center rounded-full border border-[#F0F0F0] transition-colors hover-hover:bg-[#F7F7F7] dark:border-[#3d3d3d] dark:hover-hover:bg-[#303030]'
+                className='flex h-[28px] w-[28px] cursor-pointer items-center justify-center rounded-full border border-[var(--surface-4)] transition-colors hover-hover:bg-[var(--surface-3)] dark:border-[var(--border-1)] dark:hover-hover:bg-[var(--surface-4)]'
                 title='Add attachments or resources'
               >
                 <Plus className='h-[16px] w-[16px] text-[var(--text-icon)]' />
@@ -855,14 +855,14 @@ export function UserInput({
                           }}
                         >
                           {config.renderDropdownItem({ item })}
-                          <span className='ml-auto pl-[8px] text-[11px] text-[var(--text-tertiary)]'>
+                          <span className='ml-auto pl-2 text-xs text-[var(--text-tertiary)]'>
                             {config.label}
                           </span>
                         </DropdownMenuItem>
                       )
                     })
                   ) : (
-                    <div className='px-[8px] py-[5px] text-center font-medium text-[12px] text-[var(--text-tertiary)]'>
+                    <div className='px-2 py-[5px] text-center font-medium text-caption text-[var(--text-tertiary)]'>
                       No results
                     </div>
                   )
@@ -932,7 +932,7 @@ export function UserInput({
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-        <div className='flex items-center gap-[6px]'>
+        <div className='flex items-center gap-1.5'>
           <button
             type='button'
             onClick={toggleListening}
@@ -940,7 +940,7 @@ export function UserInput({
               'flex h-[28px] w-[28px] items-center justify-center rounded-full transition-colors',
               isListening
                 ? 'bg-red-500 text-white hover-hover:bg-red-600'
-                : 'text-[var(--text-icon)] hover-hover:bg-[#F7F7F7] dark:hover-hover:bg-[#303030]'
+                : 'text-[var(--text-icon)] hover-hover:bg-[var(--surface-3)] dark:hover-hover:bg-[var(--surface-4)]'
             )}
             title={isListening ? 'Stop listening' : 'Voice input'}
           >
@@ -989,9 +989,9 @@ export function UserInput({
 
       {files.isDragging && (
         <div className='pointer-events-none absolute inset-[6px] z-10 flex items-center justify-center rounded-[14px] border-[1.5px] border-[var(--border-1)] border-dashed bg-[var(--white)] dark:bg-[var(--surface-4)]'>
-          <div className='flex flex-col items-center gap-[8px]'>
-            <span className='font-medium text-[13px] text-[var(--text-secondary)]'>Drop files</span>
-            <div className='flex items-center gap-[8px] text-[var(--text-icon)]'>
+          <div className='flex flex-col items-center gap-2'>
+            <span className='font-medium text-small text-[var(--text-secondary)]'>Drop files</span>
+            <div className='flex items-center gap-2 text-[var(--text-icon)]'>
               {DROP_OVERLAY_ICONS.map((Icon, i) => (
                 <Icon key={i} className='h-[14px] w-[14px]' />
               ))}

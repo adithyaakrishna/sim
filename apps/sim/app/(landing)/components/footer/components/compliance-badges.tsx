@@ -4,7 +4,7 @@ import { HIPAABadgeIcon } from '@/components/icons'
 
 export default function ComplianceBadges() {
   return (
-    <div className='mt-[6px] flex items-center gap-[12px]'>
+    <div className='mt-1.5 flex items-center gap-3'>
       {/* SOC2 badge */}
       <Link href='https://trust.delve.co/sim-studio' target='_blank' rel='noopener noreferrer'>
         <Image

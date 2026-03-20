@@ -204,7 +204,7 @@ function MentionMenuContent({
   )
 
   return (
-    <PopoverScrollArea ref={menuListRef} className='space-y-[2px]'>
+    <PopoverScrollArea ref={menuListRef} className='space-y-0.5'>
       {isInFolder ? (
         <FolderContent
           folderId={currentFolder as MentionFolderId}
@@ -230,8 +230,8 @@ function MentionMenuContent({
                 <span className='flex-1 truncate'>{item.label}</span>
                 {item.category === 'logs' && (
                   <>
-                    <span className='text-[10px] text-[var(--text-tertiary)]'>·</span>
-                    <span className='whitespace-nowrap text-[10px]'>
+                    <span className='text-micro text-[var(--text-tertiary)]'>·</span>
+                    <span className='whitespace-nowrap text-micro'>
                       {formatCompactTimestamp(item.data.createdAt)}
                     </span>
                   </>

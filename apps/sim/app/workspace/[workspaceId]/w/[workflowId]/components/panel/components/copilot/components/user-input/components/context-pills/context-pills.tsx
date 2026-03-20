@@ -31,7 +31,7 @@ export function ContextPills({ contexts, onRemoveContext }: ContextPillsProps) {
         <Badge
           key={`selctx-${idx}-${ctx.label}`}
           variant='outline'
-          className='inline-flex items-center gap-1 rounded-[6px] px-2 py-[4.5px] text-xs leading-[12px]'
+          className='inline-flex items-center gap-1 rounded-md px-2 py-[4.5px] text-xs leading-[12px]'
           title={ctx.label}
         >
           <span className='max-w-[140px] truncate leading-[12px]'>{ctx.label}</span>

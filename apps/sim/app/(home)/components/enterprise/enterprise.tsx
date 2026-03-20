@@ -205,7 +205,7 @@ function AuditRow({ entry, index }: AuditRowProps) {
   const resourceLabel = RESOURCE_TYPE_LABEL[entry.resourceType]
 
   return (
-    <div className='group relative overflow-hidden border-[#2A2A2A] border-b bg-[#191919] transition-colors duration-150 last:border-b-0 hover:bg-[#212121]'>
+    <div className='group relative overflow-hidden border-[var(--surface-4)] border-b bg-[#191919] transition-colors duration-150 last:border-b-0 hover:bg-[var(--surface-1)]'>
       {/* Left accent bar — brightness encodes recency */}
       <div
         aria-hidden='true'
@@ -214,7 +214,7 @@ function AuditRow({ entry, index }: AuditRowProps) {
       />
 
       {/* Row content */}
-      <div className='flex min-w-0 items-center gap-3 py-[10px] pr-4 pl-5'>
+      <div className='flex min-w-0 items-center gap-3 py-2.5 pr-4 pl-5'>
         {/* Actor avatar */}
         <div
           className='flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-full'
@@ -226,22 +226,22 @@ function AuditRow({ entry, index }: AuditRowProps) {
         </div>
 
         {/* Time */}
-        <span className='w-[56px] shrink-0 font-[430] font-season text-[#F6F6F6]/30 text-[11px] leading-none tracking-[0.02em]'>
+        <span className='w-[56px] shrink-0 font-[430] font-season text-[var(--text-primary)]/30 text-xs leading-none tracking-[0.02em]'>
           {timeAgo}
         </span>
 
         {/* Description — description hidden on mobile to avoid truncation */}
-        <span className='min-w-0 truncate font-[430] font-season text-[12px] leading-none tracking-[0.02em]'>
-          <span className='text-[#F6F6F6]/80'>{entry.actor}</span>
+        <span className='min-w-0 truncate font-[430] font-season text-caption leading-none tracking-[0.02em]'>
+          <span className='text-[var(--text-primary)]/80'>{entry.actor}</span>
           <span className='hidden sm:inline'>
-            <span className='text-[#F6F6F6]/40'> · </span>
-            <span className='text-[#F6F6F6]/55'>{entry.description}</span>
+            <span className='text-[var(--text-primary)]/40'> · </span>
+            <span className='text-[var(--text-primary)]/55'>{entry.description}</span>
           </span>
         </span>
 
         {/* Resource type label — formatted name, neutral so it doesn't compete with actor colors */}
         {resourceLabel && (
-          <span className='ml-auto shrink-0 rounded border border-[#2A2A2A] px-[7px] py-[3px] font-[430] font-season text-[#F6F6F6]/25 text-[10px] leading-none tracking-[0.04em]'>
+          <span className='ml-auto shrink-0 rounded border border-[var(--surface-4)] px-[7px] py-[3px] font-[430] font-season text-[var(--text-primary)]/25 text-micro leading-none tracking-[0.04em]'>
             {resourceLabel}
           </span>
         )}
@@ -285,9 +285,9 @@ function AuditLogPreview() {
   }, [])
 
   return (
-    <div className='mx-6 mt-6 overflow-hidden rounded-[8px] border border-[#2A2A2A] md:mx-8 md:mt-8'>
+    <div className='mx-6 mt-6 overflow-hidden rounded-lg border border-[var(--surface-4)] md:mx-8 md:mt-8'>
       {/* Header */}
-      <div className='flex items-center justify-between border-[#2A2A2A] border-b bg-[#161616] px-4 py-[10px]'>
+      <div className='flex items-center justify-between border-[var(--surface-4)] border-b bg-[#161616] px-4 py-2.5'>
         <div className='flex items-center gap-2'>
           {/* Pulsing live indicator */}
           <span className='relative flex h-[8px] w-[8px]'>
@@ -300,15 +300,15 @@ function AuditLogPreview() {
               style={{ backgroundColor: '#33C482' }}
             />
           </span>
-          <span className='font-[430] font-season text-[#F6F6F6]/40 text-[11px] uppercase tracking-[0.08em]'>
+          <span className='font-[430] font-season text-[var(--text-primary)]/40 text-xs uppercase tracking-[0.08em]'>
             Audit Log
           </span>
         </div>
         <div className='flex items-center gap-2'>
-          <span className='rounded border border-[#2A2A2A] px-[8px] py-[3px] font-[430] font-season text-[#F6F6F6]/20 text-[11px] tracking-[0.02em]'>
+          <span className='rounded border border-[var(--surface-4)] px-2 py-[3px] font-[430] font-season text-[var(--text-primary)]/20 text-xs tracking-[0.02em]'>
             Export
           </span>
-          <span className='rounded border border-[#2A2A2A] px-[8px] py-[3px] font-[430] font-season text-[#F6F6F6]/20 text-[11px] tracking-[0.02em]'>
+          <span className='rounded border border-[var(--surface-4)] px-2 py-[3px] font-[430] font-season text-[var(--text-primary)]/20 text-xs tracking-[0.02em]'>
             Filter
           </span>
         </div>
@@ -346,13 +346,13 @@ function AuditLogPreview() {
 
 function TrustStrip() {
   return (
-    <div className='mx-6 mt-4 grid grid-cols-1 overflow-hidden rounded-[8px] border border-[#2A2A2A] sm:grid-cols-3 md:mx-8'>
+    <div className='mx-6 mt-4 grid grid-cols-1 overflow-hidden rounded-lg border border-[var(--surface-4)] sm:grid-cols-3 md:mx-8'>
       {/* SOC 2 + HIPAA combined */}
       <Link
         href='https://trust.delve.co/sim-studio'
         target='_blank'
         rel='noopener noreferrer'
-        className='group flex items-center gap-3 border-[#2A2A2A] border-b px-4 py-[14px] transition-colors hover:bg-[#212121] sm:border-r sm:border-b-0'
+        className='group flex items-center gap-3 border-[var(--surface-4)] border-b px-4 py-3.5 transition-colors hover:bg-[var(--surface-1)] sm:border-r sm:border-b-0'
       >
         <Image
           src='/footer/soc2.png'
@@ -362,10 +362,10 @@ function TrustStrip() {
           className='shrink-0 object-contain'
         />
         <div className='flex flex-col gap-[3px]'>
-          <strong className='font-[430] font-season text-[13px] text-white leading-none'>
+          <strong className='font-[430] font-season text-small text-white leading-none'>
             SOC 2 & HIPAA
           </strong>
-          <span className='font-[430] font-season text-[#F6F6F6]/30 text-[11px] leading-none tracking-[0.02em] transition-colors group-hover:text-[#F6F6F6]/55'>
+          <span className='font-[430] font-season text-[var(--text-primary)]/30 text-xs leading-none tracking-[0.02em] transition-colors group-hover:text-[var(--text-primary)]/55'>
             Type II · PHI protected →
           </span>
         </div>
@@ -376,31 +376,31 @@ function TrustStrip() {
         href='https://github.com/simstudioai/sim'
         target='_blank'
         rel='noopener noreferrer'
-        className='group flex items-center gap-3 border-[#2A2A2A] border-b px-4 py-[14px] transition-colors hover:bg-[#212121] sm:border-r sm:border-b-0'
+        className='group flex items-center gap-3 border-[var(--surface-4)] border-b px-4 py-3.5 transition-colors hover:bg-[var(--surface-1)] sm:border-r sm:border-b-0'
       >
         <div className='flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-full bg-[#FFCC02]/10'>
           <GithubIcon width={11} height={11} className='text-[#FFCC02]/75' />
         </div>
         <div className='flex flex-col gap-[3px]'>
-          <strong className='font-[430] font-season text-[13px] text-white leading-none'>
+          <strong className='font-[430] font-season text-small text-white leading-none'>
             Open Source
           </strong>
-          <span className='font-[430] font-season text-[#F6F6F6]/30 text-[11px] leading-none tracking-[0.02em] transition-colors group-hover:text-[#F6F6F6]/55'>
+          <span className='font-[430] font-season text-[var(--text-primary)]/30 text-xs leading-none tracking-[0.02em] transition-colors group-hover:text-[var(--text-primary)]/55'>
             View on GitHub →
           </span>
         </div>
       </Link>
 
       {/* SSO */}
-      <div className='flex items-center gap-3 px-4 py-[14px]'>
+      <div className='flex items-center gap-3 px-4 py-3.5'>
         <div className='flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-full bg-[#2ABBF8]/10'>
           <Lock className='h-[14px] w-[14px] text-[#2ABBF8]/75' />
         </div>
         <div className='flex flex-col gap-[3px]'>
-          <strong className='font-[430] font-season text-[13px] text-white leading-none'>
+          <strong className='font-[430] font-season text-small text-white leading-none'>
             SSO & SCIM
           </strong>
-          <span className='font-[430] font-season text-[#F6F6F6]/30 text-[11px] leading-none tracking-[0.02em]'>
+          <span className='font-[430] font-season text-[var(--text-primary)]/30 text-xs leading-none tracking-[0.02em]'>
             Okta, Azure AD, Google
           </span>
         </div>
@@ -411,9 +411,9 @@ function TrustStrip() {
 
 export default function Enterprise() {
   return (
-    <section id='enterprise' aria-labelledby='enterprise-heading' className='bg-[#F6F6F6]'>
-      <div className='px-4 pt-[60px] pb-[40px] sm:px-8 sm:pt-[80px] sm:pb-0 md:px-[80px] md:pt-[100px]'>
-        <div className='flex flex-col items-start gap-3 sm:gap-4 md:gap-[20px]'>
+    <section id='enterprise' aria-labelledby='enterprise-heading' className='bg-[var(--text-primary)]'>
+      <div className='px-4 pt-[60px] pb-10 sm:px-8 sm:pt-[80px] sm:pb-0 md:px-[80px] md:pt-[100px]'>
+        <div className='flex flex-col items-start gap-3 sm:gap-4 md:gap-5'>
           <Badge
             variant='blue'
             size='md'
@@ -425,7 +425,7 @@ export default function Enterprise() {
 
           <h2
             id='enterprise-heading'
-            className='max-w-[600px] font-[430] font-season text-[#1C1C1C] text-[32px] leading-[100%] tracking-[-0.02em] sm:text-[36px] md:text-[40px]'
+            className='max-w-[600px] font-[430] font-season text-[var(--text-primary)] text-[32px] leading-[100%] tracking-[-0.02em] sm:text-[36px] md:text-[40px]'
           >
             Enterprise features for
             <br />
@@ -433,12 +433,12 @@ export default function Enterprise() {
           </h2>
         </div>
 
-        <div className='mt-8 overflow-hidden rounded-[12px] bg-[#1C1C1C] sm:mt-10 md:mt-12'>
+        <div className='mt-8 overflow-hidden rounded-[12px] bg-[var(--text-primary)] sm:mt-10 md:mt-12'>
           <AuditLogPreview />
           <TrustStrip />
 
           {/* Scrolling feature ticker — keyframe loop; pause on hover. Tags use transitions for hover. */}
-          <div className='enterprise-feature-marquee relative mt-6 overflow-hidden border-[#2A2A2A] border-t'>
+          <div className='enterprise-feature-marquee relative mt-6 overflow-hidden border-[var(--surface-4)] border-t'>
             <style dangerouslySetInnerHTML={{ __html: ENTERPRISE_FEATURE_MARQUEE_STYLES }} />
             {/* Fade edges */}
             <div
@@ -457,7 +457,7 @@ export default function Enterprise() {
                 (tag, i) => (
                   <span
                     key={i}
-                    className='enterprise-feature-marquee-tag whitespace-nowrap border-[#2A2A2A] border-r px-5 py-4 font-[430] font-season text-[#F6F6F6]/40 text-[13px] leading-none tracking-[0.02em] hover:bg-white/[0.04] hover:text-[#F6F6F6]/55'
+                    className='enterprise-feature-marquee-tag whitespace-nowrap border-[var(--surface-4)] border-r px-5 py-4 font-[430] font-season text-[var(--text-primary)]/40 text-small leading-none tracking-[0.02em] hover:bg-white/[0.04] hover:text-[var(--text-primary)]/55'
                   >
                     {tag}
                   </span>
@@ -466,13 +466,13 @@ export default function Enterprise() {
             </div>
           </div>
 
-          <div className='flex items-center justify-between border-[#2A2A2A] border-t px-6 py-5 md:px-8 md:py-6'>
-            <p className='font-[430] font-season text-[#F6F6F6]/40 text-[15px] leading-[150%] tracking-[0.02em]'>
+          <div className='flex items-center justify-between border-[var(--surface-4)] border-t px-6 py-5 md:px-8 md:py-6'>
+            <p className='font-[430] font-season text-[var(--text-primary)]/40 text-base leading-[150%] tracking-[0.02em]'>
               Ready for growth?
             </p>
             <Link
               href='/contact'
-              className='group/cta inline-flex h-[32px] items-center gap-[6px] rounded-[5px] border border-white bg-white px-[10px] font-[430] font-season text-[14px] text-black transition-colors hover:border-[#E0E0E0] hover:bg-[#E0E0E0]'
+              className='group/cta inline-flex h-[32px] items-center gap-1.5 rounded-[5px] border border-white bg-white px-2.5 font-[430] font-season text-sm text-black transition-colors hover:border-[var(--border-1)] hover:bg-[var(--border-1)]'
             >
               Book a demo
               <span className='relative h-[10px] w-[10px] shrink-0'>

@@ -10,7 +10,7 @@ import {
 } from '@/app/workspace/[workspaceId]/w/[workflowId]/components/panel/components/copilot/components/user-input/constants'
 
 const ICON_CONTAINER =
-  'relative flex h-[16px] w-[16px] flex-shrink-0 items-center justify-center overflow-hidden rounded-[4px]'
+  'relative flex h-[16px] w-[16px] flex-shrink-0 items-center justify-center overflow-hidden rounded-sm'
 
 export function BlockIcon({
   bgColor,
@@ -70,16 +70,16 @@ export function renderItemIcon(folderId: MentionFolderId, item: any): ReactNode 
 function renderItemSuffix(folderId: MentionFolderId, item: any): ReactNode {
   switch (folderId) {
     case 'templates':
-      return <span className='text-[10px] text-[var(--text-muted)]'>{item.stars}</span>
+      return <span className='text-micro text-[var(--text-muted)]'>{item.stars}</span>
     case 'logs':
       return (
         <>
-          <span className='text-[10px] text-[var(--text-tertiary)]'>·</span>
-          <span className='whitespace-nowrap text-[10px]'>
+          <span className='text-micro text-[var(--text-tertiary)]'>·</span>
+          <span className='whitespace-nowrap text-micro'>
             {formatCompactTimestamp(item.createdAt)}
           </span>
-          <span className='text-[10px] text-[var(--text-tertiary)]'>·</span>
-          <span className='text-[10px] capitalize'>{(item.trigger || 'manual').toLowerCase()}</span>
+          <span className='text-micro text-[var(--text-tertiary)]'>·</span>
+          <span className='text-micro capitalize'>{(item.trigger || 'manual').toLowerCase()}</span>
         </>
       )
     default:

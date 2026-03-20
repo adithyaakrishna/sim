@@ -50,13 +50,13 @@ const Content = React.forwardRef<
       collisionPadding={8}
       avoidCollisions={true}
       className={cn(
-        'z-[var(--z-tooltip)] rounded-[4px] bg-[#1b1b1b] px-[8px] py-[3.5px] font-base text-white text-xs shadow-sm dark:bg-[#fdfdfd] dark:text-black',
+        'z-[var(--z-tooltip)] rounded-sm bg-[var(--bg)] px-2 py-[3.5px] font-base text-white text-xs shadow-sm dark:bg-[#fdfdfd] dark:text-black',
         className
       )}
       {...props}
     >
       {props.children}
-      <TooltipPrimitive.Arrow className='fill-[#1b1b1b] dark:fill-[#fdfdfd]' />
+      <TooltipPrimitive.Arrow className='fill-[var(--bg)] dark:fill-[#fdfdfd]' />
     </TooltipPrimitive.Content>
   </TooltipPrimitive.Portal>
 ))
@@ -82,7 +82,7 @@ interface ShortcutProps {
  * ```
  */
 const Shortcut = ({ keys, className, children }: ShortcutProps) => (
-  <span className={cn('flex items-center gap-[8px]', className)}>
+  <span className={cn('flex items-center gap-2', className)}>
     {children && <span>{children}</span>}
     <span className='opacity-70'>{keys}</span>
   </span>

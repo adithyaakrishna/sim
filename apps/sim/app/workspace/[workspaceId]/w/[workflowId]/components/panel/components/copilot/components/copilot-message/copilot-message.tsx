@@ -330,17 +330,17 @@ const CopilotMessage: FC<CopilotMessageProps> = memo(
                 onClick={handleMessageClick}
                 onMouseEnter={() => setIsHoveringMessage(true)}
                 onMouseLeave={() => setIsHoveringMessage(false)}
-                className='group relative w-full cursor-pointer rounded-[4px] border border-[var(--border-1)] bg-[var(--surface-4)] px-[6px] py-[6px] transition-all duration-200 hover-hover:border-[var(--surface-7)] hover-hover:bg-[var(--surface-4)] dark:bg-[var(--surface-4)] dark:hover-hover:border-[var(--surface-7)] dark:hover-hover:bg-[var(--border-1)]'
+                className='group relative w-full cursor-pointer rounded-sm border border-[var(--border-1)] bg-[var(--surface-4)] px-1.5 py-1.5 transition-all duration-200 hover-hover:border-[var(--surface-7)] hover-hover:bg-[var(--surface-4)] dark:bg-[var(--surface-4)] dark:hover-hover:border-[var(--surface-7)] dark:hover-hover:bg-[var(--border-1)]'
               >
                 <div
                   ref={messageContentRef}
-                  className={`relative whitespace-pre-wrap break-words px-[2px] py-1 font-medium font-sans text-[var(--text-primary)] text-sm leading-[1.25rem] ${isSendingMessage && isLastUserMessage && isHoveringMessage ? 'pr-7' : ''} ${!isExpanded && needsExpansion ? 'max-h-[60px] overflow-hidden' : 'overflow-visible'}`}
+                  className={`relative whitespace-pre-wrap break-words px-0.5 py-1 font-medium font-sans text-[var(--text-primary)] text-sm leading-[1.25rem] ${isSendingMessage && isLastUserMessage && isHoveringMessage ? 'pr-7' : ''} ${!isExpanded && needsExpansion ? 'max-h-[60px] overflow-hidden' : 'overflow-visible'}`}
                 >
                   {buildMentionHighlightNodes(
                     message.content || '',
                     message.contexts || [],
                     (token, key) => (
-                      <span key={key} className='rounded-[4px] bg-[rgba(50,189,126,0.65)] py-[1px]'>
+                      <span key={key} className='rounded-sm bg-[rgba(50,189,126,0.65)] py-[1px]'>
                         {token}
                       </span>
                     )
@@ -354,13 +354,13 @@ const CopilotMessage: FC<CopilotMessageProps> = memo(
 
                 {/* Abort button when hovering and response is generating (only on last user message) */}
                 {isSendingMessage && isHoveringMessage && isLastUserMessage && (
-                  <div className='pointer-events-auto absolute right-[6px] bottom-[6px]'>
+                  <div className='pointer-events-auto absolute right-[6px] bottom-1.5'>
                     <Button
                       onClick={(e) => {
                         e.stopPropagation()
                         abortMessage()
                       }}
-                      className='h-[20px] w-[20px] rounded-full border-0 bg-[var(--c-383838)] p-0 transition-colors hover-hover:bg-[var(--c-575757)] dark:bg-[var(--c-E0E0E0)] dark:hover-hover:bg-[var(--c-CFCFCF)]'
+                      className='h-[20px] w-[20px] rounded-full border-0 bg-[var(--divider)] p-0 transition-colors hover-hover:bg-[var(--text-secondary)] dark:bg-[var(--border-1)] dark:hover-hover:bg-[var(--text-body)]'
                       title='Stop generation'
                     >
                       <svg
@@ -376,7 +376,7 @@ const CopilotMessage: FC<CopilotMessageProps> = memo(
 
                 {/* Revert button on hover (only when has checkpoints and not generating) */}
                 {!isSendingMessage && hasCheckpoints && isHoveringMessage && (
-                  <div className='pointer-events-auto absolute right-[6px] bottom-[6px]'>
+                  <div className='pointer-events-auto absolute right-[6px] bottom-1.5'>
                     <Button
                       onClick={(e) => {
                         e.stopPropagation()
@@ -418,7 +418,7 @@ const CopilotMessage: FC<CopilotMessageProps> = memo(
               <MessageActions content={message.content} requestId={message.requestId} />
             </div>
           )}
-          <div className='max-w-full space-y-[4px] px-[2px] pb-5'>
+          <div className='max-w-full space-y-1 px-0.5 pb-5'>
             {/* Content blocks in chronological order */}
             {memoizedContentBlocks || (isStreaming && <div className='min-h-0' />)}
 

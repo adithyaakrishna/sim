@@ -19,13 +19,13 @@ const LandingPreview = dynamic(
     ),
   {
     ssr: false,
-    loading: () => <div className='aspect-[1116/549] w-full rounded bg-[#1b1b1b]' />,
+    loading: () => <div className='aspect-[1116/549] w-full rounded bg-[var(--bg)]' />,
   }
 )
 
 /** Shared base classes for CTA link buttons — matches Deploy/Run button styling in the preview panel. */
 const CTA_BASE =
-  'inline-flex items-center h-[32px] rounded-[5px] border px-[10px] font-[430] font-season text-[14px]'
+  'inline-flex items-center h-[32px] rounded-[5px] border px-2.5 font-[430] font-season text-sm'
 
 export default function Hero() {
   const blockStates = useBlockCycle()
@@ -34,7 +34,7 @@ export default function Hero() {
     <section
       id='hero'
       aria-labelledby='hero-heading'
-      className='relative flex flex-col items-center overflow-hidden bg-[#1C1C1C] pt-[60px] pb-[12px] lg:pt-[100px]'
+      className='relative flex flex-col items-center overflow-hidden bg-[var(--text-primary)] pt-[60px] pb-3 lg:pt-[100px]'
     >
       <p className='sr-only'>
         Sim is the open-source platform to build AI agents and run your agentic workforce. Connect
@@ -58,30 +58,30 @@ export default function Hero() {
         <Image src='/landing/card-right.svg' alt='' fill className='object-contain' />
       </div>
 
-      <div className='relative z-10 flex flex-col items-center gap-[12px]'>
+      <div className='relative z-10 flex flex-col items-center gap-3'>
         <h1
           id='hero-heading'
           className='font-[430] font-season text-[36px] text-white leading-[100%] tracking-[-0.02em] sm:text-[48px] lg:text-[72px]'
         >
           Build AI Agents
         </h1>
-        <p className='font-[430] font-season text-[#F6F6F6]/60 text-[15px] leading-[125%] tracking-[0.02em] lg:text-[18px]'>
+        <p className='font-[430] font-season text-[var(--text-primary)]/60 text-base leading-[125%] tracking-[0.02em] lg:text-lg'>
           Sim is the AI Workspace for Agent Builders.
         </p>
 
-        <div className='mt-[12px] flex items-center gap-[8px]'>
+        <div className='mt-3 flex items-center gap-2'>
           <a
             href='https://form.typeform.com/to/jqCO12pF'
             target='_blank'
             rel='noopener noreferrer'
-            className={`${CTA_BASE} border-[#3d3d3d] text-[#ECECEC] transition-colors hover:bg-[#2A2A2A]`}
+            className={`${CTA_BASE} border-[var(--border-1)] text-[var(--landing-text)] transition-colors hover:bg-[var(--surface-4)]`}
             aria-label='Get a demo'
           >
             Get a demo
           </a>
           <Link
             href='/signup'
-            className={`${CTA_BASE} gap-[8px] border-[#FFFFFF] bg-[#FFFFFF] text-black transition-colors hover:border-[#E0E0E0] hover:bg-[#E0E0E0]`}
+            className={`${CTA_BASE} gap-2 border-[var(--white)] bg-[var(--white)] text-black transition-colors hover:border-[var(--border-1)] hover:bg-[var(--border-1)]`}
             aria-label='Get started with Sim'
           >
             Get started
@@ -118,7 +118,7 @@ export default function Hero() {
           <BlocksRightSideAnimated animState={blockStates.rightSide} />
         </div>
 
-        <div className='relative z-10 overflow-hidden rounded border border-[#2A2A2A]'>
+        <div className='relative z-10 overflow-hidden rounded border border-[var(--surface-4)]'>
           <LandingPreview />
         </div>
       </div>

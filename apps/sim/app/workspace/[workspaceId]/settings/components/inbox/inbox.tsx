@@ -31,12 +31,12 @@ export function Inbox() {
 
   if (isBillingEnabled && !isMaxPlan) {
     return (
-      <div className='flex h-full flex-col items-center justify-center gap-[16px] py-[80px]'>
+      <div className='flex h-full flex-col items-center justify-center gap-4 py-[80px]'>
         <div className='text-center'>
-          <h3 className='font-medium text-[16px] text-[var(--text-primary)]'>
+          <h3 className='font-medium text-md text-[var(--text-primary)]'>
             Sim Mailer requires a Max plan
           </h3>
-          <p className='mt-[6px] text-[14px] text-[var(--text-muted)]'>
+          <p className='mt-1.5 text-sm text-[var(--text-muted)]'>
             Upgrade to Max to receive tasks via email and let Sim work on your behalf.
           </p>
         </div>
@@ -45,14 +45,14 @@ export function Inbox() {
           onClick={() => router.push(`/workspace/${workspaceId}/settings/subscription`)}
         >
           Upgrade to Max
-          <ArrowRight className='ml-[6px] h-[14px] w-[14px]' />
+          <ArrowRight className='ml-1.5 h-[14px] w-[14px]' />
         </Button>
       </div>
     )
   }
 
   return (
-    <div className='flex h-full flex-col gap-[18px]'>
+    <div className='flex h-full flex-col gap-4.5'>
       <InboxEnableToggle />
 
       {config?.enabled && (
@@ -60,9 +60,9 @@ export function Inbox() {
           <div className='border-[var(--border)] border-t' />
           <InboxSettingsTab />
 
-          <div className='border-[var(--border)] border-t pt-[16px]'>
-            <div className='font-medium text-[14px] text-[var(--text-secondary)]'>Inbox</div>
-            <p className='mt-[2px] text-[13px] text-[var(--text-muted)]'>
+          <div className='border-[var(--border)] border-t pt-4'>
+            <div className='font-medium text-sm text-[var(--text-secondary)]'>Inbox</div>
+            <p className='mt-0.5 text-small text-[var(--text-muted)]'>
               Email tasks received by this workspace.
             </p>
           </div>

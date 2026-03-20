@@ -266,23 +266,23 @@ function PlanSteps({
   if (sortedSteps.length === 0) return null
 
   return (
-    <div className='mt-0 overflow-hidden rounded-[6px] border border-[var(--border-1)] bg-[var(--surface-1)]'>
-      <div className='flex items-center gap-[8px] border-[var(--border-1)] border-b bg-[var(--surface-2)] p-[8px]'>
-        <LayoutList className='ml-[2px] h-3 w-3 flex-shrink-0 text-[var(--text-tertiary)]' />
-        <span className='font-medium text-[12px] text-[var(--text-primary)]'>To-dos</span>
-        <span className='flex-shrink-0 font-medium text-[12px] text-[var(--text-tertiary)]'>
+    <div className='mt-0 overflow-hidden rounded-md border border-[var(--border-1)] bg-[var(--surface-1)]'>
+      <div className='flex items-center gap-2 border-[var(--border-1)] border-b bg-[var(--surface-2)] p-2'>
+        <LayoutList className='ml-0.5 h-3 w-3 flex-shrink-0 text-[var(--text-tertiary)]' />
+        <span className='font-medium text-caption text-[var(--text-primary)]'>To-dos</span>
+        <span className='flex-shrink-0 font-medium text-caption text-[var(--text-tertiary)]'>
           {sortedSteps.length}
         </span>
       </div>
-      <div className='flex flex-col gap-[6px] px-[10px] py-[6px]'>
+      <div className='flex flex-col gap-1.5 px-2.5 py-1.5'>
         {sortedSteps.map(([num, title], index) => {
           const isLastStep = index === sortedSteps.length - 1
           return (
-            <div key={num} className='flex items-baseline gap-[6px]'>
-              <span className='w-[14px] flex-shrink-0 text-right text-[12px] text-[var(--text-tertiary)]'>
+            <div key={num} className='flex items-baseline gap-1.5'>
+              <span className='w-[14px] flex-shrink-0 text-right text-caption text-[var(--text-tertiary)]'>
                 {index + 1}.
               </span>
-              <div className='min-w-0 flex-1 text-[12px] text-[var(--text-secondary)] leading-[18px] [&_code]:px-1 [&_code]:py-0.5 [&_code]:text-[11px] [&_p]:m-0 [&_p]:text-[12px] [&_p]:leading-[18px]'>
+              <div className='min-w-0 flex-1 text-caption text-[var(--text-secondary)] leading-[18px] [&_code]:px-1 [&_code]:py-0.5 [&_code]:text-xs [&_p]:m-0 [&_p]:text-caption [&_p]:leading-[18px]'>
                 {streaming && isLastStep ? (
                   <SmoothStreamingText content={title} isStreaming={true} />
                 ) : (
@@ -401,7 +401,7 @@ export function OptionsSelector({
   if (sortedOptions.length === 0) return null
 
   return (
-    <div ref={containerRef} className='flex flex-col gap-[4px] pt-[4px]'>
+    <div ref={containerRef} className='flex flex-col gap-1 pt-1'>
       {sortedOptions.map((option, index) => {
         const isHovered = index === hoveredIndex && !isLocked
         const isChosen = option.key === chosenKey
@@ -423,7 +423,7 @@ export function OptionsSelector({
               if (!isLocked && !streaming && sortedOptions.length === 1) setHoveredIndex(-1)
             }}
             className={clsx(
-              'group flex cursor-pointer items-start gap-2 rounded-[6px] p-1',
+              'group flex cursor-pointer items-start gap-2 rounded-md p-1',
               'hover-hover:bg-[var(--surface-4)]',
               disabled && !isChosen && 'cursor-not-allowed opacity-50',
               streaming && 'pointer-events-none',
@@ -433,14 +433,14 @@ export function OptionsSelector({
           >
             <Button
               variant='3d'
-              className='group-hover:-translate-y-0.5 group-[.is-hovered]:-translate-y-0.5 w-[22px] py-[2px] text-[11px] group-hover:text-[var(--text-primary)] group-hover:shadow-[0_4px_0_0_rgba(48,48,48,1)] group-[.is-hovered]:text-[var(--text-primary)] group-[.is-hovered]:shadow-[0_4px_0_0_rgba(48,48,48,1)]'
+              className='group-hover:-translate-y-0.5 group-[.is-hovered]:-translate-y-0.5 w-[22px] py-0.5 text-xs group-hover:text-[var(--text-primary)] group-hover:shadow-kbd group-[.is-hovered]:text-[var(--text-primary)] group-[.is-hovered]:shadow-kbd'
             >
               {option.key}
             </Button>
 
             <span
               className={clsx(
-                'min-w-0 flex-1 pt-0.5 font-season text-[12px] text-[var(--text-tertiary)] leading-5 group-hover:text-[var(--text-primary)] group-[.is-hovered]:text-[var(--text-primary)] [&_code]:px-1 [&_code]:py-0.5 [&_code]:text-[11px] [&_p]:m-0 [&_p]:leading-5',
+                'min-w-0 flex-1 pt-0.5 font-season text-caption text-[var(--text-tertiary)] leading-5 group-hover:text-[var(--text-primary)] group-[.is-hovered]:text-[var(--text-primary)] [&_code]:px-1 [&_code]:py-0.5 [&_code]:text-xs [&_p]:m-0 [&_p]:leading-5',
                 isRejected && 'text-[var(--text-tertiary)] line-through opacity-50'
               )}
             >
@@ -759,7 +759,7 @@ function SubAgentThinkingContent({
   const hasSpecialTags = hasPlan
 
   return (
-    <div className='space-y-[4px]'>
+    <div className='space-y-1'>
       {cleanText.trim() && (
         <ThinkingBlock
           content={cleanText}
@@ -904,7 +904,7 @@ const SubagentContentRenderer = memo(function SubagentContentRenderer({
 
   if (isStreaming || !shouldCollapse) {
     return (
-      <div className='w-full space-y-[4px]'>
+      <div className='w-full space-y-1'>
         {renderCollapsibleContent()}
         {hasPlan && planToRender && <PlanSteps steps={planToRender} streaming={isPlanStreaming} />}
       </div>
@@ -931,14 +931,14 @@ const SubagentContentRenderer = memo(function SubagentContentRenderer({
       <div
         className={clsx(
           'overflow-hidden transition-all duration-150 ease-out',
-          isExpanded ? 'mt-1.5 max-h-[5000px] space-y-[4px] opacity-100' : 'max-h-0 opacity-0'
+          isExpanded ? 'mt-1.5 max-h-[5000px] space-y-1 opacity-100' : 'max-h-0 opacity-0'
         )}
       >
         {renderCollapsibleContent()}
       </div>
 
       {hasPlan && planToRender && (
-        <div className='mt-[6px]'>
+        <div className='mt-1.5'>
           <PlanSteps steps={planToRender} />
         </div>
       )}
@@ -1154,8 +1154,8 @@ const WorkflowEditSummary = memo(function WorkflowEditSummary({
 
     const actionIcons = {
       add: { symbol: '+', color: 'text-[#22c55e]' },
-      edit: { symbol: '~', color: 'text-[#f97316]' },
-      delete: { symbol: '-', color: 'text-[#ef4444]' },
+      edit: { symbol: '~', color: 'text-[var(--orange)]' },
+      delete: { symbol: '-', color: 'text-[var(--text-error)]' },
     }
     const { symbol, color } = actionIcons[type]
 
@@ -1168,23 +1168,23 @@ const WorkflowEditSummary = memo(function WorkflowEditSummary({
         className='overflow-hidden rounded-md border border-[var(--border-1)] bg-[var(--surface-1)]'
       >
         {/* Block header - gray background like plan/table headers */}
-        <div className='flex items-center justify-between p-[8px]'>
-          <div className='flex min-w-0 flex-1 items-center gap-[8px]'>
+        <div className='flex items-center justify-between p-2'>
+          <div className='flex min-w-0 flex-1 items-center gap-2'>
             {/* Toolbar-style icon: colored square with white icon */}
             <div
-              className='flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-[4px]'
+              className='flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-sm'
               style={{ background: bgColor }}
             >
               {Icon && <Icon className='h-[12px] w-[12px] text-white' />}
             </div>
             <span
-              className={`truncate font-medium text-[14px] ${type === 'delete' ? 'text-[var(--text-tertiary)]' : 'text-[var(--text-primary)]'}`}
+              className={`truncate font-medium text-sm ${type === 'delete' ? 'text-[var(--text-tertiary)]' : 'text-[var(--text-primary)]'}`}
             >
               {change.blockName}
             </span>
           </div>
           {/* Action icon in top right */}
-          <span className={`flex-shrink-0 font-bold font-mono text-[14px] ${color}`}>{symbol}</span>
+          <span className={`flex-shrink-0 font-bold font-mono text-sm ${color}`}>{symbol}</span>
         </div>
 
         {/* Subblock details - dark background like table/plan body */}
@@ -1201,9 +1201,9 @@ const WorkflowEditSummary = memo(function WorkflowEditSummary({
                 displayValue = maskCredentialValue(rawValue)
               }
               return (
-                <div key={sb.id} className='flex items-start gap-1.5 py-0.5 text-[11px]'>
+                <div key={sb.id} className='flex items-start gap-1.5 py-0.5 text-xs'>
                   <span
-                    className={`font-medium ${type === 'edit' ? 'text-[#f97316]' : 'text-[var(--text-tertiary)]'}`}
+                    className={`font-medium ${type === 'edit' ? 'text-[var(--orange)]' : 'text-[var(--text-tertiary)]'}`}
                   >
                     {sb.title}:
                   </span>
@@ -1389,7 +1389,7 @@ function RunSkipButtons({
 
   // Standardized buttons for all interrupt tools: Allow, Always Allow, Skip
   return (
-    <div className='mt-[10px] flex gap-[6px]'>
+    <div className='mt-2.5 flex gap-1.5'>
       <Button onClick={onRun} disabled={isProcessing} variant='primary'>
         {isProcessing ? 'Allowing...' : 'Allow'}
       </Button>
@@ -1569,14 +1569,14 @@ export function ToolCall({
       const url = editedParams.url || ''
       const method = (editedParams.method || '').toUpperCase()
       return (
-        <div className='w-full overflow-hidden rounded-[4px] border border-[var(--border-1)] bg-[var(--surface-1)]'>
+        <div className='w-full overflow-hidden rounded-sm border border-[var(--border-1)] bg-[var(--surface-1)]'>
           <table className='w-full table-fixed bg-transparent'>
             <thead className='bg-transparent'>
               <tr className='border-[var(--border-1)] border-b bg-transparent'>
-                <th className='w-[26%] border-[var(--border-1)] border-r bg-transparent px-[10px] py-[5px] text-left font-medium text-[14px] text-[var(--text-tertiary)]'>
+                <th className='w-[26%] border-[var(--border-1)] border-r bg-transparent px-2.5 py-[5px] text-left font-medium text-sm text-[var(--text-tertiary)]'>
                   Method
                 </th>
-                <th className='w-[74%] bg-transparent px-[10px] py-[5px] text-left font-medium text-[14px] text-[var(--text-tertiary)]'>
+                <th className='w-[74%] bg-transparent px-2.5 py-[5px] text-left font-medium text-sm text-[var(--text-tertiary)]'>
                   Endpoint
                 </th>
               </tr>
@@ -1584,7 +1584,7 @@ export function ToolCall({
             <tbody className='bg-transparent'>
               <tr className='group relative border-[var(--border-1)] border-t bg-transparent'>
                 <td className='relative w-[26%] border-[var(--border-1)] border-r bg-transparent p-0'>
-                  <div className='px-[10px] py-[8px]'>
+                  <div className='px-2.5 py-2'>
                     <input
                       type='text'
                       value={method || 'GET'}
@@ -1594,7 +1594,7 @@ export function ToolCall({
                   </div>
                 </td>
                 <td className='relative w-[74%] bg-transparent p-0'>
-                  <div className='min-w-0 px-[10px] py-[8px]'>
+                  <div className='min-w-0 px-2.5 py-2'>
                     <input
                       type='text'
                       value={url || ''}
@@ -1631,14 +1631,14 @@ export function ToolCall({
       })
 
       return (
-        <div className='w-full overflow-hidden rounded-[4px] border border-[var(--border-1)] bg-[var(--surface-1)]'>
+        <div className='w-full overflow-hidden rounded-sm border border-[var(--border-1)] bg-[var(--surface-1)]'>
           <table className='w-full table-fixed bg-transparent'>
             <thead className='bg-transparent'>
               <tr className='border-[var(--border-1)] border-b bg-transparent'>
-                <th className='w-[36%] border-[var(--border-1)] border-r bg-transparent px-[10px] py-[5px] text-left font-medium text-[14px] text-[var(--text-tertiary)]'>
+                <th className='w-[36%] border-[var(--border-1)] border-r bg-transparent px-2.5 py-[5px] text-left font-medium text-sm text-[var(--text-tertiary)]'>
                   Name
                 </th>
-                <th className='w-[64%] bg-transparent px-[10px] py-[5px] text-left font-medium text-[14px] text-[var(--text-tertiary)]'>
+                <th className='w-[64%] bg-transparent px-2.5 py-[5px] text-left font-medium text-sm text-[var(--text-tertiary)]'>
                   Value
                 </th>
               </tr>
@@ -1646,7 +1646,7 @@ export function ToolCall({
             <tbody className='bg-transparent'>
               {normalizedEntries.length === 0 ? (
                 <tr className='border-[var(--border-1)] border-t bg-transparent'>
-                  <td colSpan={2} className='px-[10px] py-[8px] text-[var(--text-muted)] text-xs'>
+                  <td colSpan={2} className='px-2.5 py-2 text-[var(--text-muted)] text-xs'>
                     No variables provided
                   </td>
                 </tr>
@@ -1657,7 +1657,7 @@ export function ToolCall({
                     className='group relative border-[var(--border-1)] border-t bg-transparent'
                   >
                     <td className='relative w-[36%] border-[var(--border-1)] border-r bg-transparent p-0'>
-                      <div className='px-[10px] py-[8px]'>
+                      <div className='px-2.5 py-2'>
                         <input
                           type='text'
                           value={name}
@@ -1688,7 +1688,7 @@ export function ToolCall({
                       </div>
                     </td>
                     <td className='relative w-[64%] bg-transparent p-0'>
-                      <div className='min-w-0 px-[10px] py-[8px]'>
+                      <div className='min-w-0 px-2.5 py-2'>
                         <input
                           type='text'
                           value={value}
@@ -1734,15 +1734,15 @@ export function ToolCall({
     if (toolCall.name === 'set_global_workflow_variables') {
       const ops = Array.isArray(editedParams.operations) ? (editedParams.operations as any[]) : []
       return (
-        <div className='w-full overflow-hidden rounded-[4px] border border-[var(--border-1)] bg-[var(--surface-1)]'>
+        <div className='w-full overflow-hidden rounded-sm border border-[var(--border-1)] bg-[var(--surface-1)]'>
           <div className='grid grid-cols-3 gap-0 border-[var(--border-1)] border-b bg-[var(--surface-4)] py-1.5'>
-            <div className='self-start px-2 font-medium font-season text-[10px] text-[var(--text-secondary)] uppercase tracking-wide'>
+            <div className='self-start px-2 font-medium font-season text-micro text-[var(--text-secondary)] uppercase tracking-wide'>
               Name
             </div>
-            <div className='self-start px-2 font-medium font-season text-[10px] text-[var(--text-secondary)] uppercase tracking-wide'>
+            <div className='self-start px-2 font-medium font-season text-micro text-[var(--text-secondary)] uppercase tracking-wide'>
               Type
             </div>
-            <div className='self-start px-2 font-medium font-season text-[10px] text-[var(--text-secondary)] uppercase tracking-wide'>
+            <div className='self-start px-2 font-medium font-season text-micro text-[var(--text-secondary)] uppercase tracking-wide'>
               Value
             </div>
           </div>
@@ -1767,7 +1767,7 @@ export function ToolCall({
                     />
                   </div>
                   <div className='self-start px-2'>
-                    <span className='rounded border border-[var(--border-1)] px-1 py-0.5 font-[470] font-season text-[10px] text-[var(--text-primary)]'>
+                    <span className='rounded border border-[var(--border-1)] px-1 py-0.5 font-[470] font-season text-micro text-[var(--text-primary)]'>
                       {String(op.type || '')}
                     </span>
                   </div>
@@ -1864,14 +1864,14 @@ export function ToolCall({
       return (
         <div className='w-full overflow-hidden rounded-md border border-[var(--border-1)] bg-[var(--surface-1)]'>
           {/* Header */}
-          <div className='flex items-center gap-[8px] border-[var(--border-1)] border-b bg-[var(--surface-2)] p-[8px]'>
-            <span className='font-medium text-[12px] text-[var(--text-primary)]'>Edit Input</span>
-            <span className='flex-shrink-0 font-medium text-[12px] text-[var(--text-tertiary)]'>
+          <div className='flex items-center gap-2 border-[var(--border-1)] border-b bg-[var(--surface-2)] p-2'>
+            <span className='font-medium text-caption text-[var(--text-primary)]'>Edit Input</span>
+            <span className='flex-shrink-0 font-medium text-caption text-[var(--text-tertiary)]'>
               {inputEntries.length}
             </span>
           </div>
           {/* Input entries */}
-          <div className='flex flex-col pt-[6px]'>
+          <div className='flex flex-col pt-1.5'>
             {inputEntries.map(([key, value], index) => {
               const isComplex = isComplexValue(value)
               const displayValue = formatValueForDisplay(value)
@@ -1880,12 +1880,12 @@ export function ToolCall({
                 <div
                   key={key}
                   className={clsx(
-                    'flex flex-col gap-[6px] px-[10px] pb-[6px]',
-                    index > 0 && 'mt-[6px] border-[var(--border-1)] border-t pt-[6px]'
+                    'flex flex-col gap-1.5 px-2.5 pb-1.5',
+                    index > 0 && 'mt-1.5 border-[var(--border-1)] border-t pt-1.5'
                   )}
                 >
                   {/* Input key */}
-                  <span className='font-medium text-[11px] text-[var(--text-primary)]'>{key}</span>
+                  <span className='font-medium text-xs text-[var(--text-primary)]'>{key}</span>
                   {/* Value editor */}
                   {isComplex ? (
                     <Code.Container className='max-h-[168px] min-h-[60px]'>
@@ -1941,7 +1941,7 @@ export function ToolCall({
                           setEditedParams({ ...editedParams, [key]: parsedValue })
                         }
                       }}
-                      className='w-full rounded-[4px] border border-[var(--border-1)] bg-[var(--surface-1)] px-[8px] py-[6px] font-medium font-mono text-[13px] text-[var(--text-primary)] outline-none transition-colors placeholder:text-[var(--text-muted)] focus:outline-none'
+                      className='w-full rounded-sm border border-[var(--border-1)] bg-[var(--surface-1)] px-2 py-1.5 font-medium font-mono text-small text-[var(--text-primary)] outline-none transition-colors placeholder:text-[var(--text-muted)] focus:outline-none'
                     />
                   )}
                 </div>
@@ -1978,9 +1978,9 @@ export function ToolCall({
             className='font-[470] font-season text-[var(--text-secondary)] text-sm dark:text-[var(--text-muted)]'
           />
         </div>
-        <div className='mt-[10px]'>{renderPendingDetails()}</div>
+        <div className='mt-2.5'>{renderPendingDetails()}</div>
         {showRemoveAutoAllow && isAutoAllowed && (
-          <div className='mt-[10px]'>
+          <div className='mt-2.5'>
             <Button
               onClick={async () => {
                 await removeAutoAllowedTool(toolCall.name)
@@ -2036,12 +2036,12 @@ export function ToolCall({
           />
         </div>
         {code && (
-          <div className='mt-[10px]'>
+          <div className='mt-2.5'>
             <Code.Viewer code={code} language='javascript' showGutter className='min-h-0' />
           </div>
         )}
         {showRemoveAutoAllow && isAutoAllowed && (
-          <div className='mt-[10px]'>
+          <div className='mt-2.5'>
             <Button
               onClick={async () => {
                 await removeAutoAllowedTool(toolCall.name)
@@ -2100,9 +2100,9 @@ export function ToolCall({
           />
         </div>
       )}
-      {shouldShowDetails && <div className='mt-[10px]'>{renderPendingDetails()}</div>}
+      {shouldShowDetails && <div className='mt-2.5'>{renderPendingDetails()}</div>}
       {showRemoveAutoAllow && isAutoAllowed && (
-        <div className='mt-[10px]'>
+        <div className='mt-2.5'>
           <Button
             onClick={async () => {
               await removeAutoAllowedTool(toolCall.name)
@@ -2123,7 +2123,7 @@ export function ToolCall({
           editedParams={editedParams}
         />
       ) : showMoveToBackground ? (
-        <div className='mt-[10px]'>
+        <div className='mt-2.5'>
           <Button
             onClick={async () => {
               setToolCallState(toolCall, ClientToolCallState.background)
@@ -2137,7 +2137,7 @@ export function ToolCall({
           </Button>
         </div>
       ) : showWake ? (
-        <div className='mt-[10px]'>
+        <div className='mt-2.5'>
           <Button
             onClick={async () => {
               setToolCallState(toolCall, ClientToolCallState.background)

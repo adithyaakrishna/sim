@@ -70,7 +70,7 @@ export const TodoList = memo(function TodoList({
     >
       {/* Header - always visible */}
       <div className='flex items-center justify-between px-[5.5px] py-[5px]'>
-        <div className='flex items-center gap-[8px]'>
+        <div className='flex items-center gap-2'>
           <Button
             variant='ghost'
             onClick={() => setIsCollapsed(!isCollapsed)}
@@ -88,7 +88,7 @@ export const TodoList = memo(function TodoList({
           </span>
         </div>
 
-        <div className='flex flex-1 items-center gap-[8px] pl-[10px]'>
+        <div className='flex flex-1 items-center gap-2 pl-2.5'>
           {/* Progress bar */}
           <div className='h-1.5 flex-1 overflow-hidden rounded-full bg-[var(--border-1)]'>
             <div
@@ -140,7 +140,7 @@ export const TodoList = memo(function TodoList({
 
               <span
                 className={cn(
-                  'flex-1 font-base text-[12px] leading-relaxed',
+                  'flex-1 font-base text-caption leading-relaxed',
                   todo.completed
                     ? 'text-[var(--text-muted)] line-through'
                     : 'text-[var(--text-primary)]'

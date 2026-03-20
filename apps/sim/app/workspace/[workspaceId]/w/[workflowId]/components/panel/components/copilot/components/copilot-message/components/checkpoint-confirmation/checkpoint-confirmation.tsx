@@ -31,8 +31,8 @@ export function CheckpointConfirmation({
   const isRestoreVariant = variant === 'restore'
 
   return (
-    <div className='mt-[8px] rounded-[4px] border border-[var(--border)] bg-[var(--surface-4)] p-[10px]'>
-      <p className='mb-[8px] text-[12px] text-[var(--text-primary)]'>
+    <div className='mt-2 rounded-sm border border-[var(--border)] bg-[var(--surface-4)] p-2.5'>
+      <p className='mb-2 text-caption text-[var(--text-primary)]'>
         {isRestoreVariant ? (
           <>
             Revert to checkpoint? This will restore your workflow to the state saved at this
@@ -43,7 +43,7 @@ export function CheckpointConfirmation({
           'Continue from a previous message?'
         )}
       </p>
-      <div className='flex gap-[8px]'>
+      <div className='flex gap-2'>
         <Button
           onClick={onCancel}
           variant='active'

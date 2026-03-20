@@ -359,16 +359,16 @@ export function TrainingModal() {
           <ModalBody className='flex min-h-[400px] flex-col overflow-hidden'>
             {/* Recording Banner */}
             {isTraining && (
-              <div className='mb-[16px] rounded-[8px] border bg-orange-50 p-[12px] dark:bg-orange-950/30'>
-                <p className='mb-[8px] font-medium text-[13px] text-orange-700 dark:text-orange-300'>
+              <div className='mb-4 rounded-lg border bg-orange-50 p-3 dark:bg-orange-950/30'>
+                <p className='mb-2 font-medium text-small text-orange-700 dark:text-orange-300'>
                   Recording: {currentTitle}
                 </p>
-                <p className='mb-[12px] text-[12px] text-[var(--text-secondary)]'>
+                <p className='mb-3 text-caption text-[var(--text-secondary)]'>
                   {currentPrompt}
                 </p>
-                <div className='flex gap-[8px]'>
+                <div className='flex gap-2'>
                   <Button variant='default' onClick={cancelTraining} className='flex-1'>
-                    <X className='mr-[6px] h-[14px] w-[14px]' />
+                    <X className='mr-1.5 h-[14px] w-[14px]' />
                     Cancel
                   </Button>
                   <Button
@@ -379,12 +379,12 @@ export function TrainingModal() {
                     }}
                     className='flex-1'
                   >
-                    <Check className='mr-[6px] h-[14px] w-[14px]' />
+                    <Check className='mr-1.5 h-[14px] w-[14px]' />
                     Save Dataset
                   </Button>
                 </div>
                 {startSnapshot && (
-                  <div className='mt-[8px] flex items-center gap-[12px] text-[12px]'>
+                  <div className='mt-2 flex items-center gap-3 text-caption'>
                     <span className='text-orange-600 dark:text-orange-400'>Starting state:</span>
                     <span className='text-[var(--text-primary)]'>
                       {Object.keys(startSnapshot.blocks).length} blocks
@@ -399,8 +399,8 @@ export function TrainingModal() {
             )}
 
             {/* New Training Session Tab */}
-            <ModalTabsContent value='new' className='flex flex-col gap-[16px]'>
-              <div className='flex items-center gap-[16px] text-[13px]'>
+            <ModalTabsContent value='new' className='flex flex-col gap-4'>
+              <div className='flex items-center gap-4 text-small'>
                 <span className='text-[var(--text-muted)]'>Current workflow:</span>
                 <span className='text-[var(--text-primary)]'>
                   {currentWorkflow.getBlockCount()} blocks
@@ -411,7 +411,7 @@ export function TrainingModal() {
                 </span>
               </div>
 
-              <div className='flex flex-col gap-[8px]'>
+              <div className='flex flex-col gap-2'>
                 <Label htmlFor='title'>Title</Label>
                 <Input
                   id='title'
@@ -422,7 +422,7 @@ export function TrainingModal() {
                 />
               </div>
 
-              <div className='flex flex-col gap-[8px]'>
+              <div className='flex flex-col gap-2'>
                 <Label htmlFor='prompt'>Training Prompt</Label>
                 <Textarea
                   id='prompt'
@@ -431,7 +431,7 @@ export function TrainingModal() {
                   onChange={(e) => setLocalPrompt(e.target.value)}
                   rows={3}
                 />
-                <p className='text-[12px] text-[var(--text-muted)]'>
+                <p className='text-caption text-[var(--text-muted)]'>
                   Describe what the next sequence of edits aim to achieve
                 </p>
               </div>
@@ -447,34 +447,34 @@ export function TrainingModal() {
             </ModalTabsContent>
 
             {/* Datasets Tab */}
-            <ModalTabsContent value='datasets' className='flex flex-col gap-[16px]'>
+            <ModalTabsContent value='datasets' className='flex flex-col gap-4'>
               {datasets.length === 0 ? (
-                <div className='py-[32px] text-center text-[13px] text-[var(--text-muted)]'>
+                <div className='py-8 text-center text-small text-[var(--text-muted)]'>
                   No training datasets yet. Start a new session to create one.
                 </div>
               ) : (
                 <>
                   <div className='flex items-center justify-between'>
-                    <div className='flex items-center gap-[12px]'>
+                    <div className='flex items-center gap-3'>
                       <Checkbox
                         checked={datasets.length > 0 && selectedDatasets.size === datasets.length}
                         onCheckedChange={toggleSelectAll}
                         disabled={datasets.length === 0}
                       />
-                      <p className='text-[13px] text-[var(--text-muted)]'>
+                      <p className='text-small text-[var(--text-muted)]'>
                         {selectedDatasets.size > 0
                           ? `${selectedDatasets.size} of ${datasets.length} selected`
                           : `${datasets.length} dataset${datasets.length !== 1 ? 's' : ''} recorded`}
                       </p>
                     </div>
-                    <div className='flex gap-[8px]'>
+                    <div className='flex gap-2'>
                       {selectedDatasets.size > 0 && (
                         <Button
                           variant='primary'
                           onClick={handleSendSelected}
                           disabled={sendingSelected}
                         >
-                          <Send className='mr-[6px] h-[12px] w-[12px]' />
+                          <Send className='mr-1.5 h-[12px] w-[12px]' />
                           {sendingSelected
                             ? 'Sending...'
                             : `Send ${selectedDatasets.size} Selected`}
@@ -485,7 +485,7 @@ export function TrainingModal() {
                         onClick={handleSendAll}
                         disabled={datasets.length === 0 || sendingAll}
                       >
-                        <Send className='mr-[6px] h-[12px] w-[12px]' />
+                        <Send className='mr-1.5 h-[12px] w-[12px]' />
                         {sendingAll ? 'Sending...' : 'Send All'}
                       </Button>
                       <Button
@@ -493,7 +493,7 @@ export function TrainingModal() {
                         onClick={handleExportAll}
                         disabled={datasets.length === 0}
                       >
-                        <Upload className='mr-[6px] h-[12px] w-[12px]' />
+                        <Upload className='mr-1.5 h-[12px] w-[12px]' />
                         Export
                       </Button>
                       <Button
@@ -501,24 +501,24 @@ export function TrainingModal() {
                         onClick={clearDatasets}
                         disabled={datasets.length === 0}
                       >
-                        <Trash2 className='mr-[6px] h-[12px] w-[12px]' />
+                        <Trash2 className='mr-1.5 h-[12px] w-[12px]' />
                         Clear
                       </Button>
                     </div>
                   </div>
 
                   <div className='max-h-[320px] overflow-y-auto'>
-                    <div className='flex flex-col gap-[8px]'>
+                    <div className='flex flex-col gap-2'>
                       {datasets.map((dataset, index) => (
                         <div
                           key={dataset.id}
-                          className='rounded-[8px] border bg-[var(--surface-3)] transition-colors hover-hover:bg-[var(--surface-4)]'
+                          className='rounded-lg border bg-[var(--surface-3)] transition-colors hover-hover:bg-[var(--surface-4)]'
                         >
-                          <div className='flex items-start p-[12px]'>
+                          <div className='flex items-start p-3'>
                             <Checkbox
                               checked={selectedDatasets.has(dataset.id)}
                               onCheckedChange={() => toggleDatasetSelection(dataset.id)}
-                              className='mt-[2px] mr-[12px]'
+                              className='mt-0.5 mr-3'
                             />
                             <button
                               className='flex flex-1 items-center justify-between text-left'
@@ -529,21 +529,21 @@ export function TrainingModal() {
                               }
                             >
                               <div className='flex-1'>
-                                <p className='font-medium text-[14px] text-[var(--text-primary)]'>
+                                <p className='font-medium text-sm text-[var(--text-primary)]'>
                                   {dataset.title}
                                 </p>
-                                <p className='text-[12px] text-[var(--text-muted)]'>
+                                <p className='text-caption text-[var(--text-muted)]'>
                                   {dataset.prompt.substring(0, 50)}
                                   {dataset.prompt.length > 50 ? '...' : ''}
                                 </p>
                               </div>
-                              <div className='flex items-center gap-[12px]'>
+                              <div className='flex items-center gap-3'>
                                 {dataset.sentAt && (
-                                  <span className='inline-flex items-center rounded-full bg-green-50 px-[8px] py-[2px] text-[11px] text-green-700 ring-1 ring-green-600/20 ring-inset dark:bg-green-900/20 dark:text-green-300'>
-                                    <CheckCircle2 className='mr-[4px] h-[10px] w-[10px]' /> Sent
+                                  <span className='inline-flex items-center rounded-full bg-green-50 px-2 py-0.5 text-xs text-green-700 ring-1 ring-green-600/20 ring-inset dark:bg-green-900/20 dark:text-green-300'>
+                                    <CheckCircle2 className='mr-1 h-[10px] w-[10px]' /> Sent
                                   </span>
                                 )}
-                                <span className='text-[12px] text-[var(--text-muted)]'>
+                                <span className='text-caption text-[var(--text-muted)]'>
                                   {dataset.editSequence.length} ops
                                 </span>
                                 <ChevronDown
@@ -557,21 +557,21 @@ export function TrainingModal() {
                           </div>
 
                           {expandedDataset === dataset.id && (
-                            <div className='flex flex-col gap-[12px] border-t px-[12px] pt-[12px] pb-[16px]'>
+                            <div className='flex flex-col gap-3 border-t px-3 pt-3 pb-4'>
                               <div>
-                                <p className='mb-[4px] font-medium text-[13px] text-[var(--text-primary)]'>
+                                <p className='mb-1 font-medium text-small text-[var(--text-primary)]'>
                                   Prompt
                                 </p>
-                                <p className='text-[13px] text-[var(--text-secondary)]'>
+                                <p className='text-small text-[var(--text-secondary)]'>
                                   {dataset.prompt}
                                 </p>
                               </div>
 
                               <div>
-                                <p className='mb-[4px] font-medium text-[13px] text-[var(--text-primary)]'>
+                                <p className='mb-1 font-medium text-small text-[var(--text-primary)]'>
                                   Statistics
                                 </p>
-                                <div className='grid grid-cols-2 gap-[8px] text-[13px]'>
+                                <div className='grid grid-cols-2 gap-2 text-small'>
                                   <div>
                                     <span className='text-[var(--text-muted)]'>Duration:</span>{' '}
                                     <span className='text-[var(--text-secondary)]'>
@@ -604,11 +604,11 @@ export function TrainingModal() {
                               </div>
 
                               <div>
-                                <p className='mb-[4px] font-medium text-[13px] text-[var(--text-primary)]'>
+                                <p className='mb-1 font-medium text-small text-[var(--text-primary)]'>
                                   Edit Sequence
                                 </p>
-                                <div className='max-h-[100px] overflow-y-auto rounded-[6px] border bg-[var(--surface-5)] p-[8px]'>
-                                  <ul className='flex flex-col gap-[4px] font-mono text-[11px]'>
+                                <div className='max-h-[100px] overflow-y-auto rounded-md border bg-[var(--surface-5)] p-2'>
+                                  <ul className='flex flex-col gap-1 font-mono text-xs'>
                                     {formatEditSequence(dataset.editSequence).map((desc, i) => (
                                       <li key={i} className='text-[var(--text-secondary)]'>
                                         {desc}
@@ -618,7 +618,7 @@ export function TrainingModal() {
                                 </div>
                               </div>
 
-                              <div className='flex gap-[8px]'>
+                              <div className='flex gap-2'>
                                 <Button
                                   variant={
                                     sentDatasets.has(dataset.id)
@@ -641,17 +641,17 @@ export function TrainingModal() {
                                     'Sending...'
                                   ) : sentDatasets.has(dataset.id) ? (
                                     <>
-                                      <CheckCircle2 className='mr-[6px] h-[12px] w-[12px]' />
+                                      <CheckCircle2 className='mr-1.5 h-[12px] w-[12px]' />
                                       Sent
                                     </>
                                   ) : failedDatasets.has(dataset.id) ? (
                                     <>
-                                      <XCircle className='mr-[6px] h-[12px] w-[12px]' />
+                                      <XCircle className='mr-1.5 h-[12px] w-[12px]' />
                                       Failed
                                     </>
                                   ) : (
                                     <>
-                                      <Send className='mr-[6px] h-[12px] w-[12px]' />
+                                      <Send className='mr-1.5 h-[12px] w-[12px]' />
                                       Send
                                     </>
                                   )}
@@ -660,7 +660,7 @@ export function TrainingModal() {
                                   variant='default'
                                   onClick={() => setViewingDataset(dataset.id)}
                                 >
-                                  <Eye className='mr-[6px] h-[12px] w-[12px]' />
+                                  <Eye className='mr-1.5 h-[12px] w-[12px]' />
                                   View
                                 </Button>
                                 <Button
@@ -669,12 +669,12 @@ export function TrainingModal() {
                                 >
                                   {copiedId === dataset.id ? (
                                     <>
-                                      <Check className='mr-[6px] h-[12px] w-[12px]' />
+                                      <Check className='mr-1.5 h-[12px] w-[12px]' />
                                       Copied!
                                     </>
                                   ) : (
                                     <>
-                                      <Clipboard className='mr-[6px] h-[12px] w-[12px]' />
+                                      <Clipboard className='mr-1.5 h-[12px] w-[12px]' />
                                       Copy
                                     </>
                                   )}
@@ -682,8 +682,8 @@ export function TrainingModal() {
                               </div>
 
                               {viewingDataset === dataset.id && (
-                                <div className='rounded-[6px] border bg-[var(--surface-5)] p-[12px]'>
-                                  <pre className='max-h-[200px] overflow-auto text-[11px] text-[var(--text-secondary)]'>
+                                <div className='rounded-md border bg-[var(--surface-5)] p-3'>
+                                  <pre className='max-h-[200px] overflow-auto text-xs text-[var(--text-secondary)]'>
                                     {JSON.stringify(
                                       {
                                         prompt: dataset.prompt,
@@ -707,8 +707,8 @@ export function TrainingModal() {
             </ModalTabsContent>
 
             {/* Send Live State Tab */}
-            <ModalTabsContent value='live' className='flex flex-col gap-[16px]'>
-              <div className='flex items-center gap-[16px] text-[13px]'>
+            <ModalTabsContent value='live' className='flex flex-col gap-4'>
+              <div className='flex items-center gap-4 text-small'>
                 <span className='text-[var(--text-muted)]'>Current workflow:</span>
                 <span className='text-[var(--text-primary)]'>
                   {currentWorkflow.getBlockCount()} blocks
@@ -719,7 +719,7 @@ export function TrainingModal() {
                 </span>
               </div>
 
-              <div className='flex flex-col gap-[8px]'>
+              <div className='flex flex-col gap-2'>
                 <Label htmlFor='live-title'>Title</Label>
                 <Input
                   id='live-title'
@@ -728,12 +728,12 @@ export function TrainingModal() {
                   onChange={(e) => setLiveWorkflowTitle(e.target.value)}
                   className='h-9'
                 />
-                <p className='text-[12px] text-[var(--text-muted)]'>
+                <p className='text-caption text-[var(--text-muted)]'>
                   A short title identifying this workflow
                 </p>
               </div>
 
-              <div className='flex flex-col gap-[8px]'>
+              <div className='flex flex-col gap-2'>
                 <Label htmlFor='live-description'>Description</Label>
                 <Textarea
                   id='live-description'
@@ -742,7 +742,7 @@ export function TrainingModal() {
                   onChange={(e) => setLiveWorkflowDescription(e.target.value)}
                   rows={3}
                 />
-                <p className='text-[12px] text-[var(--text-muted)]'>
+                <p className='text-caption text-[var(--text-muted)]'>
                   Explain the purpose and functionality of this workflow
                 </p>
               </div>
@@ -766,33 +766,33 @@ export function TrainingModal() {
                   'Sending...'
                 ) : liveWorkflowSent ? (
                   <>
-                    <CheckCircle2 className='mr-[6px] h-[14px] w-[14px]' />
+                    <CheckCircle2 className='mr-1.5 h-[14px] w-[14px]' />
                     Sent Successfully
                   </>
                 ) : liveWorkflowFailed ? (
                   <>
-                    <XCircle className='mr-[6px] h-[14px] w-[14px]' />
+                    <XCircle className='mr-1.5 h-[14px] w-[14px]' />
                     Failed - Try Again
                   </>
                 ) : (
                   <>
-                    <Send className='mr-[6px] h-[14px] w-[14px]' />
+                    <Send className='mr-1.5 h-[14px] w-[14px]' />
                     Send Live Workflow State
                   </>
                 )}
               </Button>
 
               {liveWorkflowSent && (
-                <div className='rounded-[8px] border bg-green-50 p-[12px] dark:bg-green-950/30'>
-                  <p className='text-[13px] text-green-700 dark:text-green-300'>
+                <div className='rounded-lg border bg-green-50 p-3 dark:bg-green-950/30'>
+                  <p className='text-small text-green-700 dark:text-green-300'>
                     Workflow state sent successfully!
                   </p>
                 </div>
               )}
 
               {liveWorkflowFailed && (
-                <div className='rounded-[8px] border bg-red-50 p-[12px] dark:bg-red-950/30'>
-                  <p className='text-[13px] text-red-700 dark:text-red-300'>
+                <div className='rounded-lg border bg-red-50 p-3 dark:bg-red-950/30'>
+                  <p className='text-small text-red-700 dark:text-red-300'>
                     Failed to send workflow state. Please try again.
                   </p>
                 </div>

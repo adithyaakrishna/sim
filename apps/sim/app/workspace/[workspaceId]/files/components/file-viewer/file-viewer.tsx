@@ -251,7 +251,7 @@ function TextEditor({
 
   if (isLoading) {
     return (
-      <div className='flex flex-1 flex-col gap-[8px] p-[24px]'>
+      <div className='flex flex-1 flex-col gap-2 p-6'>
         <Skeleton className='h-[16px] w-[60%]' />
         <Skeleton className='h-[16px] w-[80%]' />
         <Skeleton className='h-[16px] w-[40%]' />
@@ -263,7 +263,7 @@ function TextEditor({
   if (error) {
     return (
       <div className='flex flex-1 items-center justify-center'>
-        <p className='text-[13px] text-[var(--text-muted)]'>Failed to load file content</p>
+        <p className='text-small text-[var(--text-muted)]'>Failed to load file content</p>
       </div>
     )
   }
@@ -282,7 +282,7 @@ function TextEditor({
           spellCheck={false}
           style={showPreviewPane ? { width: `${splitPct}%`, flexShrink: 0 } : undefined}
           className={cn(
-            'h-full resize-none border-0 bg-transparent p-[24px] font-mono text-[14px] text-[var(--text-body)] outline-none placeholder:text-[var(--text-subtle)]',
+            'h-full resize-none border-0 bg-transparent p-6 font-mono text-sm text-[var(--text-body)] outline-none placeholder:text-[var(--text-subtle)]',
             !showPreviewPane && 'w-full',
             isResizing && 'pointer-events-none'
           )}
@@ -337,11 +337,11 @@ function UnsupportedPreview({ file }: { file: WorkspaceFileRecord }) {
   const ext = getFileExtension(file.name)
 
   return (
-    <div className='flex flex-1 flex-col items-center justify-center gap-[8px]'>
-      <p className='font-medium text-[14px] text-[var(--text-body)]'>
+    <div className='flex flex-1 flex-col items-center justify-center gap-2'>
+      <p className='font-medium text-sm text-[var(--text-body)]'>
         Preview not available{ext ? ` for .${ext} files` : ' for this file'}
       </p>
-      <p className='text-[13px] text-[var(--text-muted)]'>
+      <p className='text-small text-[var(--text-muted)]'>
         Use the download button to view this file
       </p>
     </div>

@@ -117,7 +117,7 @@ function ToastItem({ toast: t, onDismiss }: { toast: ToastData; onDismiss: (id: 
   return (
     <div
       className={cn(
-        'pointer-events-auto flex w-[320px] items-start gap-[8px] rounded-[8px] border px-[12px] py-[10px] shadow-md transition-[transform,opacity]',
+        'pointer-events-auto flex w-[320px] items-start gap-2 rounded-lg border px-3 py-2.5 shadow-md transition-[transform,opacity]',
         VARIANT_STYLES[t.variant],
         exiting
           ? 'animate-[toast-exit_200ms_ease-in_forwards] motion-reduce:animate-none'
@@ -125,9 +125,9 @@ function ToastItem({ toast: t, onDismiss }: { toast: ToastData; onDismiss: (id: 
       )}
     >
       <div className='min-w-0 flex-1'>
-        <p className='font-medium text-[13px] leading-[18px]'>{t.message}</p>
+        <p className='font-medium text-small leading-[18px]'>{t.message}</p>
         {t.description && (
-          <p className='mt-[2px] text-[12px] leading-[16px] opacity-80'>{t.description}</p>
+          <p className='mt-0.5 text-caption leading-[16px] opacity-80'>{t.description}</p>
         )}
       </div>
       {t.action && (
@@ -137,7 +137,7 @@ function ToastItem({ toast: t, onDismiss }: { toast: ToastData; onDismiss: (id: 
             t.action!.onClick()
             dismiss()
           }}
-          className='shrink-0 font-medium text-[13px] underline underline-offset-2 opacity-90 hover-hover:opacity-100'
+          className='shrink-0 font-medium text-small underline underline-offset-2 opacity-90 hover-hover:opacity-100'
         >
           {t.action.label}
         </button>
@@ -145,7 +145,7 @@ function ToastItem({ toast: t, onDismiss }: { toast: ToastData; onDismiss: (id: 
       <button
         type='button'
         onClick={dismiss}
-        className='relative shrink-0 rounded-[4px] p-[2px] opacity-60 before:absolute before:inset-[-11px] before:content-[""] hover-hover:opacity-100'
+        className='relative shrink-0 rounded-sm p-0.5 opacity-60 before:absolute before:inset-[-11px] before:content-[""] hover-hover:opacity-100'
       >
         <X className='h-[14px] w-[14px]' />
       </button>
@@ -211,7 +211,7 @@ export function ToastProvider({ children }: { children?: ReactNode }) {
           <div
             aria-live='polite'
             aria-label='Notifications'
-            className='pointer-events-none fixed right-[16px] bottom-[16px] z-[var(--z-toast)] flex flex-col-reverse items-end gap-[8px]'
+            className='pointer-events-none fixed right-[16px] bottom-4 z-[var(--z-toast)] flex flex-col-reverse items-end gap-2'
           >
             {toasts.map((t) => (
               <ToastItem key={t.id} toast={t} onDismiss={dismissToast} />

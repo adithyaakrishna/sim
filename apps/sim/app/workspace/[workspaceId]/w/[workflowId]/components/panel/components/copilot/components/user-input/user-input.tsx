@@ -705,7 +705,7 @@ const UserInput = forwardRef<UserInputRef, UserInputProps>(
         elements.push(
           <span
             key={`mention-${i}-${range.start}-${range.end}`}
-            className='rounded-[4px] bg-[rgba(50,189,126,0.65)] py-[1px]'
+            className='rounded-sm bg-[rgba(50,189,126,0.65)] py-[1px]'
           >
             {range.token}
           </span>
@@ -732,7 +732,7 @@ const UserInput = forwardRef<UserInputRef, UserInputProps>(
         <div
           ref={setInputContainerRef}
           className={cn(
-            'relative w-full rounded-[4px] border border-[var(--border-1)] bg-[var(--surface-4)] px-[6px] py-[6px] transition-colors dark:bg-[var(--surface-4)]',
+            'relative w-full rounded-sm border border-[var(--border-1)] bg-[var(--surface-4)] px-1.5 py-1.5 transition-colors dark:bg-[var(--surface-4)]',
             fileAttachments.isDragging && 'ring-[1.75px] ring-[var(--brand-secondary)]'
           )}
           onDragEnter={fileAttachments.handleDragEnter}
@@ -741,8 +741,8 @@ const UserInput = forwardRef<UserInputRef, UserInputProps>(
           onDrop={fileAttachments.handleDrop}
         >
           {/* Top Row: Context controls + Build Workflow button */}
-          <div className='mb-[6px] flex flex-wrap items-center justify-between gap-[6px]'>
-            <div className='flex flex-wrap items-center gap-[6px]'>
+          <div className='mb-1.5 flex flex-wrap items-center justify-between gap-1.5'>
+            <div className='flex flex-wrap items-center gap-1.5'>
               {!disableMentions && (
                 <>
                   <Badge
@@ -750,7 +750,7 @@ const UserInput = forwardRef<UserInputRef, UserInputProps>(
                     onClick={handleOpenMentionMenuWithAt}
                     title='Insert @'
                     className={cn(
-                      'cursor-pointer rounded-[6px] p-[4.5px]',
+                      'cursor-pointer rounded-md p-[4.5px]',
                       disabled && 'cursor-not-allowed'
                     )}
                   >
@@ -762,11 +762,11 @@ const UserInput = forwardRef<UserInputRef, UserInputProps>(
                     onClick={handleOpenSlashMenu}
                     title='Insert /'
                     className={cn(
-                      'cursor-pointer rounded-[6px] p-[4.5px]',
+                      'cursor-pointer rounded-md p-[4.5px]',
                       disabled && 'cursor-not-allowed'
                     )}
                   >
-                    <span className='flex h-3 w-3 items-center justify-center font-medium text-[11px] leading-none'>
+                    <span className='flex h-3 w-3 items-center justify-center font-medium text-xs leading-none'>
                       /
                     </span>
                   </Badge>
@@ -802,11 +802,11 @@ const UserInput = forwardRef<UserInputRef, UserInputProps>(
           />
 
           {/* Textarea Field with overlay */}
-          <div className='relative mb-[6px]'>
+          <div className='relative mb-1.5'>
             {/* Highlight overlay - must have identical flow as textarea */}
             <div
               ref={overlayRef}
-              className='pointer-events-none absolute top-0 left-0 z-[1] m-0 box-border h-auto max-h-[120px] min-h-[48px] w-full resize-none overflow-y-auto overflow-x-hidden whitespace-pre-wrap break-words border-0 bg-transparent px-[2px] py-1 font-medium font-sans text-[var(--text-primary)] text-sm leading-[1.25rem] outline-none [-ms-overflow-style:none] [scrollbar-width:none] [text-rendering:optimizeLegibility] [&::-webkit-scrollbar]:hidden'
+              className='pointer-events-none absolute top-0 left-0 z-[1] m-0 box-border h-auto max-h-[120px] min-h-[48px] w-full resize-none overflow-y-auto overflow-x-hidden whitespace-pre-wrap break-words border-0 bg-transparent px-0.5 py-1 font-medium font-sans text-[var(--text-primary)] text-sm leading-[1.25rem] outline-none [-ms-overflow-style:none] [scrollbar-width:none] [text-rendering:optimizeLegibility] [&::-webkit-scrollbar]:hidden'
               aria-hidden='true'
             >
               {renderOverlayContent()}
@@ -830,7 +830,7 @@ const UserInput = forwardRef<UserInputRef, UserInputProps>(
               placeholder={fileAttachments.isDragging ? 'Drop files here...' : effectivePlaceholder}
               disabled={disabled}
               rows={2}
-              className='relative z-[2] m-0 box-border h-auto max-h-[120px] min-h-[48px] w-full resize-none overflow-y-auto overflow-x-hidden break-words border-0 bg-transparent px-[2px] py-1 font-medium font-sans text-sm text-transparent leading-[1.25rem] caret-foreground outline-none [-ms-overflow-style:none] [scrollbar-width:none] [text-rendering:auto] placeholder:text-[var(--text-muted)] focus-visible:ring-0 focus-visible:ring-offset-0 dark:placeholder:text-[var(--text-muted)] [&::-webkit-scrollbar]:hidden'
+              className='relative z-[2] m-0 box-border h-auto max-h-[120px] min-h-[48px] w-full resize-none overflow-y-auto overflow-x-hidden break-words border-0 bg-transparent px-0.5 py-1 font-medium font-sans text-sm text-transparent leading-[1.25rem] caret-foreground outline-none [-ms-overflow-style:none] [scrollbar-width:none] [text-rendering:auto] placeholder:text-[var(--text-muted)] focus-visible:ring-0 focus-visible:ring-offset-0 dark:placeholder:text-[var(--text-muted)] [&::-webkit-scrollbar]:hidden'
             />
 
             {/* Mention Menu Portal */}

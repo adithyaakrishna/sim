@@ -117,7 +117,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
     return (
       <div className='w-full max-w-full overflow-hidden opacity-100 transition-opacity duration-200'>
         {hasAttachments && (
-          <div className='mb-[4px] flex flex-wrap gap-[4px]'>
+          <div className='mb-1 flex flex-wrap gap-1'>
             {message.attachments!.map((attachment) => {
               const hasValidDataUrl =
                 attachment.dataUrl?.trim() && attachment.dataUrl.startsWith('data:')
@@ -126,7 +126,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
               return (
                 <div
                   key={attachment.id}
-                  className={`flex max-w-[150px] items-center gap-[5px] rounded-[6px] bg-[var(--surface-2)] px-[5px] py-[3px] ${
+                  className={`flex max-w-[150px] items-center gap-[5px] rounded-md bg-[var(--surface-2)] px-[5px] py-[3px] ${
                     hasValidDataUrl ? 'cursor-pointer' : ''
                   }`}
                   onClick={(e) => {
@@ -146,7 +146,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
                   ) : (
                     <FileText className='h-[12px] w-[12px] flex-shrink-0 text-[var(--text-tertiary)]' />
                   )}
-                  <span className='truncate text-[10px] text-[var(--text-secondary)]'>
+                  <span className='truncate text-micro text-[var(--text-secondary)]'>
                     {attachment.name}
                   </span>
                 </div>
@@ -156,7 +156,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
         )}
 
         {formattedContent && !formattedContent.startsWith('Uploaded') && (
-          <div className='rounded-[4px] border border-[var(--border-1)] bg-[var(--surface-5)] px-[8px] py-[6px] transition-all duration-200'>
+          <div className='rounded-sm border border-[var(--border-1)] bg-[var(--surface-5)] px-2 py-1.5 transition-all duration-200'>
             <div className='whitespace-pre-wrap break-words font-medium font-sans text-[var(--text-primary)] text-sm leading-[1.25rem]'>
               <WordWrap text={formattedContent} />
             </div>
@@ -167,7 +167,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
   }
 
   return (
-    <div className='w-full max-w-full overflow-hidden pl-[2px] opacity-100 transition-opacity duration-200'>
+    <div className='w-full max-w-full overflow-hidden pl-0.5 opacity-100 transition-opacity duration-200'>
       <div className='whitespace-pre-wrap break-words font-[470] font-season text-[var(--text-primary)] text-sm leading-[1.25rem]'>
         <WordWrap text={formattedContent} />
         {message.isStreaming && <StreamingIndicator />}

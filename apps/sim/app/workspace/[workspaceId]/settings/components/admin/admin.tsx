@@ -85,7 +85,7 @@ export function Admin() {
     unbanUser.variables,
   ])
   return (
-    <div className='flex h-full flex-col gap-[24px]'>
+    <div className='flex h-full flex-col gap-6'>
       <div className='flex items-center justify-between'>
         <Label htmlFor='super-user-mode'>Super admin mode</Label>
         <Switch
@@ -97,11 +97,11 @@ export function Admin() {
 
       <div className='h-px bg-[var(--border-secondary)]' />
 
-      <div className='flex flex-col gap-[8px]'>
-        <p className='text-[14px] text-[var(--text-secondary)]'>
+      <div className='flex flex-col gap-2'>
+        <p className='text-sm text-[var(--text-secondary)]'>
           Import a workflow by ID along with its associated copilot chats.
         </p>
-        <div className='flex gap-[8px]'>
+        <div className='flex gap-2'>
           <EmcnInput
             value={workflowId}
             onChange={(e) => {
@@ -120,10 +120,10 @@ export function Admin() {
           </Button>
         </div>
         {importWorkflow.error && (
-          <p className='text-[13px] text-[var(--text-error)]'>{importWorkflow.error.message}</p>
+          <p className='text-small text-[var(--text-error)]'>{importWorkflow.error.message}</p>
         )}
         {importWorkflow.isSuccess && (
-          <p className='text-[13px] text-[var(--text-secondary)]'>
+          <p className='text-small text-[var(--text-secondary)]'>
             Workflow imported successfully (new ID: {importWorkflow.data.newWorkflowId},{' '}
             {importWorkflow.data.copilotChatsImported ?? 0} copilot chats imported)
           </p>
@@ -132,9 +132,9 @@ export function Admin() {
 
       <div className='h-px bg-[var(--border-secondary)]' />
 
-      <div className='flex flex-col gap-[12px]'>
-        <p className='font-medium text-[14px] text-[var(--text-primary)]'>User Management</p>
-        <div className='flex gap-[8px]'>
+      <div className='flex flex-col gap-3'>
+        <p className='font-medium text-sm text-[var(--text-primary)]'>User Management</p>
+        <div className='flex gap-2'>
           <EmcnInput
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
@@ -147,30 +147,30 @@ export function Admin() {
         </div>
 
         {usersError && (
-          <p className='text-[13px] text-[var(--text-error)]'>
+          <p className='text-small text-[var(--text-error)]'>
             {usersError instanceof Error ? usersError.message : 'Failed to fetch users'}
           </p>
         )}
 
         {(setUserRole.error || banUser.error || unbanUser.error) && (
-          <p className='text-[13px] text-[var(--text-error)]'>
+          <p className='text-small text-[var(--text-error)]'>
             {(setUserRole.error || banUser.error || unbanUser.error)?.message ??
               'Action failed. Please try again.'}
           </p>
         )}
 
         {usersLoading && !usersData && (
-          <div className='flex flex-col gap-[8px]'>
+          <div className='flex flex-col gap-2'>
             {Array.from({ length: 5 }).map((_, i) => (
-              <Skeleton key={i} className='h-[48px] w-full rounded-[6px]' />
+              <Skeleton key={i} className='h-[48px] w-full rounded-md' />
             ))}
           </div>
         )}
 
         {searchQuery.length > 0 && usersData && (
           <>
-            <div className='flex flex-col gap-[2px]'>
-              <div className='flex items-center gap-[12px] border-[var(--border-secondary)] border-b px-[12px] py-[8px] text-[12px] text-[var(--text-tertiary)]'>
+            <div className='flex flex-col gap-0.5'>
+              <div className='flex items-center gap-3 border-[var(--border-secondary)] border-b px-3 py-2 text-caption text-[var(--text-tertiary)]'>
                 <span className='w-[200px]'>Name</span>
                 <span className='flex-1'>Email</span>
                 <span className='w-[80px]'>Role</span>
@@ -179,7 +179,7 @@ export function Admin() {
               </div>
 
               {usersData.users.length === 0 && (
-                <div className='py-[16px] text-center text-[13px] text-[var(--text-tertiary)]'>
+                <div className='py-4 text-center text-small text-[var(--text-tertiary)]'>
                   No users found.
                 </div>
               )}
@@ -188,7 +188,7 @@ export function Admin() {
                 <div
                   key={u.id}
                   className={cn(
-                    'flex items-center gap-[12px] px-[12px] py-[8px] text-[13px]',
+                    'flex items-center gap-3 px-3 py-2 text-small',
                     'border-[var(--border-secondary)] border-b last:border-b-0'
                   )}
                 >
@@ -206,12 +206,12 @@ export function Admin() {
                       <Badge variant='green'>Active</Badge>
                     )}
                   </span>
-                  <span className='flex w-[180px] justify-end gap-[4px]'>
+                  <span className='flex w-[180px] justify-end gap-1'>
                     {u.id !== session?.user?.id && (
                       <>
                         <Button
                           variant='active'
-                          className='h-[28px] px-[8px] text-[12px]'
+                          className='h-[28px] px-2 text-caption'
                           onClick={() => {
                             setUserRole.reset()
                             setUserRole.mutate({
@@ -226,7 +226,7 @@ export function Admin() {
                         {u.banned ? (
                           <Button
                             variant='active'
-                            className='h-[28px] px-[8px] text-[12px]'
+                            className='h-[28px] px-2 text-caption'
                             onClick={() => {
                               unbanUser.reset()
                               unbanUser.mutate({ userId: u.id })
@@ -236,16 +236,16 @@ export function Admin() {
                             Unban
                           </Button>
                         ) : banUserId === u.id ? (
-                          <div className='flex gap-[4px]'>
+                          <div className='flex gap-1'>
                             <EmcnInput
                               value={banReason}
                               onChange={(e) => setBanReason(e.target.value)}
                               placeholder='Reason (optional)'
-                              className='h-[28px] w-[120px] text-[12px]'
+                              className='h-[28px] w-[120px] text-caption'
                             />
                             <Button
                               variant='primary'
-                              className='h-[28px] px-[8px] text-[12px]'
+                              className='h-[28px] px-2 text-caption'
                               onClick={() => {
                                 banUser.reset()
                                 banUser.mutate(
@@ -267,7 +267,7 @@ export function Admin() {
                             </Button>
                             <Button
                               variant='active'
-                              className='h-[28px] px-[8px] text-[12px]'
+                              className='h-[28px] px-2 text-caption'
                               onClick={() => {
                                 setBanUserId(null)
                                 setBanReason('')
@@ -279,7 +279,7 @@ export function Admin() {
                         ) : (
                           <Button
                             variant='active'
-                            className='h-[28px] px-[8px] text-[12px] text-[var(--text-error)]'
+                            className='h-[28px] px-2 text-caption text-[var(--text-error)]'
                             onClick={() => {
                               setBanUserId(u.id)
                               setBanReason('')
@@ -297,14 +297,14 @@ export function Admin() {
             </div>
 
             {totalPages > 1 && (
-              <div className='flex items-center justify-between text-[13px] text-[var(--text-secondary)]'>
+              <div className='flex items-center justify-between text-small text-[var(--text-secondary)]'>
                 <span>
                   Page {currentPage} of {totalPages} ({usersData.total} users)
                 </span>
-                <div className='flex gap-[4px]'>
+                <div className='flex gap-1'>
                   <Button
                     variant='active'
-                    className='h-[28px] px-[8px] text-[12px]'
+                    className='h-[28px] px-2 text-caption'
                     onClick={() => setUsersOffset((prev) => prev - PAGE_SIZE)}
                     disabled={usersOffset === 0 || usersLoading}
                   >
@@ -312,7 +312,7 @@ export function Admin() {
                   </Button>
                   <Button
                     variant='active'
-                    className='h-[28px] px-[8px] text-[12px]'
+                    className='h-[28px] px-2 text-caption'
                     onClick={() => setUsersOffset((prev) => prev + PAGE_SIZE)}
                     disabled={usersOffset + PAGE_SIZE >= (usersData?.total ?? 0) || usersLoading}
                   >

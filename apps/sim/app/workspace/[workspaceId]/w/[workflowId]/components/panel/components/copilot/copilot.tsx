@@ -338,11 +338,11 @@ export const Copilot = forwardRef<CopilotRef, CopilotProps>(({ panelWidth }, ref
         className='flex h-full flex-col overflow-hidden'
       >
         {/* Header */}
-        <div className='mx-[-1px] flex flex-shrink-0 items-center justify-between gap-[8px] rounded-[4px] border border-[var(--border)] bg-[var(--surface-4)] px-[12px] py-[6px]'>
-          <h2 className='min-w-0 flex-1 truncate font-medium text-[14px] text-[var(--text-primary)]'>
+        <div className='mx-[-1px] flex flex-shrink-0 items-center justify-between gap-2 rounded-sm border border-[var(--border)] bg-[var(--surface-4)] px-3 py-1.5'>
+          <h2 className='min-w-0 flex-1 truncate font-medium text-sm text-[var(--text-primary)]'>
             {currentChat?.title || 'New Chat'}
           </h2>
-          <div className='flex items-center gap-[8px]'>
+          <div className='flex items-center gap-2'>
             <Button variant='ghost' className='p-0' onClick={handleStartNewChat}>
               <Plus className='h-[14px] w-[14px]' />
             </Button>
@@ -358,7 +358,7 @@ export const Copilot = forwardRef<CopilotRef, CopilotProps>(({ panelWidth }, ref
                     <ChatHistorySkeleton />
                   </PopoverScrollArea>
                 ) : groupedChats.length === 0 ? (
-                  <div className='px-[6px] py-[16px] text-center text-[12px] text-muted-foreground'>
+                  <div className='px-1.5 py-4 text-center text-caption text-muted-foreground'>
                     No chats yet
                   </div>
                 ) : (
@@ -385,7 +385,7 @@ export const Copilot = forwardRef<CopilotRef, CopilotProps>(({ panelWidth }, ref
                                 </span>
                                 <div
                                   className={cn(
-                                    'flex flex-shrink-0 items-center gap-[4px]',
+                                    'flex flex-shrink-0 items-center gap-1',
                                     currentChat?.id !== chat.id &&
                                       'opacity-0 transition-opacity group-hover:opacity-100'
                                   )}
@@ -427,7 +427,7 @@ export const Copilot = forwardRef<CopilotRef, CopilotProps>(({ panelWidth }, ref
             {/* Messages area */}
             {messages.length === 0 && !isSendingMessage && !isEditingMessage ? (
               /* Welcome state with input at top */
-              <div className='flex flex-1 flex-col overflow-hidden p-[8px]'>
+              <div className='flex flex-1 flex-col overflow-hidden p-2'>
                 <div className='flex-shrink-0'>
                   <UserInput
                     ref={userInputRef}
@@ -444,7 +444,7 @@ export const Copilot = forwardRef<CopilotRef, CopilotProps>(({ panelWidth }, ref
                     hasPlanArtifact={Boolean(designDocumentContent)}
                   />
                 </div>
-                <div className='flex-shrink-0 pt-[8px]'>
+                <div className='flex-shrink-0 pt-2'>
                   <Welcome onQuestionClick={handleSubmit} mode={mode} />
                 </div>
               </div>
@@ -453,7 +453,7 @@ export const Copilot = forwardRef<CopilotRef, CopilotProps>(({ panelWidth }, ref
               <div className='relative flex flex-1 flex-col overflow-hidden'>
                 {/* Design Document Section - Pinned at top, shown in all modes when available */}
                 {designDocumentContent && (
-                  <div className='flex-shrink-0 px-[8px] pt-[8px]'>
+                  <div className='flex-shrink-0 px-2 pt-2'>
                     <PlanModeSection
                       content={designDocumentContent}
                       onClear={clearPlanArtifact}
@@ -465,10 +465,10 @@ export const Copilot = forwardRef<CopilotRef, CopilotProps>(({ panelWidth }, ref
                 <div className='relative flex-1 overflow-hidden'>
                   <div
                     ref={scrollAreaRef}
-                    className='h-full overflow-y-auto overflow-x-hidden px-[8px]'
+                    className='h-full overflow-y-auto overflow-x-hidden px-2'
                   >
                     <div
-                      className={`w-full max-w-full space-y-[8px] overflow-hidden py-[8px] ${
+                      className={`w-full max-w-full space-y-2 overflow-hidden py-2 ${
                         showPlanTodos && planTodos.length > 0 ? 'pb-14' : 'pb-10'
                       }`}
                     >
@@ -517,7 +517,7 @@ export const Copilot = forwardRef<CopilotRef, CopilotProps>(({ panelWidth }, ref
                   {/* Todo list from plan tool - overlay at bottom so it's not clipped by scroll area */}
                   {showPlanTodos && planTodos.length > 0 && (
                     <div
-                      className='-translate-x-1/2 absolute bottom-0 left-1/2 z-[2] w-full max-w-full px-[8px]'
+                      className='-translate-x-1/2 absolute bottom-0 left-1/2 z-[2] w-full max-w-full px-2'
                       style={{ maxWidth: `${panelWidth - 18}px` } as React.CSSProperties}
                     >
                       <TodoList
@@ -533,7 +533,7 @@ export const Copilot = forwardRef<CopilotRef, CopilotProps>(({ panelWidth }, ref
                 <QueuedMessages />
 
                 {/* Input area with integrated mode selector */}
-                <div className='flex-shrink-0 px-[8px] pb-[8px]'>
+                <div className='flex-shrink-0 px-2 pb-2'>
                   <UserInput
                     ref={userInputRef}
                     onSubmit={handleSubmit}

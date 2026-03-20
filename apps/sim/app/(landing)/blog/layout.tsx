@@ -24,7 +24,7 @@ export default function StudioLayout({ children }: { children: React.ReactNode }
   }
 
   return (
-    <div className='flex min-h-screen flex-col bg-[#1C1C1C] font-[430] font-season text-[#ECECEC]'>
+    <div className='flex min-h-screen flex-col bg-[var(--text-primary)] font-[430] font-season text-[var(--landing-text)]'>
       <script
         type='application/ld+json'
         dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}

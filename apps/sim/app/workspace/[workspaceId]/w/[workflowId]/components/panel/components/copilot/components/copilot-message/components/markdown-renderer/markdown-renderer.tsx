@@ -163,7 +163,7 @@ const markdownComponents = {
     </h1>
   ),
   h2: ({ children }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h2 className='mt-2 mb-1 font-season font-semibold text-[15px] text-[var(--text-primary)] first:mt-0'>
+    <h2 className='mt-2 mb-1 font-season font-semibold text-base text-[var(--text-primary)] first:mt-0'>
       {children}
     </h2>
   ),

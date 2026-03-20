@@ -46,7 +46,7 @@ export function Welcome({ onQuestionClick, mode = 'ask' }: WelcomeProps) {
   return (
     <div className='flex w-full flex-col items-center'>
       {/* Unified capability cards */}
-      <div className='flex w-full flex-col items-center gap-[8px]'>
+      <div className='flex w-full flex-col items-center gap-2'>
         {capabilities.map(({ title, question }, idx) => (
           <Button
             key={idx}
@@ -63,7 +63,7 @@ export function Welcome({ onQuestionClick, mode = 'ask' }: WelcomeProps) {
       </div>
 
       {/* Tips */}
-      <p className='pt-[12px] text-center text-[13px] text-[var(--text-secondary)]'>
+      <p className='pt-3 text-center text-small text-[var(--text-secondary)]'>
         Tip: Use <span className='font-medium'>@</span> to reference chats, workflows, knowledge,
         blocks, or templates
       </p>
