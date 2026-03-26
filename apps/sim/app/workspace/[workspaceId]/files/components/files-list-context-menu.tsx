@@ -1,5 +1,6 @@
 'use client'
 
+import React, { useCallback } from 'react'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,7 +19,7 @@ interface FilesListContextMenuProps {
   disableUpload?: boolean
 }
 
-export function FilesListContextMenu({
+export const FilesListContextMenu = React.memo(function FilesListContextMenu({
   isOpen,
   position,
   onClose,
@@ -27,8 +28,15 @@ export function FilesListContextMenu({
   disableCreate = false,
   disableUpload = false,
 }: FilesListContextMenuProps) {
+  const handleOpenChange = useCallback(
+    (open: boolean) => {
+      if (!open) onClose()
+    },
+    [onClose]
+  )
+
   return (
-    <DropdownMenu open={isOpen} onOpenChange={(open) => !open && onClose()} modal={false}>
+    <DropdownMenu open={isOpen} onOpenChange={handleOpenChange} modal={false}>
       <DropdownMenuTrigger asChild>
         <div
           style={{
@@ -64,4 +72,4 @@ export function FilesListContextMenu({
       </DropdownMenuContent>
     </DropdownMenu>
   )
-}
+})

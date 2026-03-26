@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { memo, useCallback, useEffect, useRef, useState } from 'react'
 import { createLogger } from '@sim/logger'
 import { Skeleton } from '@/components/emcn'
 import { cn } from '@/lib/core/utils/cn'
@@ -226,6 +226,13 @@ function TextEditor({
     contentRef.current = value
   }, [])
 
+  const handleTextareaChange = useCallback(
+    (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      handleContentChange(e.target.value)
+    },
+    [handleContentChange]
+  )
+
   const onSave = useCallback(async () => {
     const currentContent = contentRef.current
     if (currentContent === savedContentRef.current) return
@@ -261,6 +268,8 @@ function TextEditor({
     },
     [saveRef]
   )
+
+  const handleStartResize = useCallback(() => setIsResizing(true), [])
 
   useEffect(() => {
     if (!isResizing) return
@@ -358,7 +367,7 @@ function TextEditor({
         <textarea
           ref={textareaRef}
           value={isStreaming ? revealedContent : content}
-          onChange={(e) => handleContentChange(e.target.value)}
+          onChange={handleTextareaChange}
           readOnly={!canEdit}
           spellCheck={false}
           style={showPreviewPane ? { width: `${splitPct}%`, flexShrink: 0 } : undefined}
@@ -376,7 +385,7 @@ function TextEditor({
               <div className='h-full w-px bg-[var(--border)]' />
               <div
                 className='-left-[3px] absolute top-0 z-10 h-full w-[6px] cursor-col-resize'
-                onMouseDown={() => setIsResizing(true)}
+                onMouseDown={handleStartResize}
                 role='separator'
                 aria-orientation='vertical'
                 aria-label='Resize split'
@@ -402,8 +411,12 @@ function TextEditor({
   )
 }
 
-function IframePreview({ file }: { file: WorkspaceFileRecord }) {
+const IframePreview = memo(function IframePreview({ file }: { file: WorkspaceFileRecord }) {
   const serveUrl = `/api/files/serve/${encodeURIComponent(file.key)}?context=workspace`
+
+  const handleError = useCallback(() => {
+    logger.error(`Failed to load file: ${file.name}`)
+  }, [file.name])
 
   return (
     <div className='flex flex-1 overflow-hidden'>
@@ -411,15 +424,13 @@ function IframePreview({ file }: { file: WorkspaceFileRecord }) {
         src={serveUrl}
         className='h-full w-full border-0'
         title={file.name}
-        onError={() => {
-          logger.error(`Failed to load file: ${file.name}`)
-        }}
+        onError={handleError}
       />
     </div>
   )
-}
+})
 
-function ImagePreview({ file }: { file: WorkspaceFileRecord }) {
+const ImagePreview = memo(function ImagePreview({ file }: { file: WorkspaceFileRecord }) {
   const serveUrl = `/api/files/serve/${encodeURIComponent(file.key)}?context=workspace`
 
   return (
@@ -432,7 +443,7 @@ function ImagePreview({ file }: { file: WorkspaceFileRecord }) {
       />
     </div>
   )
-}
+})
 
 const pptxSlideCache = new Map<string, string[]>()
 

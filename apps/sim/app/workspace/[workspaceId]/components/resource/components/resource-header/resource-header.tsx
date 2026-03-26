@@ -78,7 +78,7 @@ export const ResourceHeader = memo(function ResourceHeader({
                 {i > 0 && (
                   <span className='select-none text-[14px] text-[var(--text-icon)]'>/</span>
                 )}
-                <BreadcrumbSegment
+                <MemoizedBreadcrumbSegment
                   icon={i === 0 ? Icon : undefined}
                   label={crumb.label}
                   onClick={crumb.onClick}
@@ -97,28 +97,9 @@ export const ResourceHeader = memo(function ResourceHeader({
           )}
         </div>
         <div className='flex items-center gap-[6px]'>
-          {actions?.map((action) => {
-            const ActionIcon = action.icon
-            return (
-              <Button
-                key={action.label}
-                onClick={action.onClick}
-                disabled={action.disabled}
-                variant='subtle'
-                className='px-[8px] py-[4px] text-[12px]'
-              >
-                {ActionIcon && (
-                  <ActionIcon
-                    className={cn(
-                      'h-[14px] w-[14px] text-[var(--text-icon)]',
-                      action.label && 'mr-[6px]'
-                    )}
-                  />
-                )}
-                {action.label}
-              </Button>
-            )
-          })}
+          {actions?.map((action) => (
+            <MemoizedHeaderAction key={action.label} action={action} />
+          ))}
           {create && (
             <Button
               onClick={create.onClick}
@@ -136,79 +117,113 @@ export const ResourceHeader = memo(function ResourceHeader({
   )
 })
 
-function BreadcrumbSegment({
-  icon: Icon,
-  label,
-  onClick,
-  dropdownItems,
-  editing,
-}: {
-  icon?: React.ElementType
-  label: string
-  onClick?: () => void
-  dropdownItems?: DropdownOption[]
-  editing?: BreadcrumbEditing
-}) {
-  if (editing?.isEditing) {
-    return (
-      <span className='inline-flex items-center px-[8px] py-[4px]'>
-        {Icon && <Icon className='mr-[12px] h-[14px] w-[14px] text-[var(--text-icon)]' />}
-        <InlineRenameInput
-          value={editing.value}
-          onChange={editing.onChange}
-          onSubmit={editing.onSubmit}
-          onCancel={editing.onCancel}
-        />
-      </span>
-    )
-  }
-
-  const content = (
-    <>
-      {Icon && <Icon className='mr-[12px] h-[14px] w-[14px] text-[var(--text-icon)]' />}
-      {label}
-    </>
-  )
-
-  if (dropdownItems && dropdownItems.length > 0) {
-    return (
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant='subtle' className='px-[8px] py-[4px] font-medium text-[14px]'>
-            {content}
-            <ChevronDown className='ml-[8px] h-[7px] w-[9px] shrink-0 text-[var(--text-muted)]' />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align='start'>
-          {dropdownItems.map((item) => {
-            const ItemIcon = item.icon
-            return (
-              <DropdownMenuItem key={item.label} onClick={item.onClick} disabled={item.disabled}>
-                {ItemIcon && <ItemIcon className='h-[14px] w-[14px]' />}
-                {item.label}
-              </DropdownMenuItem>
-            )
-          })}
-        </DropdownMenuContent>
-      </DropdownMenu>
-    )
-  }
-
-  if (onClick) {
+const MemoizedHeaderAction = memo(
+  function HeaderActionButton({ action }: { action: HeaderAction }) {
+    const ActionIcon = action.icon
     return (
       <Button
+        onClick={action.onClick}
+        disabled={action.disabled}
         variant='subtle'
-        className='px-[8px] py-[4px] font-medium text-[14px]'
-        onClick={onClick}
+        className='px-[8px] py-[4px] text-[12px]'
       >
-        {content}
+        {ActionIcon && (
+          <ActionIcon
+            className={cn('h-[14px] w-[14px] text-[var(--text-icon)]', action.label && 'mr-[6px]')}
+          />
+        )}
+        {action.label}
       </Button>
     )
-  }
+  },
+  (prev, next) =>
+    prev.action.label === next.action.label &&
+    prev.action.icon === next.action.icon &&
+    prev.action.onClick === next.action.onClick &&
+    prev.action.disabled === next.action.disabled
+)
 
-  return (
-    <span className='inline-flex items-center px-[8px] py-[4px] font-medium text-[14px] text-[var(--text-body)]'>
-      {content}
-    </span>
-  )
-}
+const MemoizedBreadcrumbSegment = memo(
+  function BreadcrumbSegment({
+    icon: Icon,
+    label,
+    onClick,
+    dropdownItems,
+    editing,
+  }: {
+    icon?: React.ElementType
+    label: string
+    onClick?: () => void
+    dropdownItems?: DropdownOption[]
+    editing?: BreadcrumbEditing
+  }) {
+    if (editing?.isEditing) {
+      return (
+        <span className='inline-flex items-center px-[8px] py-[4px]'>
+          {Icon && <Icon className='mr-[12px] h-[14px] w-[14px] text-[var(--text-icon)]' />}
+          <InlineRenameInput
+            value={editing.value}
+            onChange={editing.onChange}
+            onSubmit={editing.onSubmit}
+            onCancel={editing.onCancel}
+          />
+        </span>
+      )
+    }
+
+    const content = (
+      <>
+        {Icon && <Icon className='mr-[12px] h-[14px] w-[14px] text-[var(--text-icon)]' />}
+        {label}
+      </>
+    )
+
+    if (dropdownItems && dropdownItems.length > 0) {
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant='subtle' className='px-[8px] py-[4px] font-medium text-[14px]'>
+              {content}
+              <ChevronDown className='ml-[8px] h-[7px] w-[9px] shrink-0 text-[var(--text-muted)]' />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align='start'>
+            {dropdownItems.map((item) => {
+              const ItemIcon = item.icon
+              return (
+                <DropdownMenuItem key={item.label} onClick={item.onClick} disabled={item.disabled}>
+                  {ItemIcon && <ItemIcon className='h-[14px] w-[14px]' />}
+                  {item.label}
+                </DropdownMenuItem>
+              )
+            })}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      )
+    }
+
+    if (onClick) {
+      return (
+        <Button
+          variant='subtle'
+          className='px-[8px] py-[4px] font-medium text-[14px]'
+          onClick={onClick}
+        >
+          {content}
+        </Button>
+      )
+    }
+
+    return (
+      <span className='inline-flex items-center px-[8px] py-[4px] font-medium text-[14px] text-[var(--text-body)]'>
+        {content}
+      </span>
+    )
+  },
+  (prev, next) =>
+    prev.icon === next.icon &&
+    prev.label === next.label &&
+    prev.onClick === next.onClick &&
+    prev.dropdownItems === next.dropdownItems &&
+    prev.editing === next.editing
+)

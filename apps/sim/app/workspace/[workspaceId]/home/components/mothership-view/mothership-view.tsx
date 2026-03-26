@@ -4,12 +4,12 @@ import { forwardRef, memo, useCallback, useState } from 'react'
 import { cn } from '@/lib/core/utils/cn'
 import { getFileExtension } from '@/lib/uploads/utils/file-utils'
 import type { PreviewMode } from '@/app/workspace/[workspaceId]/files/components/file-viewer'
-import { RICH_PREVIEWABLE_EXTENSIONS } from '@/app/workspace/[workspaceId]/files/components/file-viewer'
 import type {
   MothershipResource,
   MothershipResourceType,
 } from '@/app/workspace/[workspaceId]/home/types'
 import { useUserPermissionsContext } from '@/app/workspace/[workspaceId]/providers/workspace-permissions-provider'
+import { RICH_PREVIEWABLE_EXTENSIONS } from '../../../files/components'
 import { ResourceActions, ResourceContent, ResourceTabs } from './components'
 
 const PREVIEW_CYCLE: Record<PreviewMode, PreviewMode> = {

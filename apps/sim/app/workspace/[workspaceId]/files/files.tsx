@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { createLogger } from '@sim/logger'
 import { useParams, useRouter } from 'next/navigation'
 import {
@@ -157,6 +157,18 @@ export function Files() {
   const filesRef = useRef(files)
   filesRef.current = files
 
+  const routerRef = useRef(router)
+  routerRef.current = router
+
+  const openContextMenuRef = useRef(openContextMenu)
+  openContextMenuRef.current = openContextMenu
+  const closeContextMenuRef = useRef(closeContextMenu)
+  closeContextMenuRef.current = closeContextMenu
+  const closeListContextMenuRef = useRef(closeListContextMenu)
+  closeListContextMenuRef.current = closeListContextMenu
+  const handleListContextMenuRef = useRef(handleListContextMenu)
+  handleListContextMenuRef.current = handleListContextMenu
+
   const [uploading, setUploading] = useState(false)
   const [uploadProgress, setUploadProgress] = useState({ completed: 0, total: 0 })
   const [searchTerm, setSearchTerm] = useState('')
@@ -169,6 +181,19 @@ export function Files() {
   const [contextMenuFile, setContextMenuFile] = useState<WorkspaceFileRecord | null>(null)
   const [deleteTargetFile, setDeleteTargetFile] = useState<WorkspaceFileRecord | null>(null)
 
+  const isDirtyRef = useRef(isDirty)
+  isDirtyRef.current = isDirty
+  const saveStatusRef = useRef(saveStatus)
+  saveStatusRef.current = saveStatus
+  const contextMenuFileRef = useRef(contextMenuFile)
+  contextMenuFileRef.current = contextMenuFile
+  const deleteTargetFileRef = useRef(deleteTargetFile)
+  deleteTargetFileRef.current = deleteTargetFile
+  const creatingFileRef = useRef(creatingFile)
+  creatingFileRef.current = creatingFile
+  const fileIdFromRouteRef = useRef(fileIdFromRoute)
+  fileIdFromRouteRef.current = fileIdFromRoute
+
   const listRename = useInlineRename({
     onSave: (fileId, name) => renameFile.mutate({ workspaceId, fileId, name }),
   })
@@ -179,10 +204,30 @@ export function Files() {
     },
   })
 
+  const listRenameRef = useRef(listRename)
+  listRenameRef.current = listRename
+  const headerRenameRef = useRef(headerRename)
+  headerRenameRef.current = headerRename
+
+  const stableHeaderEditOnChange = useCallback((value: string) => {
+    headerRenameRef.current.setEditValue(value)
+  }, [])
+
+  const stableHeaderEditOnSubmit = useCallback(() => {
+    headerRenameRef.current.submitRename()
+  }, [])
+
+  const stableHeaderEditOnCancel = useCallback(() => {
+    headerRenameRef.current.cancelRename()
+  }, [])
+
   const selectedFile = useMemo(
     () => (fileIdFromRoute ? files.find((f) => f.id === fileIdFromRoute) : null),
     [fileIdFromRoute, files]
   )
+
+  const selectedFileRef = useRef(selectedFile)
+  selectedFileRef.current = selectedFile
 
   const filteredFiles = useMemo(() => {
     if (!searchTerm) return files
@@ -289,7 +334,7 @@ export function Files() {
   }, [])
 
   const handleDelete = useCallback(async () => {
-    const target = deleteTargetFile
+    const target = deleteTargetFileRef.current
     if (!target) return
 
     try {
@@ -299,44 +344,88 @@ export function Files() {
       })
       setShowDeleteConfirm(false)
       setDeleteTargetFile(null)
-      if (fileIdFromRoute === target.id) {
+      if (fileIdFromRouteRef.current === target.id) {
         setIsDirty(false)
         setSaveStatus('idle')
-        router.push(`/workspace/${workspaceId}/files`)
+        routerRef.current.push(`/workspace/${workspaceId}/files`)
       }
     } catch (err) {
       logger.error('Failed to delete file:', err)
     }
-  }, [deleteTargetFile, workspaceId, fileIdFromRoute, router])
+  }, [workspaceId])
 
   const handleSave = useCallback(async () => {
-    if (!saveRef.current || !isDirty || saveStatus === 'saving') return
+    if (!saveRef.current || !isDirtyRef.current || saveStatusRef.current === 'saving') return
     await saveRef.current()
-  }, [isDirty, saveStatus])
+  }, [])
 
   const handleBackAttempt = useCallback(() => {
-    if (isDirty) {
+    if (isDirtyRef.current) {
       setShowUnsavedChangesAlert(true)
     } else {
       setPreviewMode('editor')
-      router.push(`/workspace/${workspaceId}/files`)
+      routerRef.current.push(`/workspace/${workspaceId}/files`)
     }
-  }, [isDirty, router, workspaceId])
+  }, [workspaceId])
 
   const handleStartHeaderRename = useCallback(() => {
-    if (selectedFile) headerRename.startRename(selectedFile.id, selectedFile.name)
-  }, [selectedFile, headerRename.startRename])
+    const file = selectedFileRef.current
+    if (file) headerRenameRef.current.startRename(file.id, file.name)
+  }, [])
 
   const handleDownloadSelected = useCallback(() => {
-    if (selectedFile) handleDownload(selectedFile)
-  }, [selectedFile, handleDownload])
+    const file = selectedFileRef.current
+    if (file) handleDownload(file)
+  }, [handleDownload])
 
   const handleDeleteSelected = useCallback(() => {
-    if (selectedFile) {
-      setDeleteTargetFile(selectedFile)
+    const file = selectedFileRef.current
+    if (file) {
+      setDeleteTargetFile(file)
       setShowDeleteConfirm(true)
     }
-  }, [selectedFile])
+  }, [])
+
+  const headerEditingState = useMemo(
+    () =>
+      headerRename.editingId
+        ? {
+            isEditing: true as const,
+            value: headerRename.editValue,
+            onChange: stableHeaderEditOnChange,
+            onSubmit: stableHeaderEditOnSubmit,
+            onCancel: stableHeaderEditOnCancel,
+          }
+        : undefined,
+    [
+      headerRename.editingId,
+      headerRename.editValue,
+      stableHeaderEditOnChange,
+      stableHeaderEditOnSubmit,
+      stableHeaderEditOnCancel,
+    ]
+  )
+
+  const breadcrumbDropdownItems = useMemo(
+    () => [
+      {
+        label: 'Rename',
+        icon: Pencil,
+        onClick: handleStartHeaderRename,
+      },
+      {
+        label: 'Download',
+        icon: Download,
+        onClick: handleDownloadSelected,
+      },
+      {
+        label: 'Delete',
+        icon: Trash,
+        onClick: handleDeleteSelected,
+      },
+    ],
+    [handleStartHeaderRename, handleDownloadSelected, handleDeleteSelected]
+  )
 
   const fileDetailBreadcrumbs = useMemo(
     () =>
@@ -345,47 +434,12 @@ export function Files() {
             { label: 'Files', onClick: handleBackAttempt },
             {
               label: selectedFile.name,
-              editing: headerRename.editingId
-                ? {
-                    isEditing: true,
-                    value: headerRename.editValue,
-                    onChange: headerRename.setEditValue,
-                    onSubmit: headerRename.submitRename,
-                    onCancel: headerRename.cancelRename,
-                  }
-                : undefined,
-              dropdownItems: [
-                {
-                  label: 'Rename',
-                  icon: Pencil,
-                  onClick: handleStartHeaderRename,
-                },
-                {
-                  label: 'Download',
-                  icon: Download,
-                  onClick: handleDownloadSelected,
-                },
-                {
-                  label: 'Delete',
-                  icon: Trash,
-                  onClick: handleDeleteSelected,
-                },
-              ],
+              editing: headerEditingState,
+              dropdownItems: breadcrumbDropdownItems,
             },
           ]
         : [],
-    [
-      selectedFile,
-      handleBackAttempt,
-      headerRename.editingId,
-      headerRename.editValue,
-      headerRename.setEditValue,
-      headerRename.submitRename,
-      headerRename.cancelRename,
-      handleStartHeaderRename,
-      handleDownloadSelected,
-      handleDeleteSelected,
-    ]
+    [selectedFile, handleBackAttempt, headerEditingState, breadcrumbDropdownItems]
   )
 
   const handleDiscardChanges = useCallback(() => {
@@ -393,15 +447,15 @@ export function Files() {
     setIsDirty(false)
     setSaveStatus('idle')
     setPreviewMode('editor')
-    router.push(`/workspace/${workspaceId}/files`)
-  }, [router, workspaceId])
+    routerRef.current.push(`/workspace/${workspaceId}/files`)
+  }, [workspaceId])
 
   const handleCreateFile = useCallback(async () => {
-    if (creatingFile) return
+    if (creatingFileRef.current) return
     setCreatingFile(true)
 
     try {
-      const existingNames = new Set(files.map((f) => f.name))
+      const existingNames = new Set(filesRef.current.map((f) => f.name))
       let name = 'untitled.md'
       let counter = 1
       while (existingNames.has(name)) {
@@ -416,68 +470,91 @@ export function Files() {
       const fileId = result.file?.id
       if (fileId) {
         justCreatedFileIdRef.current = fileId
-        router.push(`/workspace/${workspaceId}/files/${fileId}`)
+        routerRef.current.push(`/workspace/${workspaceId}/files/${fileId}`)
       }
     } catch (err) {
       logger.error('Failed to create file:', err)
     } finally {
       setCreatingFile(false)
     }
-  }, [creatingFile, files, workspaceId, router])
+  }, [workspaceId])
 
-  const handleRowContextMenu = useCallback(
-    (e: React.MouseEvent, rowId: string) => {
-      const file = files.find((f) => f.id === rowId)
-      if (file) {
-        setContextMenuFile(file)
-        openContextMenu(e)
-      }
-    },
-    [files, openContextMenu]
-  )
+  const handleRowContextMenu = useCallback((e: React.MouseEvent, rowId: string) => {
+    const file = filesRef.current.find((f) => f.id === rowId)
+    if (file) {
+      setContextMenuFile(file)
+      openContextMenuRef.current(e)
+    }
+  }, [])
 
   const handleContextMenuOpen = useCallback(() => {
-    if (!contextMenuFile) return
-    router.push(`/workspace/${workspaceId}/files/${contextMenuFile.id}`)
-    closeContextMenu()
-  }, [contextMenuFile, closeContextMenu, router, workspaceId])
+    const file = contextMenuFileRef.current
+    if (!file) return
+    routerRef.current.push(`/workspace/${workspaceId}/files/${file.id}`)
+    closeContextMenuRef.current()
+  }, [workspaceId])
 
   const handleContextMenuDownload = useCallback(() => {
-    if (!contextMenuFile) return
-    handleDownload(contextMenuFile)
-    closeContextMenu()
-  }, [contextMenuFile, handleDownload, closeContextMenu])
+    const file = contextMenuFileRef.current
+    if (!file) return
+    handleDownload(file)
+    closeContextMenuRef.current()
+  }, [handleDownload])
 
   const handleContextMenuRename = useCallback(() => {
-    if (contextMenuFile) listRename.startRename(contextMenuFile.id, contextMenuFile.name)
-    closeContextMenu()
-  }, [contextMenuFile, listRename.startRename, closeContextMenu])
+    const file = contextMenuFileRef.current
+    if (file) listRenameRef.current.startRename(file.id, file.name)
+    closeContextMenuRef.current()
+  }, [])
 
   const handleContextMenuDelete = useCallback(() => {
-    if (!contextMenuFile) return
-    setDeleteTargetFile(contextMenuFile)
+    const file = contextMenuFileRef.current
+    if (!file) return
+    setDeleteTargetFile(file)
     setShowDeleteConfirm(true)
-    closeContextMenu()
-  }, [contextMenuFile, closeContextMenu])
+    closeContextMenuRef.current()
+  }, [])
 
-  const handleContentContextMenu = useCallback(
-    (e: React.MouseEvent) => {
-      const target = e.target as HTMLElement
-      if (
-        target.closest('[data-resource-row]') ||
-        target.closest('button, input, a, [role="button"]')
-      ) {
-        return
-      }
-      handleListContextMenu(e)
-    },
-    [handleListContextMenu]
-  )
+  const handleContentContextMenu = useCallback((e: React.MouseEvent) => {
+    const target = e.target as HTMLElement
+    if (
+      target.closest('[data-resource-row]') ||
+      target.closest('button, input, a, [role="button"]')
+    ) {
+      return
+    }
+    handleListContextMenuRef.current(e)
+  }, [])
 
   const handleListUploadFile = useCallback(() => {
     fileInputRef.current?.click()
-    closeListContextMenu()
-  }, [closeListContextMenu])
+    closeListContextMenuRef.current()
+  }, [])
+
+  const handleRowClick = useCallback(
+    (id: string) => {
+      if (listRenameRef.current.editingId !== id && !headerRenameRef.current.editingId) {
+        routerRef.current.push(`/workspace/${workspaceId}/files/${id}`)
+      }
+    },
+    [workspaceId]
+  )
+
+  const handleUploadClick = useCallback(() => {
+    fileInputRef.current?.click()
+  }, [])
+
+  const handleNavigateToFiles = useCallback(() => {
+    routerRef.current.push(`/workspace/${workspaceId}/files`)
+  }, [workspaceId])
+
+  const handleCloseUnsavedAlert = useCallback(() => {
+    setShowUnsavedChangesAlert(false)
+  }, [])
+
+  const handleCloseContextMenu = useCallback((open: boolean) => {
+    if (!open) closeContextMenuRef.current()
+  }, [])
 
   useEffect(() => {
     const isJustCreated =
@@ -600,19 +677,57 @@ export function Files() {
     handleDeleteSelected,
   ])
 
+  const createConfig = useMemo(
+    () => ({
+      label: 'New file',
+      onClick: handleCreateFile,
+      disabled: uploading || creatingFile || userPermissions.canEdit !== true,
+    }),
+    [handleCreateFile, uploading, creatingFile, userPermissions.canEdit]
+  )
+
+  const searchConfig = useMemo(
+    () => ({
+      value: searchTerm,
+      onChange: setSearchTerm,
+      placeholder: 'Search files...',
+    }),
+    [searchTerm]
+  )
+
+  const uploadButtonLabel =
+    uploading && uploadProgress.total > 0
+      ? `${uploadProgress.completed}/${uploadProgress.total}`
+      : uploading
+        ? 'Uploading...'
+        : 'Upload'
+
+  const listHeaderActions = useMemo<HeaderAction[]>(
+    () => [
+      {
+        label: uploadButtonLabel,
+        icon: Upload,
+        onClick: handleUploadClick,
+      },
+    ],
+    [uploadButtonLabel, handleUploadClick]
+  )
+
+  const loadingBreadcrumbs = useMemo(
+    () => [
+      {
+        label: 'Files',
+        onClick: handleNavigateToFiles,
+      },
+      { label: '...' },
+    ],
+    [handleNavigateToFiles]
+  )
+
   if (fileIdFromRoute && !selectedFile) {
     return (
       <div className='flex h-full flex-1 flex-col overflow-hidden bg-[var(--bg)]'>
-        <ResourceHeader
-          icon={FilesIcon}
-          breadcrumbs={[
-            {
-              label: 'Files',
-              onClick: () => router.push(`/workspace/${workspaceId}/files`),
-            },
-            { label: '...' },
-          ]}
-        />
+        <ResourceHeader icon={FilesIcon} breadcrumbs={loadingBreadcrumbs} />
         <div className='flex flex-1 items-center justify-center'>
           <Skeleton className='h-[16px] w-[200px]' />
         </div>
@@ -650,7 +765,7 @@ export function Files() {
                 </p>
               </ModalBody>
               <ModalFooter>
-                <Button variant='default' onClick={() => setShowUnsavedChangesAlert(false)}>
+                <Button variant='default' onClick={handleCloseUnsavedAlert}>
                   Keep Editing
                 </Button>
                 <Button variant='destructive' onClick={handleDiscardChanges}>
@@ -672,43 +787,18 @@ export function Files() {
     )
   }
 
-  const uploadButtonLabel =
-    uploading && uploadProgress.total > 0
-      ? `${uploadProgress.completed}/${uploadProgress.total}`
-      : uploading
-        ? 'Uploading...'
-        : 'Upload'
-
   return (
     <>
       <Resource
         icon={FilesIcon}
         title='Files'
-        create={{
-          label: 'New file',
-          onClick: handleCreateFile,
-          disabled: uploading || creatingFile || userPermissions.canEdit !== true,
-        }}
-        search={{
-          value: searchTerm,
-          onChange: setSearchTerm,
-          placeholder: 'Search files...',
-        }}
+        create={createConfig}
+        search={searchConfig}
         defaultSort='created'
-        headerActions={[
-          {
-            label: uploadButtonLabel,
-            icon: Upload,
-            onClick: () => fileInputRef.current?.click(),
-          },
-        ]}
+        headerActions={listHeaderActions}
         columns={COLUMNS}
         rows={rows}
-        onRowClick={(id) => {
-          if (listRename.editingId !== id && !headerRename.editingId) {
-            router.push(`/workspace/${workspaceId}/files/${id}`)
-          }
-        }}
+        onRowClick={handleRowClick}
         onRowContextMenu={handleRowContextMenu}
         isLoading={isLoading}
         onContextMenu={handleContentContextMenu}
@@ -724,11 +814,7 @@ export function Files() {
         disableUpload={uploading || userPermissions.canEdit !== true}
       />
 
-      <DropdownMenu
-        open={isContextMenuOpen}
-        onOpenChange={(open) => !open && closeContextMenu()}
-        modal={false}
-      >
+      <DropdownMenu open={isContextMenuOpen} onOpenChange={handleCloseContextMenu} modal={false}>
         <DropdownMenuTrigger asChild>
           <div
             style={{
@@ -802,7 +888,7 @@ interface DeleteConfirmModalProps {
   isPending: boolean
 }
 
-function DeleteConfirmModal({
+const DeleteConfirmModal = React.memo(function DeleteConfirmModal({
   open,
   onOpenChange,
   fileName,
@@ -833,4 +919,4 @@ function DeleteConfirmModal({
       </ModalContent>
     </Modal>
   )
-}
+})

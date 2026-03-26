@@ -73,7 +73,7 @@ const SKELETON_ROW_COUNT = 5
  * Shared page shell for resource list pages (tables, files, knowledge, schedules, logs).
  * Renders the header, toolbar with search, and a data table from column/row definitions.
  */
-export function Resource({
+export const Resource = memo(function Resource({
   icon,
   title,
   breadcrumbs,
@@ -135,7 +135,7 @@ export function Resource({
       />
     </div>
   )
-}
+})
 
 export interface ResourceTableProps {
   columns: ResourceColumn[]
@@ -229,9 +229,38 @@ export const ResourceTable = memo(function ResourceTable({
   const hasCheckbox = selectable != null
   const totalColSpan = columns.length + (hasCheckbox ? 1 : 0)
 
+  const onRowClickRef = useRef(onRowClick)
+  onRowClickRef.current = onRowClick
+  const onRowHoverRef = useRef(onRowHover)
+  onRowHoverRef.current = onRowHover
+  const onRowContextMenuRef = useRef(onRowContextMenu)
+  onRowContextMenuRef.current = onRowContextMenu
+  const selectableRef = useRef(selectable)
+  selectableRef.current = selectable
+
+  const handleRowClick = useCallback((rowId: string) => {
+    onRowClickRef.current?.(rowId)
+  }, [])
+
+  const handleRowHover = useCallback((rowId: string) => {
+    onRowHoverRef.current?.(rowId)
+  }, [])
+
+  const handleRowContextMenu = useCallback((e: React.MouseEvent, rowId: string) => {
+    onRowContextMenuRef.current?.(e, rowId)
+  }, [])
+
+  const handleSelectRow = useCallback((rowId: string, checked: boolean) => {
+    selectableRef.current?.onSelectRow(rowId, checked)
+  }, [])
+
+  const handleSelectAll = useCallback((checked: boolean) => {
+    selectableRef.current?.onSelectAll(checked)
+  }, [])
+
   if (isLoading) {
     return (
-      <DataTableSkeleton
+      <MemoizedDataTableSkeleton
         columns={columns}
         rowCount={SKELETON_ROW_COUNT}
         hasCheckbox={hasCheckbox}
@@ -251,122 +280,48 @@ export const ResourceTable = memo(function ResourceTable({
     <div className='relative flex min-h-0 flex-1 flex-col overflow-hidden'>
       <div ref={headerRef} className='overflow-hidden'>
         <table className='w-full table-fixed text-[13px]'>
-          <ResourceColGroup columns={columns} hasCheckbox={hasCheckbox} />
-          <thead className='shadow-[inset_0_-1px_0_var(--border)]'>
-            <tr>
-              {hasCheckbox && (
-                <th className='h-10 w-[52px] py-[6px] pr-0 pl-[20px] text-left align-middle'>
-                  <Checkbox
-                    size='sm'
-                    checked={selectable.isAllSelected}
-                    onCheckedChange={(checked) => selectable.onSelectAll(checked as boolean)}
-                    disabled={selectable.disabled}
-                    aria-label='Select all'
-                  />
-                </th>
-              )}
-              {columns.map((col) => {
-                if (!sortEnabled) {
-                  return (
-                    <th
-                      key={col.id}
-                      className='h-10 px-[24px] py-[6px] text-left align-middle font-base text-[12px] text-[var(--text-muted)]'
-                    >
-                      {col.header}
-                    </th>
-                  )
-                }
-                const isActive = internalSort.column === col.id
-                const SortIcon = internalSort.direction === 'asc' ? ArrowUp : ArrowDown
-                return (
-                  <th key={col.id} className='h-10 px-[16px] py-[6px] text-left align-middle'>
-                    <Button
-                      variant='subtle'
-                      className='px-[8px] py-[4px] font-base text-[var(--text-muted)] hover:text-[var(--text-muted)]'
-                      onClick={() =>
-                        handleSort(
-                          col.id,
-                          isActive ? (internalSort.direction === 'desc' ? 'asc' : 'desc') : 'desc'
-                        )
-                      }
-                    >
-                      {col.header}
-                      {isActive && (
-                        <SortIcon className='ml-[4px] h-[12px] w-[12px] text-[var(--text-icon)]' />
-                      )}
-                    </Button>
-                  </th>
-                )
-              })}
-            </tr>
-          </thead>
+          <MemoizedColGroup columns={columns} hasCheckbox={hasCheckbox} />
+          <MemoizedTableHeader
+            columns={columns}
+            hasCheckbox={hasCheckbox}
+            sortEnabled={sortEnabled}
+            sortColumn={internalSort.column}
+            sortDirection={internalSort.direction}
+            onSort={handleSort}
+            isAllSelected={selectable?.isAllSelected ?? false}
+            onSelectAll={handleSelectAll}
+            selectableDisabled={selectable?.disabled}
+          />
         </table>
       </div>
       <div className='min-h-0 flex-1 overflow-auto' onScroll={handleBodyScroll}>
         <table className='w-full table-fixed text-[13px]'>
-          <ResourceColGroup columns={columns} hasCheckbox={hasCheckbox} />
+          <MemoizedColGroup columns={columns} hasCheckbox={hasCheckbox} />
           <tbody>
-            {displayRows.map((row) => {
-              const isSelected = selectable?.selectedIds.has(row.id) ?? false
-              return (
-                <tr
-                  key={row.id}
-                  data-resource-row
-                  data-row-id={row.id}
-                  className={cn(
-                    'transition-colors hover:bg-[var(--surface-3)]',
-                    onRowClick && 'cursor-pointer',
-                    (selectedRowId === row.id || isSelected) && 'bg-[var(--surface-3)]'
-                  )}
-                  onClick={() => onRowClick?.(row.id)}
-                  onMouseEnter={onRowHover ? () => onRowHover(row.id) : undefined}
-                  onContextMenu={(e) => onRowContextMenu?.(e, row.id)}
-                >
-                  {hasCheckbox && (
-                    <td className='w-[52px] py-[10px] pr-0 pl-[20px] align-middle'>
-                      <Checkbox
-                        size='sm'
-                        checked={isSelected}
-                        onCheckedChange={(checked) =>
-                          selectable.onSelectRow(row.id, checked as boolean)
-                        }
-                        disabled={selectable.disabled}
-                        aria-label='Select row'
-                        onClick={(e) => e.stopPropagation()}
-                      />
-                    </td>
-                  )}
-                  {columns.map((col, colIdx) => {
-                    const cell = row.cells[col.id]
-                    return (
-                      <td key={col.id} className='px-[24px] py-[10px] align-middle'>
-                        <CellContent
-                          cell={{ ...cell, label: cell?.label || EMPTY_CELL_PLACEHOLDER }}
-                          primary={colIdx === 0}
-                        />
-                      </td>
-                    )
-                  })}
-                </tr>
-              )
-            })}
+            {displayRows.map((row) => (
+              <MemoizedRow
+                key={row.id}
+                row={row}
+                columns={columns}
+                isSelectedById={selectedRowId === row.id}
+                isChecked={selectable?.selectedIds.has(row.id) ?? false}
+                hasCheckbox={hasCheckbox}
+                hasClickHandler={onRowClick != null}
+                hasHoverHandler={onRowHover != null}
+                selectableDisabled={selectable?.disabled}
+                onRowClick={handleRowClick}
+                onRowHover={handleRowHover}
+                onRowContextMenu={handleRowContextMenu}
+                onSelectRow={handleSelectRow}
+              />
+            ))}
             {create && (
-              <tr
-                className={cn(
-                  'transition-colors',
-                  create.disabled
-                    ? 'cursor-not-allowed'
-                    : 'cursor-pointer hover:bg-[var(--surface-3)]'
-                )}
-                onClick={create.disabled ? undefined : create.onClick}
-              >
-                <td colSpan={totalColSpan} className='px-[24px] py-[10px] align-middle'>
-                  <span className='flex items-center gap-[12px] font-medium text-[14px] text-[var(--text-secondary)]'>
-                    <Plus className='h-[14px] w-[14px] text-[var(--text-subtle)]' />
-                    {create.label}
-                  </span>
-                </td>
-              </tr>
+              <MemoizedCreateRow
+                label={create.label}
+                disabled={create.disabled}
+                onClick={create.onClick}
+                colSpan={totalColSpan}
+              />
             )}
           </tbody>
         </table>
@@ -380,7 +335,7 @@ export const ResourceTable = memo(function ResourceTable({
       </div>
       {overlay}
       {pagination && pagination.totalPages > 1 && (
-        <Pagination
+        <MemoizedPagination
           currentPage={pagination.currentPage}
           totalPages={pagination.totalPages}
           onPageChange={pagination.onPageChange}
@@ -390,7 +345,248 @@ export const ResourceTable = memo(function ResourceTable({
   )
 })
 
-function Pagination({
+interface MemoizedTableHeaderProps {
+  columns: ResourceColumn[]
+  hasCheckbox: boolean
+  sortEnabled: boolean
+  sortColumn: string
+  sortDirection: 'asc' | 'desc'
+  onSort: (column: string, direction: 'asc' | 'desc') => void
+  isAllSelected: boolean
+  onSelectAll: (checked: boolean) => void
+  selectableDisabled?: boolean
+}
+
+const MemoizedTableHeader = memo(
+  function TableHeader({
+    columns,
+    hasCheckbox,
+    sortEnabled,
+    sortColumn,
+    sortDirection,
+    onSort,
+    isAllSelected,
+    onSelectAll,
+    selectableDisabled,
+  }: MemoizedTableHeaderProps) {
+    const handleSelectAllChange = useCallback(
+      (checked: boolean | 'indeterminate') => {
+        onSelectAll(checked as boolean)
+      },
+      [onSelectAll]
+    )
+
+    return (
+      <thead className='shadow-[inset_0_-1px_0_var(--border)]'>
+        <tr>
+          {hasCheckbox && (
+            <th className='h-10 w-[52px] py-[6px] pr-0 pl-[20px] text-left align-middle'>
+              <Checkbox
+                size='sm'
+                checked={isAllSelected}
+                onCheckedChange={handleSelectAllChange}
+                disabled={selectableDisabled}
+                aria-label='Select all'
+              />
+            </th>
+          )}
+          {columns.map((col) => {
+            if (!sortEnabled) {
+              return (
+                <th
+                  key={col.id}
+                  className='h-10 px-[24px] py-[6px] text-left align-middle font-base text-[12px] text-[var(--text-muted)]'
+                >
+                  {col.header}
+                </th>
+              )
+            }
+            const isActive = sortColumn === col.id
+            const SortIcon = sortDirection === 'asc' ? ArrowUp : ArrowDown
+            return (
+              <th key={col.id} className='h-10 px-[16px] py-[6px] text-left align-middle'>
+                <Button
+                  variant='subtle'
+                  className='px-[8px] py-[4px] font-base text-[var(--text-muted)] hover:text-[var(--text-muted)]'
+                  onClick={() =>
+                    onSort(col.id, isActive ? (sortDirection === 'desc' ? 'asc' : 'desc') : 'desc')
+                  }
+                >
+                  {col.header}
+                  {isActive && (
+                    <SortIcon className='ml-[4px] h-[12px] w-[12px] text-[var(--text-icon)]' />
+                  )}
+                </Button>
+              </th>
+            )
+          })}
+        </tr>
+      </thead>
+    )
+  },
+  (prev, next) =>
+    prev.columns === next.columns &&
+    prev.hasCheckbox === next.hasCheckbox &&
+    prev.sortEnabled === next.sortEnabled &&
+    prev.sortColumn === next.sortColumn &&
+    prev.sortDirection === next.sortDirection &&
+    prev.onSort === next.onSort &&
+    prev.isAllSelected === next.isAllSelected &&
+    prev.onSelectAll === next.onSelectAll &&
+    prev.selectableDisabled === next.selectableDisabled
+)
+
+interface MemoizedRowProps {
+  row: ResourceRow
+  columns: ResourceColumn[]
+  isSelectedById: boolean
+  isChecked: boolean
+  hasCheckbox: boolean
+  hasClickHandler: boolean
+  hasHoverHandler: boolean
+  selectableDisabled?: boolean
+  onRowClick: (rowId: string) => void
+  onRowHover: (rowId: string) => void
+  onRowContextMenu: (e: React.MouseEvent, rowId: string) => void
+  onSelectRow: (rowId: string, checked: boolean) => void
+}
+
+const MemoizedRow = memo(
+  function MemoizedRow({
+    row,
+    columns,
+    isSelectedById,
+    isChecked,
+    hasCheckbox,
+    hasClickHandler,
+    hasHoverHandler,
+    selectableDisabled,
+    onRowClick,
+    onRowHover,
+    onRowContextMenu,
+    onSelectRow,
+  }: MemoizedRowProps) {
+    const handleClick = useCallback(() => {
+      onRowClick(row.id)
+    }, [onRowClick, row.id])
+
+    const handleHover = useCallback(() => {
+      onRowHover(row.id)
+    }, [onRowHover, row.id])
+
+    const handleContextMenu = useCallback(
+      (e: React.MouseEvent) => {
+        onRowContextMenu(e, row.id)
+      },
+      [onRowContextMenu, row.id]
+    )
+
+    const handleSelect = useCallback(
+      (checked: boolean | 'indeterminate') => {
+        onSelectRow(row.id, checked as boolean)
+      },
+      [onSelectRow, row.id]
+    )
+
+    const handleCheckboxClick = useCallback((e: React.MouseEvent) => {
+      e.stopPropagation()
+    }, [])
+
+    return (
+      <tr
+        data-resource-row
+        data-row-id={row.id}
+        className={cn(
+          'transition-colors hover:bg-[var(--surface-3)]',
+          hasClickHandler && 'cursor-pointer',
+          (isSelectedById || isChecked) && 'bg-[var(--surface-3)]'
+        )}
+        onClick={hasClickHandler ? handleClick : undefined}
+        onMouseEnter={hasHoverHandler ? handleHover : undefined}
+        onContextMenu={handleContextMenu}
+      >
+        {hasCheckbox && (
+          <td className='w-[52px] py-[10px] pr-0 pl-[20px] align-middle'>
+            <Checkbox
+              size='sm'
+              checked={isChecked}
+              onCheckedChange={handleSelect}
+              disabled={selectableDisabled}
+              aria-label='Select row'
+              onClick={handleCheckboxClick}
+            />
+          </td>
+        )}
+        {columns.map((col, colIdx) => {
+          const cell = row.cells[col.id]
+          return (
+            <td key={col.id} className='px-[24px] py-[10px] align-middle'>
+              <MemoizedCellContent cell={cell} primary={colIdx === 0} />
+            </td>
+          )
+        })}
+      </tr>
+    )
+  },
+  (prev, next) =>
+    prev.row === next.row &&
+    prev.columns === next.columns &&
+    prev.isSelectedById === next.isSelectedById &&
+    prev.isChecked === next.isChecked &&
+    prev.hasCheckbox === next.hasCheckbox &&
+    prev.hasClickHandler === next.hasClickHandler &&
+    prev.hasHoverHandler === next.hasHoverHandler &&
+    prev.selectableDisabled === next.selectableDisabled &&
+    prev.onRowClick === next.onRowClick &&
+    prev.onRowHover === next.onRowHover &&
+    prev.onRowContextMenu === next.onRowContextMenu &&
+    prev.onSelectRow === next.onSelectRow
+)
+
+const MemoizedCellContent = memo(
+  function CellContent({ cell, primary }: { cell: ResourceCell | undefined; primary?: boolean }) {
+    if (cell?.content) return <>{cell.content}</>
+    const label = cell?.label || EMPTY_CELL_PLACEHOLDER
+    return (
+      <span
+        className={cn(
+          'flex min-w-0 items-center gap-[12px] font-medium text-[14px]',
+          primary ? 'text-[var(--text-body)]' : 'text-[var(--text-secondary)]'
+        )}
+      >
+        {cell?.icon && <span className='flex-shrink-0 text-[var(--text-icon)]'>{cell.icon}</span>}
+        <span className='truncate'>{label}</span>
+      </span>
+    )
+  },
+  (prev, next) => prev.cell === next.cell && prev.primary === next.primary
+)
+
+const MemoizedColGroup = memo(function ResourceColGroup({
+  columns,
+  hasCheckbox,
+}: {
+  columns: ResourceColumn[]
+  hasCheckbox?: boolean
+}) {
+  return (
+    <colgroup>
+      {hasCheckbox && <col className='w-[52px]' />}
+      {columns.map((col, colIdx) => (
+        <col
+          key={col.id}
+          style={
+            colIdx === 0
+              ? { minWidth: 200 * (col.widthMultiplier ?? 1) }
+              : { width: 160 * (col.widthMultiplier ?? 1) }
+          }
+        />
+      ))}
+    </colgroup>
+  )
+})
+
+const MemoizedPagination = memo(function Pagination({
   currentPage,
   totalPages,
   onPageChange,
@@ -447,48 +643,45 @@ function Pagination({
       </div>
     </div>
   )
-}
+})
 
-function CellContent({ cell, primary }: { cell: ResourceCell; primary?: boolean }) {
-  if (cell.content) return <>{cell.content}</>
-  return (
-    <span
-      className={cn(
-        'flex min-w-0 items-center gap-[12px] font-medium text-[14px]',
-        primary ? 'text-[var(--text-body)]' : 'text-[var(--text-secondary)]'
-      )}
-    >
-      {cell.icon && <span className='flex-shrink-0 text-[var(--text-icon)]'>{cell.icon}</span>}
-      <span className='truncate'>{cell.label}</span>
-    </span>
-  )
-}
+const MemoizedCreateRow = memo(
+  function CreateRow({
+    label,
+    disabled,
+    onClick,
+    colSpan,
+  }: {
+    label: string
+    disabled?: boolean
+    onClick: () => void
+    colSpan: number
+  }) {
+    return (
+      <tr
+        className={cn(
+          'transition-colors',
+          disabled ? 'cursor-not-allowed' : 'cursor-pointer hover:bg-[var(--surface-3)]'
+        )}
+        onClick={disabled ? undefined : onClick}
+      >
+        <td colSpan={colSpan} className='px-[24px] py-[10px] align-middle'>
+          <span className='flex items-center gap-[12px] font-medium text-[14px] text-[var(--text-secondary)]'>
+            <Plus className='h-[14px] w-[14px] text-[var(--text-subtle)]' />
+            {label}
+          </span>
+        </td>
+      </tr>
+    )
+  },
+  (prev, next) =>
+    prev.label === next.label &&
+    prev.disabled === next.disabled &&
+    prev.onClick === next.onClick &&
+    prev.colSpan === next.colSpan
+)
 
-function ResourceColGroup({
-  columns,
-  hasCheckbox,
-}: {
-  columns: ResourceColumn[]
-  hasCheckbox?: boolean
-}) {
-  return (
-    <colgroup>
-      {hasCheckbox && <col className='w-[52px]' />}
-      {columns.map((col, colIdx) => (
-        <col
-          key={col.id}
-          style={
-            colIdx === 0
-              ? { minWidth: 200 * (col.widthMultiplier ?? 1) }
-              : { width: 160 * (col.widthMultiplier ?? 1) }
-          }
-        />
-      ))}
-    </colgroup>
-  )
-}
-
-function DataTableSkeleton({
+const MemoizedDataTableSkeleton = memo(function DataTableSkeleton({
   columns,
   rowCount,
   hasCheckbox,
@@ -501,7 +694,7 @@ function DataTableSkeleton({
     <>
       <div className='overflow-hidden'>
         <table className='w-full table-fixed text-[13px]'>
-          <ResourceColGroup columns={columns} hasCheckbox={hasCheckbox} />
+          <MemoizedColGroup columns={columns} hasCheckbox={hasCheckbox} />
           <thead className='shadow-[inset_0_-1px_0_var(--border)]'>
             <tr>
               {hasCheckbox && (
@@ -525,7 +718,7 @@ function DataTableSkeleton({
       </div>
       <div className='min-h-0 flex-1 overflow-auto'>
         <table className='w-full table-fixed text-[13px]'>
-          <ResourceColGroup columns={columns} hasCheckbox={hasCheckbox} />
+          <MemoizedColGroup columns={columns} hasCheckbox={hasCheckbox} />
           <tbody>
             {Array.from({ length: rowCount }, (_, i) => (
               <tr key={i}>
@@ -549,4 +742,4 @@ function DataTableSkeleton({
       </div>
     </>
   )
-}
+})
